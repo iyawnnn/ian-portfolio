@@ -27,7 +27,7 @@ import {
   SiNetlify,
   SiAmazon,
   SiWordpress,
-  SiPrisma,
+  SiNestjs,
   SiPostgresql,
   SiVitest,
   SiGithubactions,
@@ -134,10 +134,10 @@ const toolsData: ToolCategory[] = [
         tags: ["Python", "API"],
       },
       {
-        name: "Prisma",
-        description: "Next-gen Node.js and TypeScript ORM.",
-        icon: SiPrisma,
-        tags: ["ORM", "Database"],
+        name: "NestJS",
+        description: "A progressive Node.js framework for scalable server-side applications.",
+        icon: SiNestjs,
+        tags: ["Framework", "Node.js"],
       },
       {
         name: "Python",

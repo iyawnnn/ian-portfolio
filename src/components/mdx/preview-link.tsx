@@ -14,6 +14,8 @@ const previewMap: Record<string, string> = {
   "/projects/grit": "/projects/grit/grit-cover.webp",
   "/projects/climaph": "/projects/climaph/climaph-cover.webp",
   "/projects/ac-core": "/projects/ac-core/accore-cover.webp",
+  "/projects/ua-attendance": "/blog/ua-labsign/ua-labsign-preview.webp",
+  "https://labsign.ua-cit.com/": "/blog/ua-labsign/ua-labsign-preview.webp",
   "/projects/kusinago": "/projects/kusinago/kusinago-cover.webp",
   "/projects/mamars": "/projects/mamars/mamars-cover.webp",
   "/projects/movieloom": "/projects/movieloom/movieloom-cover.webp",

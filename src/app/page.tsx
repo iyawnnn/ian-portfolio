@@ -10,8 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Counter } from "@/components/ui/counter";
 import { MovingDots, Radar } from "@/components/ui/animated-backgrounds";
+import { GitHubContributionGraph } from "@/components/ui/github-contribution-graph";
 import { SpotifyCard } from "@/components/ui/spotify-card";
 import { WakaTimeCard } from "@/components/ui/wakatime-card";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
@@ -175,34 +175,7 @@ export default function ExplorePage() {
         </div>
       </section>
 
-      <section className="grid grid-cols-3 divide-x divide-border/50 rounded-xl bg-card shadow-sm border border-border/50 overflow-hidden">
-        <div className="flex flex-col items-center justify-center p-4 text-center sm:p-8">
-          <span className="text-2xl font-extrabold tracking-tighter text-foreground sm:text-4xl lg:text-6xl">
-            <Counter value={3100} />+
-          </span>
-          <span className="text-[10px] font-medium text-muted-foreground mt-1 leading-tight sm:text-sm lg:text-base uppercase tracking-wide">
-            Engineering <br className="sm:hidden" /> Hours
-          </span>
-        </div>
-
-        <div className="flex flex-col items-center justify-center p-4 text-center sm:p-8">
-          <span className="text-2xl font-extrabold tracking-tighter text-foreground sm:text-4xl lg:text-6xl">
-            <Counter value={2000} />+
-          </span>
-          <span className="text-[10px] font-medium text-muted-foreground mt-1 leading-tight sm:text-sm lg:text-base uppercase tracking-wide">
-            GitHub <br className="sm:hidden" /> Commits
-          </span>
-        </div>
-
-        <div className="flex flex-col items-center justify-center p-4 text-center sm:p-8">
-          <span className="text-2xl font-extrabold tracking-tighter text-foreground sm:text-4xl lg:text-6xl">
-            <Counter value={200} />+
-          </span>
-          <span className="text-[10px] font-medium text-muted-foreground mt-1 leading-tight sm:text-sm lg:text-base uppercase tracking-wide">
-            Merged <br className="sm:hidden" /> Pull Requests
-          </span>
-        </div>
-      </section>
+      <GitHubContributionGraph />
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <Suspense fallback={<Skeleton className="h-[160px] w-full rounded-xl bg-card border border-border/50 shadow-sm" />}>

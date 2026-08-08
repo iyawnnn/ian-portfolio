@@ -1,0 +1,127 @@
+---
+title: "From “Can You Help Us?” to Google Play Console"
+date: "2026-06-15"
+description: "How a small class idea slowly became my first app meant for real users."
+coverImage: "/blog/ua-labsign/cover.webp"
+---
+
+[UA LabSign](https://labsign.ua-cit.com/) did not start with a grand startup pitch, a carefully planned roadmap, or a room full of people saying "let's disrupt education." It started with a random conversation with a friend.
+
+They were working on a final project for a security subject. Their professor asked the class to choose a security-related topic, so the options were the usual intimidating list: hashing, SHA, encryption, authentication, digital signatures, ECDSA, and enough acronyms to make everyone suddenly miss simple CRUD projects.
+
+The group also needed a system to apply the concept to. They considered ideas like faculty attendance, parking attendance, and laboratory attendance. Their group of three eventually landed on this combination:
+
+> ECDSA + Laboratory Attendance System
+
+My friend asked if I could help. I said yes. That was the beginning of a project that kept changing shape until it stopped feeling like a class requirement and started feeling like a real application.
+
+### Picking ECDSA, Then Trying to Understand It
+
+Choosing ECDSA was the easy part. Understanding it was another story.
+
+At first, I went through PowerPoint presentations, YouTube videos, Google searches, and anything else that could make elliptic curve digital signatures less mysterious. I understood that it had something to do with private keys, public keys, signing, verification, and proving that a message was not modified. But knowing the words and actually understanding the flow are very different things.
+
+Then I found one presentation that used colors as an analogy. It explained key generation and shared information by mixing colors in a way that was easy to follow. It was not a complete mathematical explanation of ECDSA, obviously, but it gave my brain something to hold on to. Suddenly the idea of a private key creating a signature that a public key could verify became much less scary.
+
+That was the point where the project stopped being "put ECDSA somewhere in an attendance app" and became a real attempt to use digital signatures for a meaningful security problem.
+
+### MVP Number One: Django and MySQL
+
+For the first version, my friend suggested Django and MySQL because that was the stack he knew better. Django was not the framework I was most comfortable with, but it made sense to work with what the group could actually understand and maintain.
+
+So that night, we built the first MVP.
+
+It worked. It had the basic idea, the attendance flow, and enough security logic to prove that we were not just drawing boxes in Figma. For one night, we felt productive.
+
+Then the requirements changed the next day.
+
+The professor wanted the system deployed. We did not want Django to become the final deployment path, so we did what any tired student team does when a requirement changes: rebuilt the MVP and acted like rebuilding MVPs was a completely normal hobby.
+
+### MVP Number Two: MERN, Then Another Change
+
+The next attempt used the MERN stack. After around two days, we had another MVP. It was a useful experiment, but managing a separate frontend and backend was starting to make the project harder for my friend to follow. MongoDB itself was not the problem for me; I knew it. My friend did not, though, and asking him to learn another database while we were already untangling ECDSA and racing a deadline felt like adding a side quest nobody asked for.
+
+Then the requirements changed again.
+
+At that point, "build, adjust, rebuild, repeat" became the unofficial development methodology.
+
+### Why We Settled on Next.js
+
+We eventually chose Next.js for the student-project version. My friend was more familiar with it, and keeping the application in one ecosystem made the project easier to track. It also made deployment feel less like coordinating two separate applications that were politely pretending to be one system.
+
+For the database, I initially leaned toward PostgreSQL because it was the choice I was more comfortable recommending for the long term. My friend knew MySQL better, though, so MySQL won. I looked for a hosted option and found Aiven MySQL, which became the database host for the project.
+
+The final student-project stack was roughly:
+
+- Next.js for the application
+- MySQL on Aiven for the database
+- ECDSA for cryptographic signatures
+- Geolocation, session PINs, and role-based flows for the attendance process
+
+We built the complete student-project version in around three to four days, then used the remaining time for small revisions, fixes, and the classic deadline ritual of pretending everything was fine while the deadline was very clearly not fine.
+
+The professor liked the project. We thought that was the ending.
+
+It was not.
+
+### When It Started Becoming Real
+
+Around two months later, the professor reached out again. The project had gained attention and had potential to become a real system for the University of the Assumption.
+
+The group was asked to make it deployable as an actual system.
+
+My friend came back to me, I agreed to help again, and I became the lead developer for the deployment version. This was my first application that could have real users, which made it feel very different from my older practice projects. It was not just another school project anymore: it involved a university setting, real attendance, real students, real laboratory use, and real accountability. Suddenly a bug was no longer just an annoying red error message. It could become somebody else's very real problem.
+
+The timeline was also tight: around one to two weeks.
+
+No pressure.
+
+### Rebuilding for Web and Android
+
+The real version needed to support both web and Android. There was no iOS version planned yet, which was probably a small mercy.
+
+Because we were already in the React ecosystem, React Native with Expo was the practical choice for the mobile app. I am mainly a web developer, not a mobile developer, so moving into mobile development that quickly was challenging. React Native helped because the mental model was close to React, but mobile still has its own surprises: device behavior, permissions, location services, app states, and many ways for a perfectly reasonable assumption to become incorrect.
+
+We also moved the real version to PostgreSQL. The first major job was rebuilding and migrating the system into a setup that could support web and Android together. By the end of the first week, the mobile version was mostly working.
+
+Then another major requirement arrived: Google Authentication.
+
+### Google Auth, Session Sync, and No Time for Emotions
+
+Google Auth had to work on both web and mobile, and both platforms had to stay in sync. That meant the authentication flow could not be treated as a simple login button. It had to work with the ECDSA and session-related behavior too.
+
+One of the harder parts was making sure that logging in or changing a session on one platform could affect the other in real time when needed. Authentication, cryptographic checks, session management, and cross-platform updates all had to cooperate. That is a lot of moving pieces for a project that originally started as a favor.
+
+At the same time, I had capstone planning and other work waiting for me. It was stressful, but there was no time to be dramatic about it.
+
+> No time for emotions, only implementation.
+
+We did not only migrate the attendance flow to mobile. We also added features that made admin work easier, because a system is not very useful if the people managing it have to suffer more than the users.
+
+> **UA LabSign** is the project page for the system that came out of this story - the web version of the laboratory attendance platform that started as a security class project and slowly became something real.
+>
+> You can view the [UA LabSign project page](/projects/ua-attendance) to see the system outside this article.
+
+### Testing, Location Bugs, and Google Play Console
+
+After the major features were done, we started testing before submitting the Android app to Google Play Console.
+
+That was when the bugs came out of hiding.
+
+We spent around two days fixing issues we found during testing. One of the more annoying ones involved location behavior becoming unreliable in some cases. For an attendance system that depends on geolocation, that is not the kind of bug you can politely ignore and hope nobody notices. We fixed it, tested again, and submitted the app through Google Play's testing process.
+
+That process also meant answering the required questions, filling out the forms, and working through the testing requirements before a production release. During testing, we found the location issue, fixed it, and resubmitted.
+
+Right now, the app is applying for production release. It is not something I want to overclaim before it gets there, but getting it this far already feels very different from shipping a class demo.
+
+### What UA LabSign Taught Me
+
+UA LabSign started as a random favor for a friend. It turned into a crash course in ECDSA, digital signatures, authentication, deployment, databases, mobile development, Google Play Console, geolocation, and building under deadlines that did not care whether I was tired.
+
+It also showed me how quickly a project changes when real usage becomes part of the conversation. A feature is one thing. A feature that an admin needs to rely on is another.
+
+The biggest question now is what happens when the system faces real usage. Can it handle many users submitting attendance at the same time? Will the web and Android flows stay smooth when the pressure is real?
+
+We will find out.
+
+That uncertainty is part of what makes the project feel real. And honestly, it is a lot more interesting than another MVP sitting quietly in a repository.

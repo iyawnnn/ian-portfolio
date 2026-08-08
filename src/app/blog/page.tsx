@@ -49,37 +49,31 @@ export default async function BlogPage({
             href={`/blog/${post.slug}`}
             className="group block"
           >
-            <article className="flex flex-col gap-3 py-6 md:py-8 border-b border-border/50 transition-colors hover:bg-muted/30 px-3 sm:px-4 -mx-3 sm:-mx-4 rounded-xl">
-              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 sm:gap-4">
+            <article className="grid gap-4 py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-x-6 md:py-8 border-b border-border/50 transition-colors hover:bg-muted/30 px-3 sm:px-4 -mx-3 sm:-mx-4 rounded-xl">
+              <div className="flex min-w-0 flex-col gap-3">
                 <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-foreground transition-colors group-hover:opacity-80">
                   {post.title}
                 </h2>
 
-                <div className="flex flex-row sm:flex-col items-center sm:items-end gap-3 sm:gap-1.5 text-sm font-medium text-muted-foreground shrink-0 mt-1 sm:mt-0">
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 opacity-70" />
-                    <time dateTime={post.date}>{post.date}</time>
-                  </div>
-                  <span className="sm:hidden text-[10px] opacity-50">●</span>
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-3xl">
+                  {post.description}
+                </p>
 
-                  {/* 2. WRAP IN SUSPENSE WITH A SKELETON FALLBACK */}
-                  <Suspense
-                    fallback={
-                      <div className="h-4 w-12 bg-muted animate-pulse rounded" />
-                    }
-                  >
-                    <ViewCounter slug={post.slug} />
-                  </Suspense>
+                <div className="flex items-center text-sm font-semibold text-muted-foreground mt-1 transition-colors group-hover:text-foreground">
+                  Read Article{" "}
+                  <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
 
-              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-3xl">
-                {post.description}
-              </p>
+              <div className="flex flex-row items-center gap-3 text-sm font-medium text-muted-foreground md:min-w-[120px] md:flex-col md:items-end md:gap-1.5 md:pt-1">
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="h-3.5 w-3.5 opacity-70" />
+                  <time dateTime={post.date}>{post.date}</time>
+                </div>
 
-              <div className="flex items-center text-sm font-semibold text-muted-foreground mt-1 transition-colors group-hover:text-foreground">
-                Read Article{" "}
-                <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <Suspense fallback={<div className="h-4 w-12 bg-muted animate-pulse rounded" />}>
+                  <ViewCounter slug={post.slug} />
+                </Suspense>
               </div>
             </article>
           </Link>
