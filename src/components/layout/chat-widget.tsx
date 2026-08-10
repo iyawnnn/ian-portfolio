@@ -3,11 +3,12 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Bot, X, Send, RefreshCcw } from "lucide-react";
+import { X, Send, RefreshCcw } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { CustomLink } from "@/components/mdx/preview-link";
+import { AiChatRobotButton } from "@/components/ui/ai-chat-robot-button";
 
 type Message = {
   id: string;
@@ -198,15 +199,7 @@ export function ChatWidget() {
   };
 
   if (!isOpen) {
-    return (
-      <Button
-        onClick={() => setIsOpen(true)}
-        className="hidden lg:flex fixed bottom-6 right-6 h-12 px-5 rounded-full z-50 transition-all hover:-translate-y-1 items-center gap-2.5 bg-foreground text-background font-medium hover:bg-foreground/90 border border-border shadow-2xl"
-      >
-        <Bot className="h-5 w-5 text-background" />
-        <span>Chat with AI</span>
-      </Button>
-    );
+    return <AiChatRobotButton onClick={() => setIsOpen(true)} />;
   }
 
   return (
