@@ -25,7 +25,7 @@ function useReducedMotion() {
 
 function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean; reducedMotion: boolean; dragging: boolean; onReady: () => void }) {
   const { scene } = useGLTF(MODEL_PATH);
-  const { robot, visorMaterial, eyeMaterial } = useMemo(() => {
+  const { robot, visorMaterial, eyeMaterial, rightArmPivot, rightArmRestPosition } = useMemo(() => {
     const clonedScene = scene.clone(true);
     const cleanVisor = new THREE.MeshStandardMaterial({
       color: "#050505",
@@ -57,6 +57,9 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
     const leftArm = clonedScene.getObjectByName("left_soft_arm_down");
     const authoredRightArm = clonedScene.getObjectByName("right_soft_waving_arm");
 
+    let rightArmPivot: THREE.Group | null = null;
+    let rightArmRestPosition: THREE.Vector3 | null = null;
+
     if (authoredRightArm) authoredRightArm.visible = false;
     if (leftArm?.parent) {
       const mirroredRightArm = leftArm.clone();
@@ -65,10 +68,26 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
       mirroredRightArm.rotation.y *= -1;
       mirroredRightArm.rotation.z *= -1;
       mirroredRightArm.scale.x *= -1;
-      leftArm.parent.add(mirroredRightArm);
+
+      const armParent = leftArm.parent;
+      armParent.add(mirroredRightArm);
+      clonedScene.updateMatrixWorld(true);
+
+      rightArmPivot = new THREE.Group();
+      rightArmPivot.position.set(0.6, 0, 0.06);
+      armParent.add(rightArmPivot);
+      rightArmPivot.updateWorldMatrix(true, false);
+      rightArmPivot.attach(mirroredRightArm);
+      rightArmRestPosition = rightArmPivot.position.clone();
     }
 
-    return { robot: clonedScene, visorMaterial: cleanVisor, eyeMaterial: cleanEyes };
+    return {
+      robot: clonedScene,
+      visorMaterial: cleanVisor,
+      eyeMaterial: cleanEyes,
+      rightArmPivot,
+      rightArmRestPosition,
+    };
   }, [scene]);
   const group = useRef<THREE.Group>(null);
   const visorMaterialRef = useRef(visorMaterial);
@@ -76,6 +95,11 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
   const targetScale = useMemo(() => new THREE.Vector3(), []);
   const hoverScale = useRef(1);
   const hoverLift = useRef(0);
+  const rightArmPivotRef = useRef(rightArmPivot);
+  const rightArmRestPositionRef = useRef(rightArmRestPosition);
+  const armWaveBlend = useRef(0);
+  const bodyLean = useRef(0);
+  const bodyYaw = useRef(0);
 
   useEffect(() => {
     return () => {
@@ -122,23 +146,80 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
       1 - Math.exp(-delta * 5),
     );
 
+    const armPivot = rightArmPivotRef.current;
+    const armRestPosition = rightArmRestPositionRef.current;
+    if (armPivot && armRestPosition) {
+      if (reducedMotion) {
+        armWaveBlend.current = 0;
+        armPivot.rotation.set(0, 0, 0);
+        armPivot.position.copy(armRestPosition);
+      } else {
+        armWaveBlend.current = THREE.MathUtils.damp(
+          armWaveBlend.current,
+          hovered ? 1 : 0,
+          4.2,
+          delta,
+        );
+        const blend = armWaveBlend.current;
+        const raiseProgress = THREE.MathUtils.smoothstep(blend, 0.08, 0.9);
+        const waveEnvelope = THREE.MathUtils.smoothstep(blend, 0.68, 0.96);
+        const wave = Math.sin(time * 5.7) * 0.4 * waveEnvelope;
+        const secondaryTwist =
+          Math.sin(time * 5.7 + 0.7) * 0.1 * waveEnvelope;
+
+        armPivot.rotation.y = THREE.MathUtils.damp(
+          armPivot.rotation.y,
+          -1.85 * raiseProgress + wave,
+          7,
+          delta,
+        );
+        armPivot.rotation.z = THREE.MathUtils.damp(
+          armPivot.rotation.z,
+          -0.07 * raiseProgress + secondaryTwist,
+          7,
+          delta,
+        );
+        armPivot.position.y = THREE.MathUtils.damp(
+          armPivot.position.y,
+          armRestPosition.y - raiseProgress * 0.085,
+          7,
+          delta,
+        );
+      }
+    }
+
     if (reducedMotion) {
+      bodyLean.current = 0;
+      bodyYaw.current = 0;
       group.current.position.y = 0;
       group.current.rotation.set(0, 0, 0);
       return;
     }
+
+    bodyLean.current = THREE.MathUtils.damp(
+      bodyLean.current,
+      hovered ? 0.16 : 0,
+      6,
+      delta,
+    );
+    bodyYaw.current = THREE.MathUtils.damp(
+      bodyYaw.current,
+      hovered ? -0.075 : 0,
+      6,
+      delta,
+    );
 
     group.current.position.y =
       -0.015 + Math.sin(time * 1.35) * 0.038 + hoverLift.current;
     if (!dragging) {
       group.current.rotation.y = THREE.MathUtils.lerp(
         group.current.rotation.y,
-        Math.sin(time * 0.75) * 0.02,
+        Math.sin(time * 0.75) * 0.02 + bodyYaw.current,
         smoothness * 0.35,
       );
       group.current.rotation.z = THREE.MathUtils.lerp(
         group.current.rotation.z,
-        Math.sin(time * 1.0) * 0.02,
+        Math.sin(time * 1.0) * 0.02 + bodyLean.current,
         smoothness * 0.35,
       );
     }
