@@ -68,11 +68,12 @@ export function MobileHeader() {
           <span className="sr-only">Open Command Palette</span>
         </Button>
 
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Chat with AI"
           onClick={openAiChat}
-          className="h-10 w-10 rounded-full text-muted-foreground hover:bg-accent hover:text-foreground"
+          className="h-10 w-10 rounded-full text-muted-foreground hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground"
         >
           <Bot className="h-5 w-5" />
           <span className="sr-only">Open AI Chat</span>

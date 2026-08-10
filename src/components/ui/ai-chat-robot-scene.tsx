@@ -23,7 +23,7 @@ function useReducedMotion() {
   return reducedMotion;
 }
 
-function Robot({ hovered, reducedMotion, dragging }: { hovered: boolean; reducedMotion: boolean; dragging: boolean }) {
+function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean; reducedMotion: boolean; dragging: boolean; onReady: () => void }) {
   const { scene } = useGLTF(MODEL_PATH);
   const { robot, visorMaterial, eyeMaterial } = useMemo(() => {
     const clonedScene = scene.clone(true);
@@ -83,6 +83,10 @@ function Robot({ hovered, reducedMotion, dragging }: { hovered: boolean; reduced
       eyeMaterial.dispose();
     };
   }, [eyeMaterial, visorMaterial]);
+
+  useEffect(() => {
+    onReady();
+  }, [onReady]);
 
   useFrame((state, delta) => {
     if (!group.current) return;
@@ -150,16 +154,7 @@ function Robot({ hovered, reducedMotion, dragging }: { hovered: boolean; reduced
   );
 }
 
-function RobotLoadingShape() {
-  return (
-    <mesh>
-      <icosahedronGeometry args={[0.65, 1]} />
-      <meshStandardMaterial color="#737373" wireframe />
-    </mesh>
-  );
-}
-
-export default function AiChatRobotScene() {
+export default function AiChatRobotScene({ onReady }: { onReady: () => void }) {
   const [hovered, setHovered] = useState(false);
   const [dragging, setDragging] = useState(false);
   const reducedMotion = useReducedMotion();
@@ -176,9 +171,9 @@ export default function AiChatRobotScene() {
       <ambientLight intensity={1.8} />
       <directionalLight position={[3, 4, 5]} intensity={2.2} />
       <directionalLight position={[-3, 1, 2]} intensity={0.7} />
-      <Suspense fallback={<RobotLoadingShape />}>
+      <Suspense fallback={null}>
         <Bounds fit clip observe margin={1.14}>
-          <Robot hovered={hovered} reducedMotion={reducedMotion} dragging={dragging} />
+          <Robot hovered={hovered} reducedMotion={reducedMotion} dragging={dragging} onReady={onReady} />
         </Bounds>
       </Suspense>
       <OrbitControls

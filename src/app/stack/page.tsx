@@ -46,16 +46,32 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+type ToolIcon = React.ComponentType<{
+  className?: string;
+  "aria-label"?: string;
+}>;
+
 interface Tool {
   name: string;
   description: string;
-  icon: React.ElementType;
+  icon: ToolIcon;
   tags: string[];
 }
 
 interface ToolCategory {
   category: string;
   items: Tool[];
+}
+
+function ToolLogo({ tool }: { tool: Tool }) {
+  const Icon = tool.icon;
+
+  return (
+    <Icon
+      className="w-6 h-6 text-foreground group-hover:text-primary transition-colors"
+      aria-label={tool.name + " logo"}
+    />
+  );
 }
 
 const toolsData: ToolCategory[] = [
@@ -482,10 +498,7 @@ export default function StackPage() {
                     >
                       <CardContent className="p-4 lg:p-5 flex items-start gap-4 min-w-0">
                         <div className="p-2 bg-secondary rounded-lg border border-border group-hover:border-primary/20 transition-colors shrink-0">
-                          <tool.icon
-                            className="w-6 h-6 text-foreground group-hover:text-primary transition-colors"
-                            aria-label={`${tool.name} logo`}
-                          />
+                          <ToolLogo tool={tool} />
                         </div>
                         <div className="space-y-2 w-full min-w-0">
                           <div className="space-y-1 min-w-0">
