@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
+import { FaTiktok } from "react-icons/fa6";
 import {
   Home,
   User,
@@ -63,6 +64,12 @@ const CONNECT_LINKS = [
     title: "Github",
     href: "https://github.com/iyawnnn",
     icon: Github,
+    isExternal: true,
+  },
+  {
+    title: "TikTok",
+    href: "https://www.tiktok.com/@iyawn.ts",
+    icon: FaTiktok,
     isExternal: true,
   },
   {
