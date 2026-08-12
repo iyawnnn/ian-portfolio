@@ -30,9 +30,11 @@ import {
   SiNestjs,
   SiPostgresql,
   SiVitest,
+  SiJest,
   SiGithubactions,
   SiPytest, 
   SiFastapi,
+  SiFastify,
   SiLaravel,
   SiRender,
   SiSqlite,
@@ -144,6 +146,12 @@ const toolsData: ToolCategory[] = [
         tags: ["Framework", "API"],
       },
       {
+        name: "Fastify",
+        description: "Fast and low-overhead web framework for Node.js.",
+        icon: SiFastify,
+        tags: ["Backend", "Node.js"],
+      },
+      {
         name: "FastAPI",
         description: "High-performance Python API framework.",
         icon: SiFastapi,
@@ -151,7 +159,7 @@ const toolsData: ToolCategory[] = [
       },
       {
         name: "NestJS",
-        description: "A progressive Node.js framework for scalable server-side applications.",
+        description: "Scalable Node.js backend framework.",
         icon: SiNestjs,
         tags: ["Framework", "Node.js"],
       },
@@ -218,6 +226,12 @@ const toolsData: ToolCategory[] = [
         description: "Blazing fast Vite-native unit testing.",
         icon: SiVitest,
         tags: ["Testing", "Unit"],
+      },
+      {
+        name: "Jest",
+        description: "Fast JavaScript testing framework.",
+        icon: SiJest,
+        tags: ["Testing", "JavaScript"],
       },
       {
         name: "Pytest",
