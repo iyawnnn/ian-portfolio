@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   BookOpen,
   Brain,
@@ -29,8 +29,6 @@ export default function AboutPage() {
   const paragraph1 = `I’m a 4th-year Information Technology student at Holy Angel University, specializing in Web Development. I’m more of a web app guy. I enjoy turning ideas into actual systems people can use, not just pages that look nice and call it a day.`;
 
   const paragraph2 = `Most of what I know came from building, breaking, debugging, and rebuilding real projects. I like exploring modern tools, figuring out how things work beyond the classroom, and slowly becoming the kind of developer who can take an idea and turn it into something reliable and useful.`;
-
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="flex w-full max-w-6xl mx-auto flex-col gap-12 p-4 pt-8 md:p-8 md:pt-20 lg:p-12 lg:pt-24">
@@ -221,78 +219,46 @@ export default function AboutPage() {
           className="pointer-events-none absolute inset-0 z-0 overflow-hidden [contain:paint]"
         >
           {/* Desktop clusters */}
-          <motion.svg
+          <svg
             viewBox="0 0 1000 260"
             preserveAspectRatio="none"
-            className="absolute -left-[10%] -top-[22%] hidden h-[88%] w-[120%] overflow-visible text-foreground sm:block"
-            style={{ willChange: shouldReduceMotion ? "auto" : "transform" }}
-            initial={false}
-            animate={
-              shouldReduceMotion
-                ? undefined
-                : { x: ["-6%", "8%", "-6%"], y: ["3%", "-5%", "3%"], rotate: [-3, 3.5, -3], scale: [1, 1.035, 1], opacity: [0.82, 1, 0.82] }
-            }
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            className="about-cta-lines about-cta-lines-desktop-top absolute -left-[10%] -top-[22%] hidden h-[88%] w-[120%] overflow-visible text-foreground sm:block"
           >
             <path d="M-90 238 C 135 188, 260 8, 475 58 C 690 108, 815 22, 1090 -22" fill="none" stroke="currentColor" strokeWidth="0.8" opacity="0.13" />
             <path d="M-95 258 C 130 202, 285 34, 492 76 C 712 121, 850 30, 1095 -8" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.28" />
             <path d="M-100 276 C 120 226, 298 60, 510 97 C 735 136, 875 47, 1100 15" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.19" />
             <path d="M-105 292 C 112 252, 320 92, 540 119 C 765 146, 900 70, 1105 42" fill="none" stroke="currentColor" strokeWidth="0.7" opacity="0.1" />
-          </motion.svg>
+          </svg>
 
-          <motion.svg
+          <svg
             viewBox="0 0 1000 250"
             preserveAspectRatio="none"
-            className="absolute -left-[12%] -bottom-[28%] hidden h-[84%] w-[124%] overflow-visible text-foreground sm:block"
-            style={{ willChange: shouldReduceMotion ? "auto" : "transform" }}
-            initial={false}
-            animate={
-              shouldReduceMotion
-                ? undefined
-                : { x: ["7%", "-7%", "7%"], y: ["-4%", "5%", "-4%"], rotate: [3, -3.5, 3], scale: [1.035, 1, 1.035], opacity: [0.78, 1, 0.78] }
-            }
-            transition={{ duration: 23, delay: 2.8, repeat: Infinity, ease: "easeInOut" }}
+            className="about-cta-lines about-cta-lines-desktop-bottom absolute -left-[12%] -bottom-[28%] hidden h-[84%] w-[124%] overflow-visible text-foreground sm:block"
           >
             <path d="M-100 238 C 110 278, 250 86, 455 136 C 665 188, 820 54, 1110 92" fill="none" stroke="currentColor" strokeWidth="0.8" opacity="0.12" />
             <path d="M-105 258 C 105 294, 270 112, 474 158 C 688 207, 850 77, 1115 116" fill="none" stroke="currentColor" strokeWidth="1.4" opacity="0.25" />
             <path d="M-110 276 C 98 310, 292 143, 500 181 C 718 221, 878 108, 1120 142" fill="none" stroke="currentColor" strokeWidth="0.9" opacity="0.16" />
-          </motion.svg>
+          </svg>
 
           {/* Mobile clusters */}
-          <motion.svg
+          <svg
             viewBox="0 0 430 120"
             preserveAspectRatio="none"
-            className="absolute -left-[16%] -top-[12%] h-[38%] w-[132%] overflow-visible text-foreground sm:hidden"
-            style={{ willChange: shouldReduceMotion ? "auto" : "transform" }}
-            initial={false}
-            animate={
-              shouldReduceMotion
-                ? undefined
-                : { x: ["-5%", "7%", "-5%"], y: ["2%", "-5%", "2%"], rotate: [-2.5, 3, -2.5], scale: [1, 1.025, 1], opacity: [0.72, 0.95, 0.72] }
-            }
-            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            className="about-cta-lines about-cta-lines-mobile-top absolute -left-[16%] -top-[12%] h-[38%] w-[132%] overflow-visible text-foreground sm:hidden"
           >
             <path d="M-55 18 C 42 8, 96 82, 178 91 C 272 102, 346 34, 495 65" fill="none" stroke="currentColor" strokeWidth="0.85" opacity="0.15" />
             <path d="M-58 33 C 38 19, 104 96, 190 105 C 286 115, 362 48, 498 79" fill="none" stroke="currentColor" strokeWidth="1.35" opacity="0.23" />
             <path d="M-61 48 C 31 31, 112 111, 204 116 C 305 122, 379 66, 501 94" fill="none" stroke="currentColor" strokeWidth="0.75" opacity="0.11" />
-          </motion.svg>
+          </svg>
 
-          <motion.svg
+          <svg
             viewBox="0 0 430 105"
             preserveAspectRatio="none"
-            className="absolute -bottom-[12%] -left-[18%] h-[38%] w-[136%] overflow-visible text-foreground sm:hidden"
-            style={{ willChange: shouldReduceMotion ? "auto" : "transform" }}
-            initial={false}
-            animate={
-              shouldReduceMotion
-                ? undefined
-                : { x: ["6%", "-6%", "6%"], y: ["-2%", "5%", "-2%"], rotate: [2.5, -3, 2.5], scale: [1.025, 1, 1.025], opacity: [0.7, 0.92, 0.7] }
-            }
-            transition={{ duration: 25, delay: 3.7, repeat: Infinity, ease: "easeInOut" }}
+            className="about-cta-lines about-cta-lines-mobile-bottom absolute -bottom-[12%] -left-[18%] h-[38%] w-[136%] overflow-visible text-foreground sm:hidden"
           >
             <path d="M-65 102 C 38 122, 94 38, 184 30 C 278 21, 352 92, 505 54" fill="none" stroke="currentColor" strokeWidth="0.8" opacity="0.14" />
             <path d="M-68 118 C 34 137, 105 55, 198 45 C 298 34, 376 108, 508 70" fill="none" stroke="currentColor" strokeWidth="1.3" opacity="0.22" />
-          </motion.svg>
+          </svg>
         </div>
         <div className="relative z-10">
           <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">

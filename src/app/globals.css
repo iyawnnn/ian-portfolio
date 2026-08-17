@@ -151,19 +151,24 @@
     animation: page-enter 500ms ease-in-out both;
   }
 
-  @keyframes typewriter-character {
+
+  @keyframes typewriter-character-in {
     from {
       opacity: 0;
+      transform: translateY(1px);
     }
     to {
       opacity: 1;
+      transform: translateY(0);
     }
   }
 
   .typewriter-character {
-    animation: typewriter-character 10ms linear both;
+    display: inline-block;
+    animation-name: typewriter-character-in;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: both;
   }
-
   @keyframes typewriter-cursor {
     0%,
     100% {
@@ -177,17 +182,30 @@
   .typewriter-cursor {
     animation: typewriter-cursor 1.6s ease-in-out infinite;
   }
+  .typewriter-reduced-text {
+    display: none;
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .page-enter,
-    .typewriter-character {
+    .page-enter {
       animation-duration: 1ms;
       animation-delay: 0ms !important;
+    }
+
+    .typewriter-character {
+      animation: none;
     }
 
     .typewriter-cursor {
       animation: none;
       opacity: 1;
+    }
+    .typewriter-live-text {
+      display: none;
+    }
+
+    .typewriter-reduced-text {
+      display: inline;
     }
   }
   /* FLOAT ANIMATION for MovingDots */
@@ -295,5 +313,82 @@
     animation: none;
     stroke-dashoffset: 0;
     opacity: 1;
+  }
+}
+.about-cta-lines {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.about-cta-lines-desktop-top {
+  animation-name: about-cta-lines-desktop-top;
+  animation-duration: 15s;
+}
+
+.about-cta-lines-desktop-bottom {
+  animation-name: about-cta-lines-desktop-bottom;
+  animation-duration: 23s;
+  animation-delay: 2.8s;
+}
+
+.about-cta-lines-mobile-top {
+  animation-name: about-cta-lines-mobile-top;
+  animation-duration: 18s;
+}
+
+.about-cta-lines-mobile-bottom {
+  animation-name: about-cta-lines-mobile-bottom;
+  animation-duration: 25s;
+  animation-delay: 3.7s;
+}
+
+@keyframes about-cta-lines-desktop-top {
+  0%, 100% { transform: translate(-6%, 3%) rotate(-3deg) scale(1); opacity: 0.82; }
+  50% { transform: translate(8%, -5%) rotate(3.5deg) scale(1.035); opacity: 1; }
+}
+
+@keyframes about-cta-lines-desktop-bottom {
+  0%, 100% { transform: translate(7%, -4%) rotate(3deg) scale(1.035); opacity: 0.78; }
+  50% { transform: translate(-7%, 5%) rotate(-3.5deg) scale(1); opacity: 1; }
+}
+
+@keyframes about-cta-lines-mobile-top {
+  0%, 100% { transform: translate(-5%, 2%) rotate(-2.5deg) scale(1); opacity: 0.72; }
+  50% { transform: translate(7%, -5%) rotate(3deg) scale(1.025); opacity: 0.95; }
+}
+
+@keyframes about-cta-lines-mobile-bottom {
+  0%, 100% { transform: translate(6%, -2%) rotate(2.5deg) scale(1.025); opacity: 0.7; }
+  50% { transform: translate(-6%, 5%) rotate(-3deg) scale(1); opacity: 0.92; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-cta-lines {
+    animation: none;
+    will-change: auto;
+  }
+
+  .about-cta-lines-desktop-top {
+    transform: translate(-6%, 3%) rotate(-3deg) scale(1);
+    opacity: 0.82;
+  }
+
+  .about-cta-lines-desktop-bottom {
+    transform: translate(7%, -4%) rotate(3deg) scale(1.035);
+    opacity: 0.78;
+  }
+
+  .about-cta-lines-mobile-top {
+    transform: translate(-5%, 2%) rotate(-2.5deg) scale(1);
+    opacity: 0.72;
+  }
+
+  .about-cta-lines-mobile-bottom {
+    transform: translate(6%, -2%) rotate(2.5deg) scale(1.025);
+    opacity: 0.7;
   }
 }

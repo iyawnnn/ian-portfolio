@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export const TypewriterEffectSmooth = ({
   words,
@@ -24,8 +25,8 @@ export const TypewriterEffectSmooth = ({
   const [showCursor, setShowCursor] = useState(delay === 0);
 
   useEffect(() => {
-    let startTimeout: ReturnType<typeof setTimeout> | undefined;
-    let endTimeout: ReturnType<typeof setTimeout> | undefined;
+    let startTimeout: NodeJS.Timeout;
+    let endTimeout: NodeJS.Timeout;
 
     if (delay > 0) {
       startTimeout = setTimeout(() => {
@@ -48,49 +49,81 @@ export const TypewriterEffectSmooth = ({
     };
   }, [delay, duration, hideCursorOnComplete]);
 
-  const totalCharacters = words.reduce((total, word) => total + word.text.length, 0);
-  const wordsArray = words.map((word, wordIndex) => ({
-    ...word,
-    characters: word.text.split(""),
-    startIndex: words
-      .slice(0, wordIndex)
-      .reduce((total, precedingWord) => total + precedingWord.text.length, 0),
-  }));
+  const wordsArray = words.map((word) => {
+    return {
+      ...word,
+      text: word.text.split(""),
+    };
+  });
 
-  return (
-    <div className={cn("flex min-h-[1em] items-center space-x-1 my-0", className)}>
-      <div className="overflow-hidden">
-        <div className="flex items-center gap-[0.25em] whitespace-nowrap font-extrabold leading-none tracking-tight">
-          {wordsArray.map((word, wordIndex) => (
-            <span key={`word-${wordIndex}`} className="inline-block">
-              {word.characters.map((character, characterIndex) => (
+  const renderWords = () => {
+    return (
+      // CHANGED: gap-1.5 -> gap-[0.25em] for better responsiveness
+      <div className="flex items-center gap-[0.25em] whitespace-nowrap">
+        {wordsArray.map((word, idx) => {
+          return (
+            <div key={`word-${idx}`} className="inline-block">
+              {word.text.map((char, index) => (
                 <span
-                  key={`char-${characterIndex}`}
-                  className={cn("typewriter-character text-foreground", word.className)}
-                  style={{
-                    animationDelay: `${
-                      delay +
-                      ((word.startIndex + characterIndex) /
-                        Math.max(totalCharacters, 1)) *
-                        duration
-                    }s`,
-                  }}
+                  key={`char-${index}`}
+                  className={cn(`text-foreground`, word.className)}
                 >
-                  {character}
+                  {char}
                 </span>
               ))}
-            </span>
-          ))}
-        </div>
+            </div>
+          );
+        })}
       </div>
+    );
+  };
 
-      <span
+  return (
+    <div
+      className={cn("flex items-center space-x-1 my-0 min-h-[1em]", className)}
+    >
+      <motion.div
+        className="overflow-hidden"
+        initial={{
+          width: "0%",
+        }}
+        animate={{
+          width: "fit-content",
+        }}
+        transition={{
+          duration: duration,
+          ease: "linear",
+          delay: delay,
+        }}
+      >
+        <div
+          className="whitespace-nowrap font-extrabold tracking-tight leading-none"
+          style={{
+            whiteSpace: "nowrap",
+          }}
+        >
+          {renderWords()}
+        </div>{" "}
+      </motion.div>
+
+      <motion.span
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.8,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
         className={cn(
-          "typewriter-cursor block h-[1em] w-[4px] rounded-sm bg-primary",
+          "block rounded-sm w-[4px] h-[1em] bg-primary",
           cursorClassName,
           !showCursor && "invisible",
         )}
-      />
+      ></motion.span>
     </div>
   );
 };

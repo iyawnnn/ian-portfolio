@@ -11,23 +11,11 @@ import {
   type PointerEvent,
   type ReactNode,
 } from "react";
-import { Bot } from "lucide-react";
 
 const RobotScene = dynamic(() => import("./ai-chat-robot-scene"), {
   ssr: false,
   loading: () => null,
 });
-
-function RobotFallback() {
-  return (
-    <span
-      className="flex size-full items-center justify-center"
-      aria-hidden="true"
-    >
-      <Bot className="size-10 text-foreground sm:size-12" strokeWidth={1.35} />
-    </span>
-  );
-}
 
 class RobotErrorBoundary extends Component<
   { children: ReactNode; onError: () => void },
@@ -200,12 +188,11 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
         className="relative z-10 flex size-[92px] touch-none rounded-full border border-transparent bg-transparent drop-shadow-[0_16px_28px_rgba(0,0,0,0.18)] ring-offset-background transition-[filter,opacity] duration-500 ease-out hover:drop-shadow-[0_18px_34px_rgba(0,0,0,0.22)] dark:drop-shadow-[0_16px_28px_rgba(255,255,255,0.10)] dark:hover:drop-shadow-[0_18px_34px_rgba(255,255,255,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 motion-reduce:transition-none sm:size-28"
       >
         <span
-          className={`absolute inset-0 transition-opacity duration-500 ${
+          aria-hidden="true"
+          className={`absolute inset-0 rounded-full border border-foreground/10 bg-foreground/[0.03] shadow-inner transition-opacity duration-500 ${
             isModelReady ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          <RobotFallback />
-        </span>
+          } motion-reduce:transition-none`}
+        />
         {shouldLoadRobot && !hasModelError && (
           <span
             className={`absolute inset-0 transition-opacity duration-500 ${

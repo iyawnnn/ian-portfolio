@@ -1,6 +1,12 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import useSWR from "swr";
 
 type Day = { date: string; contributionCount: number };
@@ -124,6 +130,53 @@ function ContributionGrid({
     firstDay && lastDay
       ? dateLabel(firstDay.date) + " through " + dateLabel(lastDay.date)
       : "the available date range";
+  const gridRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const tooltipDateRef = useRef<HTMLParagraphElement>(null);
+  const tooltipCountRef = useRef<HTMLParagraphElement>(null);
+
+  const hideTooltip = () => {
+    if (tooltipRef.current) tooltipRef.current.hidden = true;
+  };
+
+  const showTooltip = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+
+    const cell = target.closest<HTMLElement>("[data-contribution-cell]");
+    const grid = gridRef.current;
+    const tooltip = tooltipRef.current;
+    if (!cell || !grid || !tooltip || !grid.contains(cell)) return;
+
+    const cellRect = cell.getBoundingClientRect();
+    const gridRect = grid.getBoundingClientRect();
+    const count = Number(cell.dataset.count ?? 0);
+    const horizontalInset = Math.min(88, gridRect.width / 2);
+    const cellCenter = cellRect.left - gridRect.left + cellRect.width / 2;
+    const tooltipX = Math.min(
+      Math.max(cellCenter, horizontalInset),
+      gridRect.width - horizontalInset,
+    );
+    const placeBelow = cellRect.top < 72;
+
+    if (tooltipDateRef.current) {
+      tooltipDateRef.current.textContent = cell.dataset.dateLabel ?? "";
+    }
+    if (tooltipCountRef.current) {
+      tooltipCountRef.current.textContent = `${count} contribution${
+        count === 1 ? "" : "s"
+      }`;
+    }
+
+    tooltip.style.left = `${tooltipX}px`;
+    tooltip.style.top = `${
+      cellRect.top - gridRect.top + (placeBelow ? cellRect.height : 0)
+    }px`;
+    tooltip.style.transform = placeBelow
+      ? "translate(-50%, 8px)"
+      : "translate(-50%, calc(-100% - 8px))";
+    tooltip.hidden = false;
+  };
   const accessibleSummary =
     "GitHub contribution activity: " +
     totalContributions.toLocaleString() +
@@ -139,10 +192,13 @@ function ContributionGrid({
         </p>
       )}
       <div
-        className="grid w-full grid-flow-col items-start justify-between"
+        ref={gridRef}
+        className="relative grid w-full grid-flow-col items-start justify-between"
         style={{ columnGap: gap }}
         role="img"
         aria-label={accessibleSummary}
+        onPointerOver={showTooltip}
+        onPointerLeave={hideTooltip}
       >
         {weeks.map((week, weekIndex) => (
           <div
@@ -154,9 +210,9 @@ function ContributionGrid({
               <span
                 key={day.date}
                 aria-hidden="true"
-                title={`${dateLabel(day.date)} — ${day.contributionCount} contribution${
-                  day.contributionCount === 1 ? "" : "s"
-                }`}
+                data-contribution-cell=""
+                data-date-label={dateLabel(day.date)}
+                data-count={day.contributionCount}
                 className={
                   "block rounded-[2px] border transition-transform " +
                   intensity(day.contributionCount)
@@ -166,6 +222,15 @@ function ContributionGrid({
             ))}
           </div>
         ))}
+        <div
+          ref={tooltipRef}
+          hidden
+          aria-hidden="true"
+          className="pointer-events-none absolute z-50 whitespace-nowrap rounded-md border border-border bg-card px-2.5 py-2 text-left text-xs text-card-foreground shadow-lg"
+        >
+          <p ref={tooltipDateRef} className="font-medium" />
+          <p ref={tooltipCountRef} className="mt-0.5 text-muted-foreground" />
+        </div>
       </div>
     </div>
   );
