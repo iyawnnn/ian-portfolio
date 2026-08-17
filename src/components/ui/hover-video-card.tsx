@@ -63,6 +63,8 @@ export function HoverVideoCard({ posterSrc, videoSrc, alt }: HoverVideoCardProps
       />
 
       <video
+        aria-hidden="true"
+        tabIndex={-1}
         ref={videoRef}
         src={videoSrc}
         preload="none"

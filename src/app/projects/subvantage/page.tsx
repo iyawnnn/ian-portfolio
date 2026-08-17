@@ -96,6 +96,8 @@ export default function SubVantagePage() {
       {/* --- HERO MEDIA (Video) --- */}
       <div className="aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-secondary/20 shadow-sm">
         <video
+          aria-hidden="true"
+          tabIndex={-1}
           src="/projects/subvantage/subvantage-demo.mp4"
           poster="/projects/subvantage/subvantage-cover.webp"
           autoPlay

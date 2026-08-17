@@ -137,7 +137,7 @@ export default function ExplorePage() {
             size="lg"
             className="rounded-md border border-input bg-secondary/50 shadow-sm transition-all hover:bg-secondary hover:border-foreground/10 active:scale-95"
           >
-            <Link href="/about">
+            <Link href="/about" prefetch={false}>
               <User className="mr-2 h-4 w-4" /> About
             </Link>
           </Button>
@@ -146,7 +146,7 @@ export default function ExplorePage() {
             size="lg"
             className="rounded-md shadow-sm transition-all hover:opacity-90 active:scale-95"
           >
-            <Link href="/contact">
+            <Link href="/contact" prefetch={false}>
               <Mail className="mr-2 h-4 w-4" /> Get in Touch
             </Link>
           </Button>
@@ -160,6 +160,7 @@ export default function ExplorePage() {
           </h2>
           <Link
             href="/projects"
+            prefetch={false}
             className="flex items-center text-xs font-medium text-muted-foreground transition-colors hover:text-primary sm:text-sm"
           >
             <span className="hidden sm:inline">View all projects</span>
@@ -210,7 +211,7 @@ export default function ExplorePage() {
                 variant="default"
                 className="w-fit rounded-md shadow-sm transition-all hover:opacity-90 active:scale-95"
               >
-                <Link href="/blog">View All Articles</Link>
+                <Link href="/blog" prefetch={false}>View All Articles</Link>
               </Button>
             </div>
           </div>
@@ -220,6 +221,7 @@ export default function ExplorePage() {
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
+                prefetch={false}
                 className="group flex flex-1 items-center justify-between p-6 lg:px-8 lg:py-0 transition-colors hover:bg-muted/40 active:bg-muted/60 min-h-[80px]"
               >
                 <div className="flex flex-col gap-1.5 pr-4 py-4 lg:py-6">
@@ -259,7 +261,7 @@ export default function ExplorePage() {
               size="sm"
               className="w-full rounded-md border-input bg-background/50 backdrop-blur-sm shadow-sm transition-all hover:bg-accent hover:text-accent-foreground active:scale-95 md:w-auto md:h-10 md:px-4 md:py-2"
             >
-              <Link href="/stack">View Stack</Link>
+              <Link href="/stack" prefetch={false}>View Stack</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -282,7 +284,7 @@ export default function ExplorePage() {
               size="sm"
               className="w-full rounded-md shadow-sm transition-all hover:opacity-90 active:scale-95 md:w-auto md:h-10 md:px-4 md:py-2"
             >
-              <Link href="/resume">View Resume</Link>
+              <Link href="/resume" prefetch={false}>View Resume</Link>
             </Button>
           </CardFooter>
         </Card>

@@ -99,6 +99,8 @@ export default function GritPage() {
       {/* --- HERO MEDIA (Video) --- */}
       <div className="aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-secondary/20 shadow-sm">
         <video
+          aria-hidden="true"
+          tabIndex={-1}
           src="/projects/grit/grit-demo.mp4"
           poster="/projects/grit/grit-cover.webp"
           autoPlay

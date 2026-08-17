@@ -2,11 +2,6 @@
 
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 type Day = { date: string; contributionCount: number };
 type ContributionWeek = { contributionDays: Day[] };
@@ -45,17 +40,22 @@ function intensity(count: number) {
   return "border-zinc-900 bg-zinc-900 dark:border-white/5 dark:bg-white";
 }
 
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
+const dateLabelCache = new Map<string, string>();
+
 function dateLabel(date: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(`${date}T00:00:00`));
+  const cachedLabel = dateLabelCache.get(date);
+  if (cachedLabel) return cachedLabel;
+
+  const label = dateFormatter.format(new Date(`${date}T00:00:00`));
+  dateLabelCache.set(date, label);
+  return label;
 }
 
-function contributionLabel(day: Day) {
-  return `${dateLabel(day.date)}: ${day.contributionCount} contribution${day.contributionCount === 1 ? "" : "s"}`;
-}
 
 function graphMetrics(width: number) {
   if (width >= 720) return { cellSize: 12, gap: 4 };
@@ -109,12 +109,28 @@ function ContributionGrid({
   label,
   cellSize,
   gap,
+  totalContributions,
 }: {
   weeks: ContributionWeek[];
   label?: string;
   cellSize: number;
   gap: number;
+  totalContributions: number;
 }) {
+  const firstDay = weeks[0]?.contributionDays[0];
+  const lastWeek = weeks.at(-1);
+  const lastDay = lastWeek?.contributionDays.at(-1);
+  const visibleRange =
+    firstDay && lastDay
+      ? dateLabel(firstDay.date) + " through " + dateLabel(lastDay.date)
+      : "the available date range";
+  const accessibleSummary =
+    "GitHub contribution activity: " +
+    totalContributions.toLocaleString() +
+    " contributions in the last year. Showing " +
+    visibleRange +
+    ". Darker squares indicate more contributions.";
+
   return (
     <div>
       {label && (
@@ -125,12 +141,8 @@ function ContributionGrid({
       <div
         className="grid w-full grid-flow-col items-start justify-between"
         style={{ columnGap: gap }}
-        role="grid"
-        aria-label={
-          label
-            ? `GitHub contribution calendar, ${label.toLowerCase()}`
-            : "GitHub contribution calendar"
-        }
+        role="img"
+        aria-label={accessibleSummary}
       >
         {weeks.map((week, weekIndex) => (
           <div
@@ -139,28 +151,18 @@ function ContributionGrid({
             style={{ rowGap: gap }}
           >
             {week.contributionDays.map((day) => (
-              <Tooltip key={day.date}>
-                <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    role="gridcell"
-                    aria-label={contributionLabel(day)}
-                    className={`rounded-[2px] border transition-transform focus-visible:z-10 focus-visible:scale-125 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${intensity(day.contributionCount)}`}
-                    style={{ width: cellSize, height: cellSize }}
-                  />
-                </TooltipTrigger>
-                <TooltipContent
-                  side="top"
-                  sideOffset={8}
-                  className="rounded-md border border-border bg-card px-2.5 py-2 text-left text-xs text-card-foreground shadow-lg"
-                >
-                  <p className="font-medium">{dateLabel(day.date)}</p>
-                  <p className="mt-0.5 text-muted-foreground">
-                    {day.contributionCount} contribution
-                    {day.contributionCount === 1 ? "" : "s"}
-                  </p>
-                </TooltipContent>
-              </Tooltip>
+              <span
+                key={day.date}
+                aria-hidden="true"
+                title={`${dateLabel(day.date)} — ${day.contributionCount} contribution${
+                  day.contributionCount === 1 ? "" : "s"
+                }`}
+                className={
+                  "block rounded-[2px] border transition-transform " +
+                  intensity(day.contributionCount)
+                }
+                style={{ width: cellSize, height: cellSize }}
+              />
             ))}
           </div>
         ))}
@@ -241,7 +243,7 @@ export function GitHubContributionGraph() {
 
       <div ref={containerRef} className="min-w-0 w-full">
         {isLoading && visibleWeekCount > 0 && (
-          <div aria-label="Loading GitHub contributions">
+          <div role="status" aria-label="Loading GitHub contributions">
             {isTruncated && (
               <div className="mb-2 h-3 w-24 animate-pulse rounded bg-muted" />
             )}
@@ -265,11 +267,12 @@ export function GitHubContributionGraph() {
             label={isTruncated ? "Recent activity" : undefined}
             cellSize={cellSize}
             gap={gap}
+            totalContributions={data.totalContributions}
           />
         )}
       </div>
 
-      <div className="mt-4 flex min-w-0 items-center justify-end gap-1 text-[9px] font-mono uppercase tracking-wider text-muted-foreground sm:gap-1.5 sm:text-[10px]">
+      <div aria-hidden="true" className="mt-4 flex min-w-0 items-center justify-end gap-1 text-[9px] font-mono uppercase tracking-wider text-muted-foreground sm:gap-1.5 sm:text-[10px]">
         <span>Less</span>
         {[0, 1, 4, 7, 10].map((count) => (
           <span

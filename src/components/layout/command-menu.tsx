@@ -47,8 +47,8 @@ const ALL_BLOGS = [
   { title: "Better Bacolod", href: "/blog/better-bacolod" },
 ];
 
-export function CommandMenu() {
-  const [open, setOpen] = React.useState(false);
+export function CommandMenu({ initialOpen = false }: { initialOpen?: boolean }) {
+  const [open, setOpen] = React.useState(initialOpen);
   const [searchQuery, setSearchQuery] = React.useState("");
   const router = useRouter();
 

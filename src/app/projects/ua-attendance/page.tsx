@@ -94,6 +94,8 @@ export default function UAAttendancePage() {
 
       <div className="aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-secondary/20 shadow-sm">
         <video
+          aria-hidden="true"
+          tabIndex={-1}
           src="/projects/ua-attendance/ua-attendance-demo.mp4"
           poster="/projects/ua-attendance/ua-attendance-cover.webp"
           autoPlay

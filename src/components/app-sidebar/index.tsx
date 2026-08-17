@@ -108,7 +108,7 @@ function NavSection({
               <Link
                 href={link.href}
                 target={isExternal ? "_blank" : undefined}
-                prefetch={!isExternal ? true : undefined}
+                prefetch={false}
                 className={cn(
                   "group flex items-center rounded-xl py-2.5 text-sm font-medium transition-all duration-200 border",
                   isCollapsed ? "justify-center px-2" : "justify-between px-3",

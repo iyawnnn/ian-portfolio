@@ -96,6 +96,8 @@ export default function MovieLoomPage() {
       {/* --- HERO MEDIA (Video) --- */}
       <div className="aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-secondary/20 shadow-sm">
         <video
+          aria-hidden="true"
+          tabIndex={-1}
           src="/projects/movieloom/movieloom-demo.mp4"
           poster="/projects/movieloom/movieloom-cover.webp"
           autoPlay

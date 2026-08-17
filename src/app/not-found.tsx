@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -16,11 +13,8 @@ export default function NotFound() {
       </div>
 
       <div className="max-w-md w-full text-center relative">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative z-10 space-y-8"
+        <div
+          className="page-enter relative z-10 space-y-8"
         >
           <div className="space-y-2">
             <h1 className="text-sm font-bold uppercase tracking-[0.3em] text-primary">
@@ -47,7 +41,7 @@ export default function NotFound() {
               </Link>
             </Button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </main>
   );

@@ -136,6 +136,60 @@
 }
 
 @layer utilities {
+  @keyframes page-enter {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .page-enter {
+    animation: page-enter 500ms ease-in-out both;
+  }
+
+  @keyframes typewriter-character {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .typewriter-character {
+    animation: typewriter-character 10ms linear both;
+  }
+
+  @keyframes typewriter-cursor {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .typewriter-cursor {
+    animation: typewriter-cursor 1.6s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-enter,
+    .typewriter-character {
+      animation-duration: 1ms;
+      animation-delay: 0ms !important;
+    }
+
+    .typewriter-cursor {
+      animation: none;
+      opacity: 1;
+    }
+  }
   /* FLOAT ANIMATION for MovingDots */
   @keyframes float-up {
     0% {
@@ -217,5 +271,29 @@
     border-radius: 16px;
     background: #666;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@keyframes route-loader-draw {
+  0%, 100% {
+    stroke-dashoffset: 320;
+    opacity: 0;
+  }
+  50% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.route-loader-path {
+  stroke-dasharray: 320;
+  animation: route-loader-draw 2.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-loader-path {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }

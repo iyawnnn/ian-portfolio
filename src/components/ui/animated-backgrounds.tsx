@@ -1,15 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 
 // EFFECT 1: Moving Dots (Good visibility, calm float)
 export const MovingDots = () => {
   const [dots, setDots] = useState<React.CSSProperties[]>([]);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    if (!window.matchMedia("(min-width: 768px)").matches) return;
     // Use requestIdleCallback or a small timeout to let the page finish loading first
     const timer = setTimeout(() => {
       const newDots = new Array(15).fill(null).map(() => ({
@@ -25,8 +23,6 @@ export const MovingDots = () => {
 
     return () => clearTimeout(timer);
   }, []);
-
-  if (!mounted) return null;
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none select-none transform-gpu">

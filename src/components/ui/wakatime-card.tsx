@@ -23,7 +23,7 @@ async function fetchWakaTimeData() {
       total: json.data.human_readable_total,
       language: json.data.languages?.[0]?.name || "Unknown",
     };
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -62,7 +62,7 @@ export async function WakaTimeCard() {
               {data?.total || "0 hrs"}
             </h3>
             <p className="text-sm font-medium text-muted-foreground truncate mt-0.5">Logged</p>
-            <p className="text-[10px] text-muted-foreground/70 truncate mt-1">
+            <p className="text-[10px] text-muted-foreground truncate mt-1">
               Top: {data?.language || "Unknown"}
             </p>
           </div>

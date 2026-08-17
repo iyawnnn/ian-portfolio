@@ -26,9 +26,8 @@ export type SpotifyData = {
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export function SpotifyCardClient({ initialData }: { initialData: SpotifyData }) {
+export function SpotifyCardClient() {
   const { data } = useSWR<SpotifyData>("/api/spotify", fetcher, {
-    fallbackData: initialData,
     refreshInterval: 10000, 
     revalidateOnFocus: true,
   });
@@ -36,26 +35,42 @@ export function SpotifyCardClient({ initialData }: { initialData: SpotifyData })
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (!data?.isPlaying || !data.progressMs || !data.durationMs) {
-      setProgress(0);
-      return;
-    }
+    if (!data?.isPlaying || !data.progressMs || !data.durationMs) return;
 
     let currentProgress = data.progressMs;
     const duration = data.durationMs;
-
-    setProgress((currentProgress / duration) * 100);
+    const initialFrame = requestAnimationFrame(() => {
+      setProgress((currentProgress / duration) * 100);
+    });
 
     const interval = setInterval(() => {
-      currentProgress += 1000;
-      if (currentProgress > duration) {
-        currentProgress = duration;
-      }
+      currentProgress = Math.min(currentProgress + 1000, duration);
       setProgress((currentProgress / duration) * 100);
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      cancelAnimationFrame(initialFrame);
+      clearInterval(interval);
+    };
   }, [data]);
+
+  if (!data) {
+    return (
+      <Card
+        className="flex h-[160px] w-full animate-pulse flex-col border-border/50 bg-card p-6"
+        aria-label="Loading Spotify activity"
+      >
+        <div className="h-3 w-24 rounded bg-muted" />
+        <div className="mt-auto flex items-center gap-4">
+          <div className="size-16 rounded-md bg-muted" />
+          <div className="flex flex-1 flex-col gap-2">
+            <div className="h-4 w-2/3 rounded bg-muted" />
+            <div className="h-3 w-1/2 rounded bg-muted" />
+          </div>
+        </div>
+      </Card>
+    );
+  }
 
   if (!data?.isPlaying) {
     return (
@@ -94,7 +109,7 @@ export function SpotifyCardClient({ initialData }: { initialData: SpotifyData })
         `}</style>
 
         <div className="absolute -right-12 -top-12 opacity-[0.04] group-hover:opacity-[0.12] transition-opacity duration-700 blur-2xl pointer-events-none will-change-[opacity]">
-          <Image src={data.albumImageUrl!} height={200} width={200} quality={10} alt="" />
+          <Image src={data.albumImageUrl!} height={200} width={200} sizes="200px" quality={10} alt="" />
         </div>
 
         <div className="flex justify-between items-start z-10">
@@ -128,7 +143,7 @@ export function SpotifyCardClient({ initialData }: { initialData: SpotifyData })
           <div className="flex flex-col min-w-0 flex-1">
             <h3 className="text-base font-bold text-foreground truncate leading-tight">{data.title}</h3>
             <p className="text-sm font-medium text-muted-foreground truncate mt-0.5">{data.artist}</p>
-            <p className="text-[10px] text-muted-foreground/70 truncate mt-1">{data.album}</p>
+            <p className="text-[10px] text-muted-foreground truncate mt-1">{data.album}</p>
           </div>
 
           <div className="shrink-0 flex items-center justify-center h-8 w-8 rounded-full border border-border/50 bg-secondary group-hover:bg-foreground group-hover:text-background text-foreground transition-colors">
@@ -138,8 +153,8 @@ export function SpotifyCardClient({ initialData }: { initialData: SpotifyData })
 
         <div className="absolute bottom-0 left-0 w-full h-[2px] bg-secondary overflow-hidden">
           <div 
-            className="h-full bg-foreground/80 transition-all duration-1000 ease-linear"
-            style={{ width: `${progress}%` }}
+            className="h-full w-full origin-left bg-foreground/80 transition-transform duration-1000 ease-linear"
+            style={{ transform: "scaleX(" + progress / 100 + ")" }}
           />
         </div>
       </Card>

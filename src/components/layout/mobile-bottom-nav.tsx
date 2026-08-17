@@ -80,7 +80,7 @@ export function MobileBottomNav() {
                 key={link.label}
                 href={link.href}
                 target={link.isExternal ? "_blank" : undefined}
-                prefetch={!link.isExternal ? true : undefined}
+                prefetch={false}
                 className={cn(
                   "snap-center group flex min-w-[5rem] flex-col items-center justify-center gap-1 rounded-lg py-2 px-2 transition-all duration-300",
                   isActive

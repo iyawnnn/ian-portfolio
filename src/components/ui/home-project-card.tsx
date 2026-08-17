@@ -64,6 +64,7 @@ export function HomeProjectCard({
   return (
     <Link
       href={project.link}
+      prefetch={false}
       className="group block h-full"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -79,13 +80,15 @@ export function HomeProjectCard({
             fill
             preload={preloadImage}
             fetchPriority={preloadImage ? "high" : undefined}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1023px) calc((100vw - 5.5rem) / 2), (max-width: 1151px) calc((100vw - 8rem) / 2), 32rem"
             className={`object-cover transition-transform duration-500 group-hover:scale-105 z-10 ${
               isImageLoading ? "opacity-0" : "opacity-100"
             }`}
             onLoad={() => setIsImageLoading(false)}
           />
           <video
+            aria-hidden="true"
+            tabIndex={-1}
             ref={videoRef}
             src={project.video}
             preload="none"

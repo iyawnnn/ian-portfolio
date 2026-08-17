@@ -97,6 +97,8 @@ export default function AcCorePage() {
       {/* --- HERO MEDIA (Video) --- */}
       <div className="aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-secondary/20 shadow-sm">
         <video
+          aria-hidden="true"
+          tabIndex={-1}
           src="/projects/ac-core/accore-demo.mp4"
           poster="/projects/ac-core/accore-cover.webp"
           autoPlay

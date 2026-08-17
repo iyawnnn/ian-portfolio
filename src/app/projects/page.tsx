@@ -250,6 +250,8 @@ function ProjectCard({ project }: { project: (typeof PROJECTS)[0] }) {
           />
 
           <video
+            aria-hidden="true"
+            tabIndex={-1}
             ref={videoRef}
             src={project.video}
             preload="none"
