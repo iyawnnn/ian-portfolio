@@ -12,6 +12,8 @@ import {
   type ReactNode,
 } from "react";
 
+const AUTOMATIC_ROBOT_DELAY_MS = 1500;
+
 const RobotScene = dynamic(() => import("./ai-chat-robot-scene"), {
   ssr: false,
   loading: () => null,
@@ -52,52 +54,42 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
 
   useEffect(() => {
     const query = window.matchMedia("(min-width: 1024px)");
-    let idleId: number | undefined;
-    let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
-    let waitingForLoad = false;
+    let automaticLoadTimer: ReturnType<typeof setTimeout> | undefined;
+    let waitingForWindowLoad = false;
 
-    const cancelDeferredLoad = () => {
-      if (idleId !== undefined && "cancelIdleCallback" in window) {
-        window.cancelIdleCallback(idleId);
-      }
-      clearTimeout(fallbackTimer);
-      if (waitingForLoad) {
-        window.removeEventListener("load", scheduleDeferredLoad);
-        waitingForLoad = false;
-      }
-      idleId = undefined;
-      fallbackTimer = undefined;
-    };
+    const cancelAutomaticLoad = () => {
+      clearTimeout(automaticLoadTimer);
+      automaticLoadTimer = undefined;
 
-    const scheduleIdleLoad = () => {
-      if ("requestIdleCallback" in window) {
-        idleId = window.requestIdleCallback(startRobotLoad);
-      } else {
-        fallbackTimer = setTimeout(startRobotLoad, 1200);
+      if (waitingForWindowLoad) {
+        window.removeEventListener("load", scheduleAutomaticLoad);
+        waitingForWindowLoad = false;
       }
     };
 
-    function scheduleDeferredLoad() {
-      waitingForLoad = false;
+    function scheduleAutomaticLoad() {
+      waitingForWindowLoad = false;
       if (!query.matches) return;
-      scheduleIdleLoad();
+
+      automaticLoadTimer = setTimeout(startRobotLoad, AUTOMATIC_ROBOT_DELAY_MS);
     }
 
     const updateVisibility = () => {
-      cancelDeferredLoad();
+      cancelAutomaticLoad();
       setShowMascot(query.matches);
 
-      if (query.matches) {
-        if (document.readyState === "complete") {
-          scheduleIdleLoad();
-        } else {
-          waitingForLoad = true;
-          window.addEventListener("load", scheduleDeferredLoad, { once: true });
-        }
-      } else {
+      if (!query.matches) {
         setShouldLoadRobot(false);
         setIsModelReady(false);
         setHasModelError(false);
+        return;
+      }
+
+      if (document.readyState === "complete") {
+        scheduleAutomaticLoad();
+      } else {
+        waitingForWindowLoad = true;
+        window.addEventListener("load", scheduleAutomaticLoad, { once: true });
       }
     };
 
@@ -105,7 +97,7 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
     query.addEventListener("change", updateVisibility);
 
     return () => {
-      cancelDeferredLoad();
+      cancelAutomaticLoad();
       query.removeEventListener("change", updateVisibility);
     };
   }, [startRobotLoad]);
@@ -139,6 +131,7 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
   }, []);
 
   const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    startRobotLoad();
     pointerStart.current = { x: event.clientX, y: event.clientY };
     dragged.current = false;
   };
@@ -195,7 +188,7 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
         />
         {shouldLoadRobot && !hasModelError && (
           <span
-            className={`absolute inset-0 transition-opacity duration-500 ${
+            className={`ai-robot-idle-motion absolute inset-0 transition-opacity duration-500 ${
               isModelReady ? "opacity-100" : "opacity-0"
             }`}
           >

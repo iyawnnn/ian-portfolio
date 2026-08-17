@@ -133,7 +133,7 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
     if (!group.current) return;
 
     const time = state.clock.elapsedTime;
-    const breathingScale = reducedMotion ? 0 : Math.sin(time * 1.5) * 0.01;
+
     hoverScale.current = THREE.MathUtils.damp(
       hoverScale.current,
       reducedMotion ? 1 : hovered ? 1.04 : 1,
@@ -146,7 +146,7 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
       5.5,
       delta,
     );
-    const scale = hoverScale.current + breathingScale;
+    const scale = hoverScale.current;
     const smoothness = 1 - Math.exp(-delta * 7);
     group.current.scale.lerp(targetScale.setScalar(scale), smoothness);
 
@@ -155,7 +155,7 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
       eyeMaterialInstance.emissiveIntensity,
       hovered
         ? 1.38
-        : 1.12 + (reducedMotion ? 0 : Math.sin(time * 1.4) * 0.05),
+        : 1.12,
       1 - Math.exp(-delta * 5),
     );
     visorMaterialRef.current.color.lerp(
@@ -226,17 +226,16 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
       delta,
     );
 
-    group.current.position.y =
-      -0.015 + Math.sin(time * 1.35) * 0.038 + hoverLift.current;
+    group.current.position.y = hoverLift.current;
     if (!dragging) {
       group.current.rotation.y = THREE.MathUtils.lerp(
         group.current.rotation.y,
-        Math.sin(time * 0.75) * 0.02 + bodyYaw.current,
+        bodyYaw.current,
         smoothness * 0.35,
       );
       group.current.rotation.z = THREE.MathUtils.lerp(
         group.current.rotation.z,
-        Math.sin(time * 1.0) * 0.02 + bodyLean.current,
+        bodyLean.current,
         smoothness * 0.35,
       );
     }
@@ -255,18 +254,48 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
 export default function AiChatRobotScene({ onReady }: { onReady: () => void }) {
   const [hovered, setHovered] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [isSettling, setIsSettling] = useState(false);
   const reducedMotion = useReducedMotion();
   const isDocumentVisible = useDocumentVisibility();
 
+  const settleTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const beginContinuousRendering = () => {
+    clearTimeout(settleTimer.current);
+    setIsSettling(true);
+  };
+  const finishContinuousRendering = () => {
+    clearTimeout(settleTimer.current);
+    settleTimer.current = setTimeout(() => setIsSettling(false), 900);
+  };
+
+  useEffect(
+    () => () => {
+      clearTimeout(settleTimer.current);
+    },
+    [],
+  );
+
+  const frameloop = !isDocumentVisible
+    ? "never"
+    : hovered || dragging || isSettling
+      ? "always"
+      : "demand";
+
   return (
     <Canvas
-      frameloop={isDocumentVisible ? "always" : "never"}
+      frameloop={frameloop}
       className="size-full"
       camera={{ position: [0, 0, 4.25], fov: 34 }}
       dpr={[1, 1.5]}
       gl={{ alpha: true, antialias: true, powerPreference: "low-power" }}
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
+      onPointerEnter={() => {
+        beginContinuousRendering();
+        setHovered(true);
+      }}
+      onPointerLeave={() => {
+        setHovered(false);
+        if (!dragging) finishContinuousRendering();
+      }}
     >
       <ambientLight intensity={1.8} />
       <directionalLight position={[3, 4, 5]} intensity={2.2} />
@@ -285,8 +314,14 @@ export default function AiChatRobotScene({ onReady }: { onReady: () => void }) {
         maxAzimuthAngle={0.45}
         minPolarAngle={Math.PI / 2 - 0.18}
         maxPolarAngle={Math.PI / 2 + 0.18}
-        onStart={() => setDragging(true)}
-        onEnd={() => setDragging(false)}
+        onStart={() => {
+          beginContinuousRendering();
+          setDragging(true);
+        }}
+        onEnd={() => {
+          setDragging(false);
+          if (!hovered) finishContinuousRendering();
+        }}
       />
     </Canvas>
   );
