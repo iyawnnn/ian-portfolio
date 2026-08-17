@@ -23,6 +23,23 @@ function useReducedMotion() {
   return reducedMotion;
 }
 
+function useDocumentVisibility() {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      setIsVisible(document.visibilityState === "visible");
+    };
+
+    updateVisibility();
+    document.addEventListener("visibilitychange", updateVisibility);
+    return () =>
+      document.removeEventListener("visibilitychange", updateVisibility);
+  }, []);
+
+  return isVisible;
+}
+
 function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean; reducedMotion: boolean; dragging: boolean; onReady: () => void }) {
   const { scene } = useGLTF(MODEL_PATH);
   const { robot, visorMaterial, eyeMaterial, rightArmPivot, rightArmRestPosition } = useMemo(() => {
@@ -239,9 +256,11 @@ export default function AiChatRobotScene({ onReady }: { onReady: () => void }) {
   const [hovered, setHovered] = useState(false);
   const [dragging, setDragging] = useState(false);
   const reducedMotion = useReducedMotion();
+  const isDocumentVisible = useDocumentVisibility();
 
   return (
     <Canvas
+      frameloop={isDocumentVisible ? "always" : "never"}
       className="size-full"
       camera={{ position: [0, 0, 4.25], fov: 34 }}
       dpr={[1, 1.5]}
@@ -272,6 +291,3 @@ export default function AiChatRobotScene({ onReady }: { onReady: () => void }) {
     </Canvas>
   );
 }
-
-// TODO: Keep this path in sync if public/models/ai-robot.glb is replaced.
-useGLTF.preload(MODEL_PATH);

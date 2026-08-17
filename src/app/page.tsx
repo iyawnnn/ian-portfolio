@@ -169,8 +169,12 @@ export default function ExplorePage() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8 items-start">
-          {HOME_PROJECTS.map((project) => (
-            <HomeProjectCard key={project.title} project={project} />
+          {HOME_PROJECTS.map((project, index) => (
+            <HomeProjectCard
+              key={project.title}
+              project={project}
+              preloadImage={index === 0}
+            />
           ))}
         </div>
       </section>

@@ -16,7 +16,13 @@ export interface ProjectData {
   tags: string[];
 }
 
-export function HomeProjectCard({ project }: { project: ProjectData }) {
+export function HomeProjectCard({
+  project,
+  preloadImage = false,
+}: {
+  project: ProjectData;
+  preloadImage?: boolean;
+}) {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
@@ -71,7 +77,8 @@ export function HomeProjectCard({ project }: { project: ProjectData }) {
             src={project.image}
             alt={`Cover preview of ${project.title}`}
             fill
-            priority
+            preload={preloadImage}
+            fetchPriority={preloadImage ? "high" : undefined}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className={`object-cover transition-transform duration-500 group-hover:scale-105 z-10 ${
               isImageLoading ? "opacity-0" : "opacity-100"
