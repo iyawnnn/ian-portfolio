@@ -1,5 +1,6 @@
 "use client";
 
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import useSWR from "swr";
 import {
   Tooltip,
@@ -14,6 +15,8 @@ type Data = {
   weeks: ContributionWeek[];
 };
 type ApiResponse = Data | { error: string };
+
+const FULL_YEAR_WEEK_COUNT = 53;
 
 const fetcher = async (url: string): Promise<Data> => {
   const response = await fetch(url);
@@ -54,12 +57,63 @@ function contributionLabel(day: Day) {
   return `${dateLabel(day.date)}: ${day.contributionCount} contribution${day.contributionCount === 1 ? "" : "s"}`;
 }
 
+function graphMetrics(width: number) {
+  if (width >= 720) return { cellSize: 12, gap: 4 };
+  if (width >= 360) return { cellSize: 10, gap: 4 };
+  return { cellSize: 9, gap: 3 };
+}
+
+function useGraphLayout(totalWeeks: number) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const updateWidth = (width: number) => {
+      const nextWidth = Math.floor(width);
+      setContainerWidth((currentWidth) =>
+        currentWidth === nextWidth ? currentWidth : nextWidth,
+      );
+    };
+
+    updateWidth(element.getBoundingClientRect().width);
+
+    const observer = new ResizeObserver(([entry]) => {
+      updateWidth(entry.contentRect.width);
+    });
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
+  return useMemo(() => {
+    const { cellSize, gap } = graphMetrics(containerWidth);
+    const visibleWeekCount = containerWidth
+      ? Math.max(
+          1,
+          Math.min(
+            totalWeeks,
+            Math.floor((containerWidth + gap) / (cellSize + gap)),
+          ),
+        )
+      : 0;
+
+    return { containerRef, cellSize, gap, visibleWeekCount };
+  }, [containerWidth, totalWeeks]);
+}
+
 function ContributionGrid({
   weeks,
   label,
+  cellSize,
+  gap,
 }: {
   weeks: ContributionWeek[];
   label?: string;
+  cellSize: number;
+  gap: number;
 }) {
   return (
     <div>
@@ -69,7 +123,8 @@ function ContributionGrid({
         </p>
       )}
       <div
-        className="flex w-full items-start justify-between"
+        className="grid w-full grid-flow-col items-start justify-between"
+        style={{ columnGap: gap }}
         role="grid"
         aria-label={
           label
@@ -80,7 +135,8 @@ function ContributionGrid({
         {weeks.map((week, weekIndex) => (
           <div
             key={`${week.contributionDays[0]?.date ?? "week"}-${weekIndex}`}
-            className="grid grid-rows-7 gap-1"
+            className="grid grid-rows-7"
+            style={{ rowGap: gap }}
           >
             {week.contributionDays.map((day) => (
               <Tooltip key={day.date}>
@@ -89,7 +145,8 @@ function ContributionGrid({
                     type="button"
                     role="gridcell"
                     aria-label={contributionLabel(day)}
-                    className={`size-2.5 rounded-[2px] border transition-transform focus-visible:z-10 focus-visible:scale-125 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:size-2.5 lg:size-3 ${intensity(day.contributionCount)}`}
+                    className={`rounded-[2px] border transition-transform focus-visible:z-10 focus-visible:scale-125 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${intensity(day.contributionCount)}`}
+                    style={{ width: cellSize, height: cellSize }}
                   />
                 </TooltipTrigger>
                 <TooltipContent
@@ -112,15 +169,31 @@ function ContributionGrid({
   );
 }
 
-function LoadingGrid({ weeks }: { weeks: number }) {
+function LoadingGrid({
+  weeks,
+  cellSize,
+  gap,
+}: {
+  weeks: number;
+  cellSize: number;
+  gap: number;
+}) {
   return (
-    <div className="flex w-full items-start justify-between animate-pulse">
+    <div
+      className="grid w-full grid-flow-col items-start justify-between animate-pulse"
+      style={{ columnGap: gap }}
+    >
       {Array.from({ length: weeks }, (_, weekIndex) => (
-        <div key={weekIndex} className="grid grid-rows-7 gap-1">
+        <div
+          key={weekIndex}
+          className="grid grid-rows-7"
+          style={{ rowGap: gap }}
+        >
           {Array.from({ length: 7 }, (_, dayIndex) => (
             <span
               key={dayIndex}
-              className="size-2.5 rounded-[2px] bg-muted lg:size-3"
+              className="rounded-[2px] bg-muted"
+              style={{ width: cellSize, height: cellSize }}
             />
           ))}
         </div>
@@ -135,11 +208,16 @@ export function GitHubContributionGraph() {
     fetcher,
     { revalidateOnFocus: false },
   );
+  const totalWeeks = data?.weeks.length ?? FULL_YEAR_WEEK_COUNT;
+  const { containerRef, cellSize, gap, visibleWeekCount } =
+    useGraphLayout(totalWeeks);
+  const isTruncated = visibleWeekCount > 0 && visibleWeekCount < totalWeeks;
+  const visibleWeeks = data?.weeks.slice(-visibleWeekCount) ?? [];
 
   return (
     <section
       aria-labelledby="github-contributions-title"
-      className="overflow-hidden rounded-xl border border-border/50 bg-card p-5 shadow-sm sm:p-6"
+      className="min-w-0 rounded-xl border border-border/50 bg-card p-4 shadow-sm sm:p-6"
     >
       <div className="mb-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
         <div>
@@ -155,48 +233,48 @@ export function GitHubContributionGraph() {
         </div>
         {data && (
           <p className="text-sm font-medium text-muted-foreground">
-            {data.totalContributions.toLocaleString()} contributions in the last year
+            {data.totalContributions.toLocaleString()} contributions in the last
+            year
           </p>
         )}
       </div>
 
-      {isLoading && (
-        <div aria-label="Loading GitHub contributions">
-          <div className="block sm:hidden">
-            <LoadingGrid weeks={20} />
-          </div>
-          <div className="hidden sm:block">
-            <LoadingGrid weeks={53} />
-          </div>
-        </div>
-      )}
-
-      {error && (
-        <div className="flex min-h-24 items-center justify-center rounded-lg border border-dashed border-border/60 bg-muted/20 px-4 text-center text-sm text-muted-foreground">
-          GitHub contributions are temporarily unavailable.
-        </div>
-      )}
-
-      {data && (
-        <>
-          <div className="block sm:hidden">
-            <ContributionGrid
-              weeks={data.weeks.slice(-20)}
-              label="Recent activity"
+      <div ref={containerRef} className="min-w-0 w-full">
+        {isLoading && visibleWeekCount > 0 && (
+          <div aria-label="Loading GitHub contributions">
+            {isTruncated && (
+              <div className="mb-2 h-3 w-24 animate-pulse rounded bg-muted" />
+            )}
+            <LoadingGrid
+              weeks={visibleWeekCount}
+              cellSize={cellSize}
+              gap={gap}
             />
           </div>
-          <div className="hidden sm:block">
-            <ContributionGrid weeks={data.weeks} />
-          </div>
-        </>
-      )}
+        )}
 
-      <div className="mt-4 flex items-center justify-end gap-1.5 text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
+        {error && (
+          <div className="flex min-h-24 items-center justify-center rounded-lg border border-dashed border-border/60 bg-muted/20 px-4 text-center text-sm text-muted-foreground">
+            GitHub contributions are temporarily unavailable.
+          </div>
+        )}
+
+        {data && visibleWeekCount > 0 && (
+          <ContributionGrid
+            weeks={visibleWeeks}
+            label={isTruncated ? "Recent activity" : undefined}
+            cellSize={cellSize}
+            gap={gap}
+          />
+        )}
+      </div>
+
+      <div className="mt-4 flex min-w-0 items-center justify-end gap-1 text-[9px] font-mono uppercase tracking-wider text-muted-foreground sm:gap-1.5 sm:text-[10px]">
         <span>Less</span>
         {[0, 1, 4, 7, 10].map((count) => (
           <span
             key={count}
-            className={`size-2.5 rounded-[2px] border lg:size-3 ${intensity(count)}`}
+            className={`size-2.5 rounded-[2px] border sm:size-3 ${intensity(count)}`}
           />
         ))}
         <span>More</span>
