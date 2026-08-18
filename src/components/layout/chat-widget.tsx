@@ -37,9 +37,10 @@ export function ChatWidget() {
     return () => window.removeEventListener("open-chat", openChat);
   }, [openChat]);
 
-  if (isOpen) {
-    return <ChatPanel onClose={() => setIsOpen(false)} />;
-  }
-
-  return <AiChatRobotButton onClick={openChat} />;
+  return (
+    <>
+      <AiChatRobotButton onClick={openChat} hidden={isOpen} />
+      {isOpen && <ChatPanel onClose={() => setIsOpen(false)} />}
+    </>
+  );
 }

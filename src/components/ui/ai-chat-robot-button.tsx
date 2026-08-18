@@ -12,7 +12,7 @@ import {
   type ReactNode,
 } from "react";
 
-const AUTOMATIC_ROBOT_DELAY_MS = 1500;
+const AUTOMATIC_ROBOT_DELAY_MS = 750;
 
 const RobotScene = dynamic(() => import("./ai-chat-robot-scene"), {
   ssr: false,
@@ -39,9 +39,16 @@ class RobotErrorBoundary extends Component<
   }
 }
 
-export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
+export function AiChatRobotButton({
+  onClick,
+  hidden,
+}: {
+  onClick: () => void;
+  hidden: boolean;
+}) {
   const pointerStart = useRef({ x: 0, y: 0 });
   const dragged = useRef(false);
+  const hasLoadedRobot = useRef(false);
   const [showMascot, setShowMascot] = useState(false);
   const [shouldLoadRobot, setShouldLoadRobot] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
@@ -49,6 +56,7 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
   const [showWhisper, setShowWhisper] = useState(false);
 
   const startRobotLoad = useCallback(() => {
+    if (hasLoadedRobot.current) return;
     setShouldLoadRobot(true);
   }, []);
 
@@ -69,7 +77,7 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
 
     function scheduleAutomaticLoad() {
       waitingForWindowLoad = false;
-      if (!query.matches) return;
+      if (!query.matches || hidden || hasLoadedRobot.current) return;
 
       automaticLoadTimer = setTimeout(startRobotLoad, AUTOMATIC_ROBOT_DELAY_MS);
     }
@@ -85,7 +93,9 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
         return;
       }
 
-      if (document.readyState === "complete") {
+      if (hasLoadedRobot.current) {
+        setShouldLoadRobot(true);
+      } else if (document.readyState === "complete") {
         scheduleAutomaticLoad();
       } else {
         waitingForWindowLoad = true;
@@ -100,10 +110,10 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
       cancelAutomaticLoad();
       query.removeEventListener("change", updateVisibility);
     };
-  }, [startRobotLoad]);
+  }, [hidden, startRobotLoad]);
 
   useEffect(() => {
-    if (!showMascot || !isModelReady) return;
+    if (!showMascot || hidden || !isModelReady) return;
 
     let hideTimer: ReturnType<typeof setTimeout> | undefined;
     const showWhisperBriefly = () => {
@@ -119,9 +129,10 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
       clearTimeout(hideTimer);
       clearInterval(repeatTimer);
     };
-  }, [isModelReady, showMascot]);
+  }, [hidden, isModelReady, showMascot]);
 
   const handleModelReady = useCallback(() => {
+    hasLoadedRobot.current = true;
     setIsModelReady(true);
     setHasModelError(false);
   }, []);
@@ -150,7 +161,12 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
   if (!showMascot) return null;
 
   return (
-    <div className="group fixed isolate right-[max(1rem,env(safe-area-inset-right))] bottom-[max(5rem,calc(env(safe-area-inset-bottom)+1rem))] z-50 overflow-visible lg:right-[max(1.5rem,env(safe-area-inset-right))] lg:bottom-[max(1.5rem,env(safe-area-inset-bottom))]">
+    <div
+      aria-hidden={hidden}
+      className={`group fixed isolate right-[max(1rem,env(safe-area-inset-right))] bottom-[max(5rem,calc(env(safe-area-inset-bottom)+1rem))] z-50 overflow-visible lg:right-[max(1.5rem,env(safe-area-inset-right))] lg:bottom-[max(1.5rem,env(safe-area-inset-bottom))] ${
+        hidden ? "invisible pointer-events-none" : "visible"
+      }`}
+    >
       <span
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/2 z-0 size-[82%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/[0.28] opacity-100 blur-[34px] transition-[transform,background-color,filter,opacity] duration-500 ease-out group-hover:scale-110 group-hover:bg-black/[0.36] group-hover:blur-[38px] group-focus-within:scale-110 group-focus-within:bg-black/[0.36] group-focus-within:blur-[38px] dark:bg-white/[0.18] dark:group-hover:bg-white/[0.24] dark:group-focus-within:bg-white/[0.24] motion-reduce:transition-none"
@@ -193,7 +209,7 @@ export function AiChatRobotButton({ onClick }: { onClick: () => void }) {
             }`}
           >
             <RobotErrorBoundary onError={handleModelError}>
-              <RobotScene onReady={handleModelReady} />
+              <RobotScene onReady={handleModelReady} visible={!hidden} />
             </RobotErrorBoundary>
           </span>
         )}

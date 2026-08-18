@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Bounds, OrbitControls, useGLTF } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 const MODEL_PATH = "/models/ai-robot.glb";
@@ -251,7 +251,23 @@ function Robot({ hovered, reducedMotion, dragging, onReady }: { hovered: boolean
   );
 }
 
-export default function AiChatRobotScene({ onReady }: { onReady: () => void }) {
+function InvalidateWhenShown({ visible }: { visible: boolean }) {
+  const invalidate = useThree((state) => state.invalidate);
+
+  useEffect(() => {
+    if (visible) invalidate();
+  }, [invalidate, visible]);
+
+  return null;
+}
+
+export default function AiChatRobotScene({
+  onReady,
+  visible,
+}: {
+  onReady: () => void;
+  visible: boolean;
+}) {
   const [hovered, setHovered] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [isSettling, setIsSettling] = useState(false);
@@ -275,7 +291,7 @@ export default function AiChatRobotScene({ onReady }: { onReady: () => void }) {
     [],
   );
 
-  const frameloop = !isDocumentVisible
+  const frameloop = !visible || !isDocumentVisible
     ? "never"
     : hovered || dragging || isSettling
       ? "always"
@@ -297,6 +313,7 @@ export default function AiChatRobotScene({ onReady }: { onReady: () => void }) {
         if (!dragging) finishContinuousRendering();
       }}
     >
+      <InvalidateWhenShown visible={visible} />
       <ambientLight intensity={1.8} />
       <directionalLight position={[3, 4, 5]} intensity={2.2} />
       <directionalLight position={[-3, 1, 2]} intensity={0.7} />
