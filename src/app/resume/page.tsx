@@ -118,7 +118,7 @@ export default function ResumePage() {
         </div>
         
         <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
-          Motivated Web Development student actively seeking an internship, freelance engagements, or an entry-level position to design and develop robust web applications using modern full-stack technologies. I am dedicated to delivering efficient software solutions that provide real business value, while advancing my technical expertise within a professional development team to contribute to high-quality and user-centered digital products.
+          Full-Stack Developer and Information Technology student with hands-on experience building web applications, backend services, and production-ready systems using modern technologies. Experienced across frontend and backend development, database design, API development, testing, deployment, and AI-assisted workflows. Open to entry-level software development roles and freelance opportunities where I can contribute to practical, reliable, and user-focused digital products.
         </p>
       </motion.section>
 
@@ -135,20 +135,88 @@ export default function ResumePage() {
           <h2 className="text-xl font-bold tracking-tight">Professional Experience</h2>
         </div>
 
-        <div className="relative border-l-2 border-border/50 ml-3 md:ml-4 space-y-12 pl-8 md:pl-10 py-2">
+        <div className="relative border-l-2 border-border/50 ml-3 md:ml-4 space-y-9 md:space-y-10 pl-8 md:pl-10 py-2">
           
           <div className="relative">
             <span className="absolute -left-[41px] md:-left-[49px] top-1.5 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm" />
 
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
               <h3 className="text-lg md:text-xl font-bold text-foreground">
-                Freelance Full Stack Developer
+                Backend AI Engineer Intern
               </h3>
-              <span className="text-sm font-mono text-muted-foreground bg-secondary/50 px-2 py-0.5 rounded w-fit">
-                2025 - Present
-              </span>
             </div>
-            
+
+            <div className="text-sm font-medium text-primary mb-3">
+              FlyRank AI
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <Badge variant="outline" className="text-[10px] py-0 h-5">TypeScript</Badge>
+              <Badge variant="outline" className="text-[10px] py-0 h-5">Fastify</Badge>
+              <Badge variant="outline" className="text-[10px] py-0 h-5">PostgreSQL</Badge>
+              <Badge variant="outline" className="text-[10px] py-0 h-5">Prisma</Badge>
+              <Badge variant="outline" className="text-[10px] py-0 h-5">Stripe</Badge>
+              <Badge variant="outline" className="text-[10px] py-0 h-5">Zod</Badge>
+              <Badge variant="outline" className="text-[10px] py-0 h-5">Vitest</Badge>
+            </div>
+
+            <ul className="space-y-3 text-muted-foreground text-sm md:text-base leading-relaxed">
+              <li className="flex items-start gap-3">
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
+                <span>
+                  Engineered a TypeScript/Fastify usage metering and billing service for LLM applications, implementing tenant quotas, token tracking, idempotent requests, and micro-cent usage pricing with PostgreSQL.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
+                <span>
+                  Integrated Stripe test-mode billing and webhook processing, with automated tests covering quota enforcement, usage accounting, checkout flows, and billing events.
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="relative">
+            <span className="absolute -left-[41px] md:-left-[49px] top-1.5 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm" />
+
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
+              <h3 className="text-lg md:text-xl font-bold text-foreground">
+                Web Developer Intern
+              </h3>
+            </div>
+
+            <div className="text-sm font-medium text-primary mb-3">
+              Sortr
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <Badge variant="outline" className="text-[10px] py-0 h-5">WordPress</Badge>
+            </div>
+
+            <ul className="space-y-3 text-muted-foreground text-sm md:text-base leading-relaxed">
+              <li className="flex items-start gap-3">
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
+                <span>
+                  Redesigned and optimized WordPress production pages, improving responsive layouts, content structure, technical SEO, image delivery, and overall frontend performance.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
+                <span>
+                  Built an internal IT service desk ticketing system that centralized hardware and software issue reporting, automated ticket routing and status tracking, and gave the IT team a structured workflow for managing support incidents from submission to resolution.
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div className="relative">
+            <span className="absolute -left-[41px] md:-left-[49px] top-1.5 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm" />
+
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
+              <h3 className="text-lg md:text-xl font-bold text-foreground">
+                Freelance Full-Stack Developer
+              </h3>
+            </div>
+
             <div className="text-sm font-medium text-primary mb-3">
               Independent Consultant
             </div>
@@ -158,33 +226,21 @@ export default function ResumePage() {
                 <Badge variant="outline" className="text-[10px] py-0 h-5">React</Badge>
                 <Badge variant="outline" className="text-[10px] py-0 h-5">TypeScript</Badge>
                 <Badge variant="outline" className="text-[10px] py-0 h-5">Node.js</Badge>
+                <Badge variant="outline" className="text-[10px] py-0 h-5">PostgreSQL</Badge>
                 <Badge variant="outline" className="text-[10px] py-0 h-5">MongoDB</Badge>
-                <Badge variant="outline" className="text-[10px] py-0 h-5">Tailwind CSS</Badge>
             </div>
 
             <ul className="space-y-3 text-muted-foreground text-sm md:text-base leading-relaxed">
               <li className="flex items-start gap-3">
                 <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
                 <span>
-                  Architected full-stack operational dashboards for local commercial enterprises, modernizing legacy workflows into responsive digital ecosystems that drastically reduced data retrieval latency.
+                  Built and deployed custom full-stack systems for local businesses and institutional clients, replacing manual workflows with web applications for operations, reporting, attendance, and data management.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
                 <span>
-                  Engineered complex, production-grade web applications for academic clients, successfully delivering projects and technical solutions that resolved specific architectural bottlenecks.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
-                <span>
-                  Designed secure backend infrastructures with strict role-based access controls and custom validation schemas to protect sensitive financial records and operational data from unauthorized access.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
-                <span>
-                  Managed the complete software development lifecycle from initial UI prototyping to cloud deployment, providing technical guidance and logic mentorship to help IT students translate complex requirements into scalable code.
+                  Delivered projects across React/Next.js, Node.js, PostgreSQL, MongoDB, and cloud platforms, handling application architecture, database design, authentication, testing, deployment, and client handoff.
                 </span>
               </li>
             </ul>
