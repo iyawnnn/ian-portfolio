@@ -12,9 +12,12 @@ import {
   type ReactNode,
 } from "react";
 
-const AUTOMATIC_ROBOT_DELAY_MS = 750;
+const ROBOT_PRELOAD_DELAY_MS = 750;
+const ROBOT_MOUNT_DELAY_MS = 1500;
+const ROBOT_MODEL_PATH = "/models/ai-robot.glb";
 
-const RobotScene = dynamic(() => import("./ai-chat-robot-scene"), {
+const loadRobotSceneModule = () => import("./ai-chat-robot-scene");
+const RobotScene = dynamic(loadRobotSceneModule, {
   ssr: false,
   loading: () => null,
 });
@@ -49,25 +52,47 @@ export function AiChatRobotButton({
   const pointerStart = useRef({ x: 0, y: 0 });
   const dragged = useRef(false);
   const hasLoadedRobot = useRef(false);
+  const preloadPromise = useRef<Promise<void> | null>(null);
   const [showMascot, setShowMascot] = useState(false);
   const [shouldLoadRobot, setShouldLoadRobot] = useState(false);
   const [isModelReady, setIsModelReady] = useState(false);
   const [hasModelError, setHasModelError] = useState(false);
   const [showWhisper, setShowWhisper] = useState(false);
 
+  const preloadRobot = useCallback(() => {
+    if (!preloadPromise.current) {
+      preloadPromise.current = Promise.all([
+        loadRobotSceneModule(),
+        fetch(ROBOT_MODEL_PATH, { cache: "force-cache" }).then((response) => {
+          if (!response.ok) {
+            throw new Error(`Unable to preload robot model: ${response.status}`);
+          }
+          return response.arrayBuffer();
+        }),
+      ]).then(() => undefined);
+    }
+
+    return preloadPromise.current;
+  }, []);
+
   const startRobotLoad = useCallback(() => {
     if (hasLoadedRobot.current) return;
-    setShouldLoadRobot(true);
-  }, []);
+    void preloadRobot()
+      .catch(() => undefined)
+      .finally(() => setShouldLoadRobot(true));
+  }, [preloadRobot]);
 
   useEffect(() => {
     const query = window.matchMedia("(min-width: 1024px)");
-    let automaticLoadTimer: ReturnType<typeof setTimeout> | undefined;
+    let preloadTimer: ReturnType<typeof setTimeout> | undefined;
+    let mountTimer: ReturnType<typeof setTimeout> | undefined;
     let waitingForWindowLoad = false;
 
     const cancelAutomaticLoad = () => {
-      clearTimeout(automaticLoadTimer);
-      automaticLoadTimer = undefined;
+      clearTimeout(preloadTimer);
+      clearTimeout(mountTimer);
+      preloadTimer = undefined;
+      mountTimer = undefined;
 
       if (waitingForWindowLoad) {
         window.removeEventListener("load", scheduleAutomaticLoad);
@@ -79,7 +104,10 @@ export function AiChatRobotButton({
       waitingForWindowLoad = false;
       if (!query.matches || hidden || hasLoadedRobot.current) return;
 
-      automaticLoadTimer = setTimeout(startRobotLoad, AUTOMATIC_ROBOT_DELAY_MS);
+      preloadTimer = setTimeout(() => {
+        void preloadRobot().catch(() => undefined);
+      }, ROBOT_PRELOAD_DELAY_MS);
+      mountTimer = setTimeout(startRobotLoad, ROBOT_MOUNT_DELAY_MS);
     }
 
     const updateVisibility = () => {
@@ -110,7 +138,7 @@ export function AiChatRobotButton({
       cancelAutomaticLoad();
       query.removeEventListener("change", updateVisibility);
     };
-  }, [hidden, startRobotLoad]);
+  }, [hidden, preloadRobot, startRobotLoad]);
 
   useEffect(() => {
     if (!showMascot || hidden || !isModelReady) return;

@@ -7,6 +7,11 @@ import { Ratelimit } from "@upstash/ratelimit";
 export const runtime = "edge";
 export const maxDuration = 30;
 
+const PRIMARY_MODEL = "openai/gpt-oss-120b";
+const FALLBACK_MODEL = "qwen/qwen3.6-27b";
+const CHAT_UNAVAILABLE_MESSAGE =
+  "I am currently experiencing an unusually high volume of messages. If you need an immediate response, please feel free to reach out directly through my contact page.";
+
 // Initialize explicitly to guarantee the key is read
 const groq = createGroq({
   apiKey: process.env.GROQ_API_KEY || "",
@@ -23,13 +28,31 @@ const ratelimit = new Ratelimit({
   analytics: true,
 });
 
+function logGroqError(model: string, error: unknown) {
+  const details: Record<string, unknown> = { model };
+
+  if (error instanceof Error) {
+    details.name = error.name;
+    details.message = error.message;
+  } else {
+    details.message = "Unknown Groq error";
+  }
+
+  if (typeof error === "object" && error !== null) {
+    if ("statusCode" in error) details.statusCode = error.statusCode;
+    if ("isRetryable" in error) details.isRetryable = error.isRetryable;
+  }
+
+  console.error("Groq chat request failed", details);
+}
+
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for") || "anonymous";
 
   const { success } = await ratelimit.limit(ip);
   if (!success) {
     return new Response(
-      "I am currently experiencing an unusually high volume of messages. If you need an immediate response, please feel free to reach out directly through my contact page.",
+      CHAT_UNAVAILABLE_MESSAGE,
       {
         status: 429,
       },
@@ -58,32 +81,30 @@ export async function POST(req: Request) {
   const dynamicSystemPrompt = buildDynamicPrompt(latestMessage);
 
   try {
-    // CHANGE THIS TO 8B FOR STABLE TESTING
-    // It has a much higher token limit and is less likely to fail
     const result = await streamText({
-      model: groq("llama-3.1-8b-instant"),
+      model: groq(PRIMARY_MODEL),
       system: dynamicSystemPrompt,
       messages,
+      onError: ({ error }) => logGroqError(PRIMARY_MODEL, error),
     });
 
     return result.toTextStreamResponse();
-  } catch (primaryError: any) {
-    console.warn("Primary model failed, falling back to 70B (if available)...");
+  } catch (primaryError: unknown) {
+    logGroqError(PRIMARY_MODEL, primaryError);
+    console.warn(`Falling back to Groq model ${FALLBACK_MODEL}`);
 
     try {
       const fallbackResult = await streamText({
-        model: groq("llama-3.3-70b-versatile"),
+        model: groq(FALLBACK_MODEL),
         system: dynamicSystemPrompt,
         messages,
+        onError: ({ error }) => logGroqError(FALLBACK_MODEL, error),
       });
 
       return fallbackResult.toTextStreamResponse();
-    } catch (fallbackError: any) {
-      // THIS IS WHERE YOUR NEW UI MESSAGE TRIGGERS
-      return new Response(
-        "I am currently experiencing an unusually high volume of messages. If you need an immediate response, please feel free to reach out directly through my contact page.",
-        { status: 503 },
-      );
+    } catch (fallbackError: unknown) {
+      logGroqError(FALLBACK_MODEL, fallbackError);
+      return new Response(CHAT_UNAVAILABLE_MESSAGE, { status: 503 });
     }
   }
 }
