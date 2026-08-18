@@ -3,14 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Send,
-  Mail,
-  Loader2,
-  CheckCircle2,
+  PaperPlaneTilt as Send,
+  Envelope as Mail,
+  CircleNotch as Loader2,
+  CheckCircle as CheckCircle2,
   Copy,
   Check,
   Clock,
-} from "lucide-react";
+} from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";

@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
-import { LoaderCircle } from "lucide-react";
-import { AiChatRobotButton } from "@/components/ui/ai-chat-robot-button";
+import { CircleNotch as LoaderCircle } from "@phosphor-icons/react/ssr";
+import { AiChatLauncher } from "@/components/ui/ai-chat-launcher";
 
 const ChatPanel = dynamic(
   () => import("./chat-panel").then((module) => module.ChatPanel),
@@ -39,7 +39,7 @@ export function ChatWidget() {
 
   return (
     <>
-      <AiChatRobotButton onClick={openChat} hidden={isOpen} />
+      <AiChatLauncher onClick={openChat} hidden={isOpen} />
       {isOpen && <ChatPanel onClose={() => setIsOpen(false)} />}
     </>
   );

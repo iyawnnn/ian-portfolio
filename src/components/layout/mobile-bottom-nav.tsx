@@ -2,17 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Linkedin, Github } from "lucide-react";
 import {
-  Home,
+  House as Home,
   User,
   Briefcase,
-  CodeXml,
+  Code as CodeXml,
   FileText,
-  Mail,
+  Envelope as Mail,
   BookOpen,
-  Linkedin,
-  Github,
-} from "lucide-react";
+} from "@phosphor-icons/react/ssr";
 import { cn } from "@/lib/utils";
 
 // --- CUSTOM ICONS ---

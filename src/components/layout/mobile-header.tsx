@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-import { Bot, Sun, Moon, Search } from "lucide-react";
+import { Robot as Bot, Sun, Moon, MagnifyingGlass as Search } from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/button";
 
 export function MobileHeader() {

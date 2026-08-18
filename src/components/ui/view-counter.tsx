@@ -1,5 +1,5 @@
 import { redis } from "@/lib/redis";
-import { Eye } from "lucide-react";
+import { Eye } from "@phosphor-icons/react/ssr";
 import { unstable_cache } from "next/cache";
 
 export async function ViewCounter({ slug }: { slug: string }) {

@@ -7,13 +7,13 @@ import { motion } from "framer-motion";
 import {
   Briefcase,
   GraduationCap,
-  Award,
+  Medal as Award,
   MapPin,
-  Mail,
+  Envelope as Mail,
   User,
   Eye,
   ArrowUpRight,
-} from "lucide-react";
+} from "@phosphor-icons/react/ssr";
 import { Badge } from "@/components/ui/badge";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 

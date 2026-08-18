@@ -4,7 +4,7 @@ import { getPostBySlug, getAllPostsMeta } from "@/lib/mdx";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "@phosphor-icons/react/ssr";
 import { CustomLink } from "@/components/mdx/preview-link";
 import { ViewCounter } from "@/components/ui/view-counter";
 import { ShareButtons } from "@/components/ui/share-buttons";

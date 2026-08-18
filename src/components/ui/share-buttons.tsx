@@ -1,6 +1,7 @@
 "use client";
 
-import { Twitter, Linkedin, Link as LinkIcon, Check } from "lucide-react";
+import { Twitter, Linkedin } from "lucide-react";
+import { Link as LinkIcon, Check } from "@phosphor-icons/react/ssr";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 

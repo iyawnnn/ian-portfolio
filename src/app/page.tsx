@@ -1,6 +1,13 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { CodeXml, ArrowRight, FileText, Mail, User, BookOpen } from "lucide-react";
+import {
+  Code as CodeXml,
+  ArrowRight,
+  FileText,
+  Envelope as Mail,
+  User,
+  BookOpen,
+} from "@phosphor-icons/react/ssr";
 
 import { Button } from "@/components/ui/button";
 import {
