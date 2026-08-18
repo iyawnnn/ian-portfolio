@@ -2,21 +2,21 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { Github } from "lucide-react";
 import {
   ArrowLeft,
-  ExternalLink,
-  Github,
-  Layers,
+  ArrowSquareOut as ExternalLink,
+  Stack as Layers,
   Briefcase,
   Cpu,
   Globe,
   Layout,
-  Rocket,
-  TrendingUp,
+  RocketLaunch as Rocket,
+  TrendUp as TrendingUp,
   Shield,
   Database,
-  TestTube,
-} from "lucide-react";
+  Flask as TestTube,
+} from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

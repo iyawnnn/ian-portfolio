@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Music, ArrowUpRight, Disc3 } from "lucide-react";
+import { MusicNote as Music, ArrowUpRight, Disc as Disc3 } from "@phosphor-icons/react/ssr";
 import { Card } from "@/components/ui/card";
 import useSWR from "swr";
 

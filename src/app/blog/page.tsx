@@ -2,7 +2,7 @@ export const revalidate = 60;
 
 import Link from "next/link";
 import { Suspense } from "react";
-import { ArrowRight, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Calendar, CaretLeft as ChevronLeft, CaretRight as ChevronRight } from "@phosphor-icons/react/ssr";
 import { getAllPostsMeta, PostMeta } from "@/lib/mdx";
 import { ViewCounter } from "@/components/ui/view-counter";
 

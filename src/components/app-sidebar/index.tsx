@@ -6,22 +6,21 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { FaTiktok } from "react-icons/fa6";
+import { Linkedin, Github } from "lucide-react";
 import {
-  Home,
+  House as Home,
   User,
   Briefcase,
-  CodeXml,
+  Code as CodeXml,
   FileText,
-  Mail,
+  Envelope as Mail,
   BookOpen,
-  Linkedin,
-  Github,
   Sun,
   Moon,
   ArrowUpRight,
-  ChevronLeft,
-  Search,
-} from "lucide-react";
+  CaretLeft as ChevronLeft,
+  MagnifyingGlass as Search,
+} from "@phosphor-icons/react/ssr";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";

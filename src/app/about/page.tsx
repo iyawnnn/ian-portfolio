@@ -10,16 +10,16 @@ import {
   ArrowRight,
   Target,
   Lightbulb,
-  RefreshCw,
+  ArrowClockwise as RefreshCw,
   Clock,
-  SearchCheck,
-  Code2,
-  Rocket,
-  Music,
-  Plane,
+  MagnifyingGlass as SearchCheck,
+  Code as Code2,
+  RocketLaunch as Rocket,
+  MusicNote as Music,
+  AirplaneTilt as Plane,
   Monitor,
-  Zap,
-} from "lucide-react";
+  Lightning as Zap,
+} from "@phosphor-icons/react/ssr";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";

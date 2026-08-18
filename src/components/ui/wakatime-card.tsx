@@ -1,5 +1,5 @@
 import React from "react";
-import { Terminal, CodeXml, ArrowUpRight } from "lucide-react";
+import { Terminal, Code as CodeXml, ArrowUpRight } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 

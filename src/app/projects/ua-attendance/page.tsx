@@ -2,22 +2,22 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
+import { Github } from "lucide-react";
 import {
   ArrowLeft,
-  ExternalLink,
-  Github,
-  Layers,
+  ArrowSquareOut as ExternalLink,
+  Stack as Layers,
   Briefcase,
   Cpu,
   Globe,
   Layout,
-  Rocket,
+  RocketLaunch as Rocket,
   MapPin,
   ShieldCheck,
   Key,
   Users,
-  Fingerprint
-} from "lucide-react";
+  Fingerprint,
+} from "@phosphor-icons/react/ssr";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

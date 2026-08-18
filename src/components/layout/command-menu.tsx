@@ -2,19 +2,18 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import { Github, Linkedin } from "lucide-react";
 import {
   User,
-  Home,
+  House as Home,
   Briefcase,
-  CodeXml,
+  Code as CodeXml,
   BookOpen,
-  Mail,
-  Github,
-  Linkedin,
+  Envelope as Mail,
   FileText,
-  FolderDot,
-  PenTool
-} from "lucide-react";
+  FolderSimple as FolderDot,
+  PenNib as PenTool,
+} from "@phosphor-icons/react/ssr";
 
 import {
   CommandDialog,

@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Github } from "lucide-react";
+import { Github } from "lucide-react";
+import { ArrowUpRight } from "@phosphor-icons/react/ssr";
 import { CustomLink } from "@/components/mdx/preview-link";
 import {
   Tooltip,
