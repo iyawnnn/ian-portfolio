@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "University of Assumption Laboratory Attendance - Cryptographic Tracking Platform | Ian Macabulos",
+  title: "UA LabSign — Laboratory Attendance System | Ian Macabulos",
   description:
-    "A zero-trust educational platform for the University of Assumption featuring browser geolocation APIs and Elliptic Curve Digital Signature Algorithm (ECDSA) to eliminate proxy attendance fraud.",
+    "A zero-trust web and mobile laboratory attendance system using device-bound ECDSA P-256 signatures, instant geofencing, and role-based academic workflows.",
   alternates: {
     canonical: "/projects/ua-attendance",
   },
   openGraph: {
-    title: "UA Laboratory Attendance - Cryptographic Tracking Platform | Ian Macabulos",
+    title: "UA LabSign — Laboratory Attendance System | Ian Macabulos",
     description:
-      "A zero-trust educational platform for the University of Assumption featuring browser geolocation APIs and Elliptic Curve Digital Signature Algorithm (ECDSA) to eliminate proxy attendance fraud.",
+      "A zero-trust web and mobile laboratory attendance system using device-bound ECDSA P-256 signatures, instant geofencing, and role-based academic workflows.",
     siteName: "Ian Macabulos Portfolio",
     type: "website",
   },

@@ -18,13 +18,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const PROJECTS = [
   {
-    title: "University of Assumption Laboratory Attendance",
+    title: "UA LabSign — Laboratory Attendance System",
     description:
-      "A zero-trust educational platform that eliminates proxy attendance fraud by utilizing strict browser geolocation APIs and Elliptic Curve Digital Signature Algorithm (ECDSA) cryptographic verification.",
+      "A zero-trust web and mobile laboratory attendance platform combining device-bound cryptographic signatures, instant geofencing, and role-based academic workflows.",
     link: "/projects/ua-attendance",
     image: "/projects/ua-attendance/ua-attendance-cover.webp",
     video: "/projects/ua-attendance/ua-attendance-demo.mp4",
-    tags: ["Next.js 15", "Aiven MySQL", "ECDSA", "Geolib"],
+    tags: ["Next.js", "PostgreSQL", "React Native", "Expo"],
   },
   {
     title:
