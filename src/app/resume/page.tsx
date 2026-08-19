@@ -13,29 +13,15 @@ import {
   User,
   Eye,
   ArrowUpRight,
+  Code,
+  Stack,
 } from "@phosphor-icons/react/ssr";
 import { Badge } from "@/components/ui/badge";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 const CERTIFICATIONS = [
   {
-    name: "AWS Academy Graduate - Cloud Foundations",
-    org: "Amazon Web Services",
-    icon: "/icons/aws.webp",
-    imageClass: "p-2",
-    date: "Apr 2026",
-    link: "https://www.credly.com/badges/96846437-3bb4-48cd-95f2-a9b4540fb83e/public_url",
-  },
-  {
-    name: "Back End Development and APIs",
-    org: "freeCodeCamp",
-    icon: "/icons/freecodecamp.webp",
-    imageClass: "p-2",
-    date: "Sep 2025",
-    link: "https://www.freecodecamp.org/certification/iyawn/back-end-development-and-apis",
-  },
-  {
-    name: "CompTIA IT Fundamentals+ (ITF+)",
+    name: "CompTIA IT Fundamentals (ITF+)",
     org: "CompTIA",
     icon: "/icons/comptia-white.webp",
     imageClass: "",
@@ -43,12 +29,12 @@ const CERTIFICATIONS = [
     link: "https://www.credly.com/badges/82755364-a4a7-4272-a446-2d7d07662f48/linked_in_profile",
   },
   {
-    name: "Legacy JavaScript Algorithms and Data Structures",
-    org: "freeCodeCamp",
-    icon: "/icons/freecodecamp.webp",
+    name: "AWS Cloud Foundations",
+    org: "AWS Academy",
+    icon: "/icons/aws.webp",
     imageClass: "p-2",
-    date: "Mar 2025",
-    link: "https://www.freecodecamp.org/certification/iyawn/javascript-algorithms-and-data-structures",
+    date: "Apr 2026",
+    link: "https://www.credly.com/badges/96846437-3bb4-48cd-95f2-a9b4540fb83e/public_url",
   },
   {
     name: "Responsive Web Design",
@@ -57,6 +43,22 @@ const CERTIFICATIONS = [
     imageClass: "p-2",
     date: "Sep 2024",
     link: "https://www.freecodecamp.org/certification/iyawn/responsive-web-design",
+  },
+  {
+    name: "JavaScript Algorithms",
+    org: "freeCodeCamp",
+    icon: "/icons/freecodecamp.webp",
+    imageClass: "p-2",
+    date: "Mar 2025",
+    link: "https://www.freecodecamp.org/certification/iyawn/javascript-algorithms-and-data-structures",
+  },
+  {
+    name: "Back End Development",
+    org: "freeCodeCamp",
+    icon: "/icons/freecodecamp.webp",
+    imageClass: "p-2",
+    date: "Sep 2025",
+    link: "https://www.freecodecamp.org/certification/iyawn/back-end-development-and-apis",
   },
 ];
 
@@ -80,7 +82,7 @@ export default function ResumePage() {
           <div className="flex flex-wrap justify-center md:justify-start items-center gap-3 sm:gap-4 text-sm text-muted-foreground/80">
             <div className="flex items-center gap-1.5">
               <MapPin className="w-4 h-4 text-primary" />
-              <span>CSFP, Pampanga</span>
+              <span>Pampanga, Philippines</span>
             </div>
             <div className="hidden sm:block text-border">|</div>
             <div className="flex items-center gap-1.5">
@@ -114,7 +116,7 @@ export default function ResumePage() {
           <div className="p-2 bg-primary/10 rounded-md text-primary">
             <User className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold tracking-tight">Career Objective</h2>
+          <h2 className="text-xl font-bold tracking-tight">Professional Summary</h2>
         </div>
         
         <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
@@ -132,7 +134,7 @@ export default function ResumePage() {
           <div className="p-2 bg-primary/10 rounded-md text-primary">
             <Briefcase className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold tracking-tight">Professional Experience</h2>
+          <h2 className="text-xl font-bold tracking-tight">Work Experience</h2>
         </div>
 
         <div className="relative border-l-2 border-border/50 ml-3 md:ml-4 space-y-9 md:space-y-10 pl-8 md:pl-10 py-2">
@@ -150,15 +152,6 @@ export default function ResumePage() {
               FlyRank AI
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-              <Badge variant="outline" className="text-[10px] py-0 h-5">TypeScript</Badge>
-              <Badge variant="outline" className="text-[10px] py-0 h-5">Fastify</Badge>
-              <Badge variant="outline" className="text-[10px] py-0 h-5">PostgreSQL</Badge>
-              <Badge variant="outline" className="text-[10px] py-0 h-5">Prisma</Badge>
-              <Badge variant="outline" className="text-[10px] py-0 h-5">Stripe</Badge>
-              <Badge variant="outline" className="text-[10px] py-0 h-5">Zod</Badge>
-              <Badge variant="outline" className="text-[10px] py-0 h-5">Vitest</Badge>
-            </div>
 
             <ul className="space-y-3 text-muted-foreground text-sm md:text-base leading-relaxed">
               <li className="flex items-start gap-3">
@@ -181,7 +174,7 @@ export default function ResumePage() {
 
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
               <h3 className="text-lg md:text-xl font-bold text-foreground">
-                Web Developer Intern
+                Full-Stack Web Developer Intern
               </h3>
             </div>
 
@@ -189,21 +182,18 @@ export default function ResumePage() {
               Sortr
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-              <Badge variant="outline" className="text-[10px] py-0 h-5">WordPress</Badge>
-            </div>
 
             <ul className="space-y-3 text-muted-foreground text-sm md:text-base leading-relaxed">
               <li className="flex items-start gap-3">
                 <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
                 <span>
-                  Redesigned and optimized WordPress production pages, improving responsive layouts, content structure, technical SEO, image delivery, and overall frontend performance.
+                  Built an internal IT service desk ticketing system for 50+ employees within the company domain, centralizing hardware and software issue reporting, automating ticket routing and status tracking, and providing the IT team with a structured support workflow from submission to resolution.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
                 <span>
-                  Built an internal IT service desk ticketing system that centralized hardware and software issue reporting, automated ticket routing and status tracking, and gave the IT team a structured workflow for managing support incidents from submission to resolution.
+                  Redesigned and optimized WordPress production pages, improving responsive layouts, content structure, technical SEO, image delivery, and overall frontend performance.
                 </span>
               </li>
             </ul>
@@ -217,30 +207,18 @@ export default function ResumePage() {
               </h3>
             </div>
 
-            <div className="text-sm font-medium text-primary mb-3">
-              Independent Consultant
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-                <Badge variant="outline" className="text-[10px] py-0 h-5">Next.js</Badge>
-                <Badge variant="outline" className="text-[10px] py-0 h-5">React</Badge>
-                <Badge variant="outline" className="text-[10px] py-0 h-5">TypeScript</Badge>
-                <Badge variant="outline" className="text-[10px] py-0 h-5">Node.js</Badge>
-                <Badge variant="outline" className="text-[10px] py-0 h-5">PostgreSQL</Badge>
-                <Badge variant="outline" className="text-[10px] py-0 h-5">MongoDB</Badge>
-            </div>
 
             <ul className="space-y-3 text-muted-foreground text-sm md:text-base leading-relaxed">
               <li className="flex items-start gap-3">
                 <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
                 <span>
-                  Built and deployed custom full-stack systems for local businesses and institutional clients, replacing manual workflows with web applications for operations, reporting, attendance, and data management.
+                  Built and deployed custom full-stack systems for local businesses and academic clients, replacing manual workflows with web applications for attendance, operations, reporting, and data management.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary/40 shrink-0" />
                 <span>
-                  Delivered projects across React/Next.js, Node.js, PostgreSQL, MongoDB, and cloud platforms, handling application architecture, database design, authentication, testing, deployment, and client handoff.
+                  Managed projects end to end—from requirements gathering and system architecture to database design, authentication, testing, deployment, and client handoff—delivering solutions used by dozens to hundreds of users across different academic and business workflows.
                 </span>
               </li>
             </ul>
@@ -269,22 +247,19 @@ export default function ResumePage() {
                   Holy Angel University
                 </h3>
                 <p className="text-muted-foreground text-sm md:text-base">
-                  Bachelor of Science in Information Technology
+                  Bachelor of Science in Information Technology, Major in Web Development
                 </p>
               </div>
               <Badge variant="secondary" className="w-fit h-fit py-1">
-                2023 - Present
+                2023 – Expected Graduation: 2027
               </Badge>
             </div>
 
             <div className="flex flex-col gap-2">
-              <p className="text-sm font-medium text-foreground">
-                Major in Web Development
-              </p>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Award className="w-4 h-4 text-primary" />
                 <span>
-                  Consistent Dean&apos;s and President&apos;s Lister, A.Y. 2023 to 2026
+                  Academic Honors: Consistent Dean’s and President’s Lister, A.Y. 2023-2026
                 </span>
               </div>
             </div>
@@ -302,7 +277,7 @@ export default function ResumePage() {
           <div className="p-2 bg-primary/10 rounded-md text-primary">
             <Award className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold tracking-tight">Certifications</h2>
+          <h2 className="text-xl font-bold tracking-tight">Certifications &amp; Training</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
