@@ -74,7 +74,7 @@ export default function ResumePage() {
       >
         <div className="flex flex-col items-center md:items-start space-y-4 w-full md:w-auto">
           <div>
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground lg:text-6xl">
+            <h1 className="text-4xl md:text-5xl font-[650] tracking-[-0.025em] text-foreground lg:text-6xl">
               Ian Macabulos
             </h1>
           </div>
@@ -116,7 +116,7 @@ export default function ResumePage() {
           <div className="p-2 bg-primary/10 rounded-md text-primary">
             <User className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold tracking-tight">Professional Summary</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.015em]">Professional Summary</h2>
         </div>
         
         <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
@@ -134,7 +134,7 @@ export default function ResumePage() {
           <div className="p-2 bg-primary/10 rounded-md text-primary">
             <Briefcase className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold tracking-tight">Work Experience</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.015em]">Work Experience</h2>
         </div>
 
         <div className="relative border-l-2 border-border/50 ml-3 md:ml-4 space-y-9 md:space-y-10 pl-8 md:pl-10 py-2">
@@ -143,7 +143,7 @@ export default function ResumePage() {
             <span className="absolute -left-[41px] md:-left-[49px] top-1.5 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm" />
 
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
-              <h3 className="text-lg md:text-xl font-bold text-foreground">
+              <h3 className="text-lg md:text-xl font-semibold text-foreground">
                 Backend AI Engineer Intern
               </h3>
             </div>
@@ -173,7 +173,7 @@ export default function ResumePage() {
             <span className="absolute -left-[41px] md:-left-[49px] top-1.5 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm" />
 
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
-              <h3 className="text-lg md:text-xl font-bold text-foreground">
+              <h3 className="text-lg md:text-xl font-semibold text-foreground">
                 Full-Stack Web Developer Intern
               </h3>
             </div>
@@ -202,7 +202,7 @@ export default function ResumePage() {
             <span className="absolute -left-[41px] md:-left-[49px] top-1.5 h-5 w-5 rounded-full border-4 border-background bg-primary shadow-sm" />
 
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
-              <h3 className="text-lg md:text-xl font-bold text-foreground">
+              <h3 className="text-lg md:text-xl font-semibold text-foreground">
                 Freelance Full-Stack Developer
               </h3>
             </div>
@@ -236,17 +236,17 @@ export default function ResumePage() {
           <div className="p-2 bg-primary/10 rounded-md text-primary">
             <GraduationCap className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold tracking-tight">Education</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.015em]">Education</h2>
         </div>
 
         <div className="space-y-6">
           <div className="group rounded-xl border border-border/50 bg-card p-6 transition-all hover:border-primary/30 hover:shadow-sm">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-foreground">
+                <h3 className="text-lg md:text-xl font-semibold text-foreground">
                   Holy Angel University
                 </h3>
-                <p className="text-muted-foreground text-sm md:text-base">
+                <p className="text-muted-foreground text-sm md:text-base font-medium">
                   Bachelor of Science in Information Technology, Major in Web Development
                 </p>
               </div>
@@ -277,7 +277,7 @@ export default function ResumePage() {
           <div className="p-2 bg-primary/10 rounded-md text-primary">
             <Award className="w-5 h-5" />
           </div>
-          <h2 className="text-xl font-bold tracking-tight">Certifications &amp; Training</h2>
+          <h2 className="text-xl font-semibold tracking-[-0.015em]">Certifications &amp; Training</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

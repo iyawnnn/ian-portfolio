@@ -93,7 +93,7 @@ function NavSection({
   return (
     <section className="w-full">
       {!isCollapsed && (
-        <h2 className="mb-3 px-3 text-[10px] font-bold uppercase text-sidebar-foreground/50 transition-opacity duration-300 tracking-widest">
+        <h2 className="mb-3 px-3 text-[10px] font-semibold uppercase text-sidebar-foreground/50 transition-opacity duration-300 tracking-widest">
           {title}
         </h2>
       )}
@@ -112,7 +112,7 @@ function NavSection({
                   "group flex items-center rounded-xl py-2.5 text-sm font-medium transition-all duration-200 border",
                   isCollapsed ? "justify-center px-2" : "justify-between px-3",
                   isActive
-                    ? "bg-sidebar-accent border-sidebar-border/50 text-sidebar-foreground shadow-sm"
+                    ? "bg-sidebar-accent border-sidebar-border/50 text-sidebar-foreground shadow-sm font-[550]"
                     : "border-transparent text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
                 )}
               >
@@ -154,7 +154,7 @@ function NavSection({
                     className={cn(
                       "flex h-5 w-5 items-center justify-center rounded border text-[10px] transition-all duration-200",
                       isActive
-                        ? "border-sidebar-border bg-background shadow-sm text-foreground font-semibold"
+                        ? "border-sidebar-border bg-background shadow-sm text-foreground font-medium"
                         : "border-sidebar-border/60 bg-sidebar-accent/30 text-muted-foreground group-hover:border-sidebar-border/80 group-hover:bg-background group-hover:text-foreground group-hover:shadow-sm font-medium",
                     )}
                   >
@@ -266,10 +266,10 @@ export function AppSidebar() {
               : "w-auto opacity-100 visible",
           )}
         >
-          <h1 className="truncate text-base font-bold leading-none tracking-tight">
+          <h1 className="truncate text-base font-semibold leading-none tracking-[-0.01em]">
             Ian Macabulos
           </h1>
-          <p className="whitespace-nowrap text-[12px] font-medium text-muted-foreground mt-1">
+          <p className="whitespace-nowrap text-[12px] font-normal text-muted-foreground mt-1">
             Full-Stack Developer
           </p>
         </div>

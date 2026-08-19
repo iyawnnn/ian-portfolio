@@ -126,7 +126,7 @@ export default function ProjectsPage({
         transition={{ duration: 0.4 }}
         className="flex flex-col gap-4 w-full max-w-4xl"
       >
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight lg:text-6xl text-foreground leading-[1.15]">
+        <h1 className="text-4xl md:text-5xl font-[650] tracking-[-0.025em] lg:text-6xl text-foreground leading-[1.05]">
           Crafted Projects
         </h1>
         <p className="text-lg md:text-xl leading-relaxed text-muted-foreground w-full">
@@ -153,7 +153,7 @@ export default function ProjectsPage({
             {currentPage > 1 && (
               <Link
                 href={`/projects?page=${currentPage - 1}`}
-                className="flex items-center text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors group"
+                className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group"
                 scroll={false}
                 prefetch={true} // Add aggressive prefetching
               >
@@ -169,7 +169,7 @@ export default function ProjectsPage({
             {currentPage < totalPages && (
               <Link
                 href={`/projects?page=${currentPage + 1}`}
-                className="flex items-center text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors group"
+                className="flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors group"
                 scroll={false}
                 prefetch={true} // Add aggressive prefetching
               >

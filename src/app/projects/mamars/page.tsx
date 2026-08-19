@@ -65,7 +65,7 @@ export default function MamaRsPage() {
 
       <div className="flex flex-col gap-6">
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground">
+          <h1 className="text-4xl md:text-6xl font-[650] tracking-[-0.025em] text-foreground">
             Mama R's
           </h1>
           <h2 className="text-xl md:text-2xl font-medium text-muted-foreground">
@@ -102,7 +102,7 @@ export default function MamaRsPage() {
 
       <div className="rounded-xl border border-border/50 bg-card p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm">
         <div className="space-y-1">
-          <h3 className="text-lg font-bold">Project Links</h3>
+          <h3 className="text-lg font-semibold">Project Links</h3>
           <p className="text-sm text-muted-foreground max-w-md">
             The live application operates strictly as a secured client portal for internal business use only. You can review the complete source code on GitHub.
           </p>
@@ -111,7 +111,7 @@ export default function MamaRsPage() {
           <Button
             disabled
             variant="secondary"
-            className="flex-1 md:flex-none font-bold opacity-80 cursor-not-allowed"
+            className="flex-1 md:flex-none font-medium opacity-80 cursor-not-allowed"
           >
             <Lock className="mr-2 h-4 w-4" /> Client Portal
           </Button>
@@ -119,7 +119,7 @@ export default function MamaRsPage() {
           <Button
             asChild
             variant="outline"
-            className="flex-1 md:flex-none font-bold"
+            className="flex-1 md:flex-none font-medium"
           >
             <Link href="https://github.com/iyawnnn/mamar-s" target="_blank">
               <Github className="mr-2 h-4 w-4" /> Source Code
@@ -131,7 +131,7 @@ export default function MamaRsPage() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
         <div className="xl:col-span-2 space-y-12">
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Layout className="w-6 h-6 text-primary" /> Core Features
             </h2>
             <div className="grid gap-4">
@@ -163,7 +163,7 @@ export default function MamaRsPage() {
           </section>
 
           <section className="space-y-6">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Cpu className="w-6 h-6 text-primary" /> Development Process
             </h2>
 
@@ -191,7 +191,7 @@ export default function MamaRsPage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Briefcase className="w-6 h-6 text-primary" /> Key Takeaways
             </h2>
             <p className="text-muted-foreground leading-relaxed">

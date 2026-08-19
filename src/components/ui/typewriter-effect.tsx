@@ -97,7 +97,7 @@ export const TypewriterEffectSmooth = ({
         }}
       >
         <div
-          className="whitespace-nowrap font-extrabold tracking-tight leading-none"
+          className="whitespace-nowrap font-[650] tracking-[-0.025em] leading-none"
           style={{
             whiteSpace: "nowrap",
           }}

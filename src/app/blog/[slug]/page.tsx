@@ -67,14 +67,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       <ReportView slug={resolvedParams.slug} />
 
       <div className="mb-6 md:mb-10">
-        <Link href="/blog" className="group inline-flex items-center text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground py-2">
+        <Link href="/blog" className="group inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-foreground py-2">
           <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back to Articles
         </Link>
       </div>
 
       <article className="w-full flex flex-col">
         <div className="flex flex-col mb-8 max-w-4xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-foreground font-sans leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-[650] tracking-[-0.025em] text-foreground font-sans leading-[1.05]">
             {meta.title}
           </h1>
           
@@ -111,7 +111,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         
         <div className="prose prose-neutral dark:prose-invert max-w-none w-full
           prose-headings:font-sans prose-p:font-sans prose-a:font-sans
-          prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground
+          prose-headings:font-semibold prose-headings:tracking-[-0.015em] prose-headings:text-foreground
           prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:text-base sm:prose-p:text-[1.05rem]
           prose-a:text-foreground prose-a:underline prose-a:underline-offset-4
           prose-img:rounded-xl sm:prose-img:rounded-2xl prose-img:border prose-img:border-border/50

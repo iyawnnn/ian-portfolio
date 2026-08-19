@@ -407,7 +407,7 @@ export default function StackPage() {
       
       <div className="flex flex-col gap-6 w-full min-w-0">
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-[650] tracking-[-0.025em] text-foreground">
             My Development Arsenal
           </h1>
           <p className="text-lg md:text-xl leading-relaxed text-muted-foreground w-full break-words">
@@ -553,7 +553,7 @@ export default function StackPage() {
               </div>
 
               <div className="space-y-3">
-                <h3 className="text-2xl font-bold tracking-tight">
+                <h3 className="text-2xl font-semibold tracking-[-0.015em]">
                   No results found
                 </h3>
                 <p className="text-muted-foreground text-base px-6">

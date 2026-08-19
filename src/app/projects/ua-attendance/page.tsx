@@ -75,7 +75,7 @@ export default function UAAttendancePage() {
 
       <div className="flex flex-col gap-6">
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground">
+          <h1 className="text-4xl md:text-6xl font-[650] tracking-[-0.025em] text-foreground">
             UA LabSign — Laboratory Attendance System
           </h1>
           <h2 className="text-xl md:text-2xl font-medium text-muted-foreground">
@@ -121,14 +121,14 @@ export default function UAAttendancePage() {
 
       <div className="rounded-xl border border-border/50 bg-card p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm">
         <div className="space-y-1">
-          <h3 className="text-lg font-bold">Project Links</h3>
+          <h3 className="text-lg font-semibold">Project Links</h3>
           <p className="text-sm text-muted-foreground max-w-md">
             Open the live platform or inspect the coordinated web/backend and
             mobile applications.
           </p>
         </div>
         <div className="flex gap-3 w-full md:w-auto flex-wrap">
-          <Button asChild className="flex-1 md:flex-none font-bold">
+          <Button asChild className="flex-1 md:flex-none font-medium">
             <Link
               href={liveSite}
               target="_blank"
@@ -141,7 +141,7 @@ export default function UAAttendancePage() {
           <Button
             asChild
             variant="outline"
-            className="flex-1 md:flex-none font-bold"
+            className="flex-1 md:flex-none font-medium"
           >
             <Link
               href={webRepository}
@@ -155,7 +155,7 @@ export default function UAAttendancePage() {
           <Button
             asChild
             variant="outline"
-            className="flex-1 md:flex-none font-bold"
+            className="flex-1 md:flex-none font-medium"
           >
             <Link
               href={mobileRepository}
@@ -172,7 +172,7 @@ export default function UAAttendancePage() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-12">
         <div className="xl:col-span-2 space-y-12">
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Layout aria-hidden="true" className="w-6 h-6 text-primary" />
               Coordinated Architecture
             </h2>
@@ -210,7 +210,7 @@ export default function UAAttendancePage() {
           </section>
 
           <section className="space-y-6">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <ShieldCheck
                 aria-hidden="true"
                 className="w-6 h-6 text-primary"
@@ -250,7 +250,7 @@ export default function UAAttendancePage() {
                 ],
               ].map(([step, title, description]) => (
                 <li key={step} className="flex gap-4 py-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
                     {step}
                   </span>
                   <div className="min-w-0">
@@ -265,7 +265,7 @@ export default function UAAttendancePage() {
           </section>
 
           <section className="space-y-6">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Cpu aria-hidden="true" className="w-6 h-6 text-primary" />
               Security & Operations
             </h2>
@@ -314,7 +314,7 @@ export default function UAAttendancePage() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Briefcase aria-hidden="true" className="w-6 h-6 text-primary" />
               Project Scope
             </h2>

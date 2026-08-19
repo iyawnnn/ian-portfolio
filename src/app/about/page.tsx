@@ -45,7 +45,7 @@ export default function AboutPage() {
             <span className="text-sm font-medium">Based in Philippines</span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight lg:text-6xl text-foreground leading-[1.15]">
+          <h1 className="text-4xl md:text-5xl font-[650] tracking-[-0.025em] lg:text-6xl text-foreground leading-[1.05]">
             About Me
           </h1>
 
@@ -265,7 +265,7 @@ export default function AboutPage() {
             <Rocket className="h-6 w-6" />
           </div>
 
-          <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+          <h2 className="text-2xl font-semibold tracking-[-0.015em] text-foreground sm:text-3xl">
             Let&rsquo;s build something awesome
           </h2>
 
@@ -281,7 +281,7 @@ export default function AboutPage() {
               <HoverBorderGradient
                 containerClassName="rounded-full"
                 as="button"
-                className="flex cursor-pointer items-center space-x-2 bg-black px-8 py-4 font-bold text-white transition-all hover:scale-105 active:scale-95"
+                className="flex cursor-pointer items-center space-x-2 bg-black px-8 py-4 font-semibold text-white transition-all hover:scale-105 active:scale-95"
               >
                 <span>Work with me</span>
                 <ArrowRight className="h-5 w-5" />

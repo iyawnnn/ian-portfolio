@@ -20,7 +20,7 @@ export default function NotFound() {
             <h1 className="text-sm font-bold uppercase tracking-[0.3em] text-primary">
               Error 404
             </h1>
-            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground">
+            <h2 className="text-4xl md:text-5xl font-[650] tracking-[-0.025em] text-foreground">
               Lost in space.
             </h2>
             <p className="text-muted-foreground text-base md:text-lg leading-relaxed pt-2">

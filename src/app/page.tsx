@@ -31,7 +31,7 @@ import { getAllPostsMeta } from "@/lib/mdx";
 
 const HOME_PROJECTS = [
   {
-    title: "UA LabSign",
+    title: "UA LabSign — Laboratory Attendance System",
     description:
       "A zero-trust web and mobile laboratory attendance platform combining device-bound cryptographic signatures, instant geofencing, and role-based academic workflows.",
     link: "/projects/ua-attendance",
@@ -93,7 +93,7 @@ export default function ExplorePage() {
           Ian Macabulos - Full-Stack Developer Philippines
         </h1>
 
-        <div className="flex flex-col items-start justify-center min-h-[4em] sm:min-h-[2em] text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tighter leading-[1.15]">
+        <div className="flex flex-col items-start justify-center min-h-[4em] sm:min-h-[2em] text-4xl sm:text-5xl lg:text-6xl font-[650] tracking-[-0.025em] leading-none">
           <TypewriterEffectSmooth
             words={wordsLine1}
             className="p-0 m-0"
@@ -162,7 +162,7 @@ export default function ExplorePage() {
 
       <section className="flex flex-col gap-4 md:gap-6 mt-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold tracking-tight sm:text-2xl">
+          <h2 className="text-xl font-semibold tracking-[-0.015em] sm:text-2xl">
             Projects Overview
           </h2>
           <Link
@@ -207,7 +207,7 @@ export default function ExplorePage() {
               <div className="p-3 bg-primary/10 rounded-xl w-fit mb-6">
                 <BookOpen className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground mb-3">
+              <h3 className="text-2xl sm:text-3xl font-semibold tracking-[-0.02em] text-foreground mb-3">
                 Localhost Tales
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-8">
@@ -235,7 +235,7 @@ export default function ExplorePage() {
                   <span className="text-xs font-mono text-muted-foreground tracking-wider uppercase">
                     {formatDate(post.date)}
                   </span>
-                  <h4 className="text-base sm:text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                  <h4 className="text-base sm:text-lg font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
                     {post.title}
                   </h4>
                 </div>

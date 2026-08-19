@@ -88,7 +88,7 @@ export default function ContactPage() {
             Available for new projects
           </Badge>
         </div>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground mb-4">
+        <h1 className="text-4xl md:text-6xl font-[650] tracking-[-0.025em] text-foreground mb-4">
           Let’s work together.
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
@@ -165,13 +165,13 @@ export default function ContactPage() {
               {/* STEP 1 */}
               <div className="flex gap-4">
                 <div className="flex flex-col items-center flex-none">
-                  <div className="flex-none h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold z-10 border border-primary/20 shadow-sm">
+                  <div className="flex-none h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold z-10 border border-primary/20 shadow-sm">
                     1
                   </div>
                   <div className="w-px h-full bg-border/50 my-2" />
                 </div>
                 <div className="pb-2 pt-2">
-                  <h4 className="font-bold text-foreground">Send a Message</h4>
+                  <h4 className="font-semibold text-foreground">Send a Message</h4>
                   <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
                     Fill out the form on the right. I'll receive an instant
                     notification via my personal API integration.
@@ -182,13 +182,13 @@ export default function ContactPage() {
               {/* STEP 2 */}
               <div className="flex gap-4">
                 <div className="flex flex-col items-center flex-none">
-                  <div className="flex-none h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold z-10 border border-primary/20 shadow-sm">
+                  <div className="flex-none h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold z-10 border border-primary/20 shadow-sm">
                     2
                   </div>
                   <div className="w-px h-full bg-border/50 my-2" />
                 </div>
                 <div className="pb-2 pt-2">
-                  <h4 className="font-bold text-foreground">I'll Respond</h4>
+                  <h4 className="font-semibold text-foreground">I'll Respond</h4>
                   <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
                     As a student, I balance this with my studies, but I
                     typically respond within the day.
@@ -199,12 +199,12 @@ export default function ContactPage() {
               {/* STEP 3 */}
               <div className="flex gap-4">
                 <div className="flex flex-col items-center flex-none">
-                  <div className="flex-none h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold z-10 border border-primary/20 shadow-sm">
+                  <div className="flex-none h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold z-10 border border-primary/20 shadow-sm">
                     3
                   </div>
                 </div>
                 <div className="pt-2">
-                  <h4 className="font-bold text-foreground">We Connect</h4>
+                  <h4 className="font-semibold text-foreground">We Connect</h4>
                   <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
                     If we're a good fit, we'll discuss your idea and how I can
                     help bring it to life.
@@ -234,7 +234,7 @@ export default function ContactPage() {
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-xl font-bold text-foreground">
+                    <h3 className="text-xl font-semibold text-foreground">
                       Message received!
                     </h3>
                     <p className="text-muted-foreground max-w-[280px] mx-auto text-sm">
@@ -329,7 +329,7 @@ export default function ContactPage() {
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group relative w-full font-bold shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/50 hover:-translate-y-0.5 active:translate-y-0.5 h-10 overflow-hidden"
+                      className="group relative w-full font-semibold shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/50 hover:-translate-y-0.5 active:translate-y-0.5 h-10 overflow-hidden"
                     >
                       {isSubmitting ? (
                         <span className="flex items-center">
@@ -369,7 +369,7 @@ export default function ContactPage() {
                 </span>
               </div>
             </div>
-            <div className="text-xl font-mono font-bold text-primary">
+            <div className="text-xl font-mono font-semibold text-primary">
               {time || "--:--"}
             </div>
           </div>

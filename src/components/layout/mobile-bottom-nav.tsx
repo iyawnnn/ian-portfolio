@@ -99,7 +99,7 @@ export function MobileBottomNav() {
                 <span
                   className={cn(
                     "text-[10px] font-medium leading-none tracking-tight transition-colors",
-                    isActive ? "font-semibold" : "",
+                    isActive ? "font-[550]" : "",
                   )}
                 >
                   {link.label}

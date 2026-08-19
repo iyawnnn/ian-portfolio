@@ -58,7 +58,7 @@ export async function WakaTimeCard() {
           </div>
           
           <div className="flex flex-col min-w-0 flex-1">
-            <h3 className="text-base font-bold text-foreground truncate leading-tight">
+            <h3 className="text-base font-semibold text-foreground truncate leading-tight">
               {data?.total || "0 hrs"}
             </h3>
             <p className="text-sm font-medium text-muted-foreground truncate mt-0.5">Logged</p>

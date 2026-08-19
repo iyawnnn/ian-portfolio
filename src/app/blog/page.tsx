@@ -50,7 +50,7 @@ export default async function BlogPage({
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-12 p-4 pt-8 font-sans md:p-8 md:pt-20 lg:p-12 lg:pt-24">
       <header className="flex w-full max-w-4xl flex-col gap-4">
-        <h1 className="text-4xl font-extrabold leading-[1.15] tracking-tight text-foreground md:text-5xl lg:text-6xl">
+        <h1 className="text-4xl font-[650] leading-[1.05] tracking-[-0.025em] text-foreground md:text-5xl lg:text-6xl">
           Localhost Tales
         </h1>
         <p className="w-full text-lg leading-relaxed text-muted-foreground md:text-xl">
@@ -78,7 +78,7 @@ export default async function BlogPage({
                   <span className="h-px w-8 bg-border" />
                 </div>
 
-                <h2 className="text-xl font-semibold leading-snug tracking-tight text-foreground/90 transition-[color,transform] duration-300 group-hover:translate-x-1 group-hover:text-foreground sm:text-2xl">
+                <h2 className="text-xl font-semibold leading-snug tracking-[-0.015em] text-foreground/90 transition-[color,transform] duration-300 group-hover:translate-x-1 group-hover:text-foreground sm:text-2xl">
                   <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                 </h2>
 
@@ -97,7 +97,7 @@ export default async function BlogPage({
 
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="mt-5 inline-flex items-center text-sm font-semibold text-muted-foreground transition-colors duration-300 group-hover:text-foreground"
+                  className="mt-5 inline-flex items-center text-sm font-medium text-muted-foreground transition-colors duration-300 group-hover:text-foreground"
                 >
                   Read Article
                   <ArrowRight className="ml-1.5 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -134,7 +134,7 @@ export default async function BlogPage({
               <Link
                 href={`/blog?page=${currentPage - 1}`}
                 aria-label={`Go to page ${currentPage - 1}`}
-                className="group inline-flex items-center text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground sm:text-sm"
+                className="group inline-flex items-center text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:text-sm"
                 scroll={false}
                 prefetch
               >
@@ -153,7 +153,7 @@ export default async function BlogPage({
               <Link
                 href={`/blog?page=${currentPage + 1}`}
                 aria-label={`Go to page ${currentPage + 1}`}
-                className="group inline-flex items-center text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground sm:text-sm"
+                className="group inline-flex items-center text-xs font-medium text-muted-foreground transition-colors hover:text-foreground sm:text-sm"
                 scroll={false}
                 prefetch
               >

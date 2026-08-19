@@ -72,7 +72,7 @@ export default function AcCorePage() {
       {/* --- HEADER --- */}
       <div className="flex flex-col gap-6">
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground">
+          <h1 className="text-4xl md:text-6xl font-[650] tracking-[-0.025em] text-foreground">
             AC-CORE (Angeles City Center for Operational Reporting and Engineering)
           </h1>
           <h2 className="text-xl md:text-2xl font-medium text-muted-foreground">
@@ -111,13 +111,13 @@ export default function AcCorePage() {
       {/* --- DEMO & CODE CARD --- */}
       <div className="rounded-xl border border-border/50 bg-card p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-sm">
         <div className="space-y-1">
-          <h3 className="text-lg font-bold">Project Links</h3>
+          <h3 className="text-lg font-semibold">Project Links</h3>
           <p className="text-sm text-muted-foreground max-w-md">
             Explore the live production application or review the codebase on GitHub.
           </p>
         </div>
         <div className="flex gap-3 w-full md:w-auto">
-          <Button asChild className="flex-1 md:flex-none font-bold">
+          <Button asChild className="flex-1 md:flex-none font-medium">
             <Link href="https://ac-core.vercel.app/" target="_blank">
               <ExternalLink className="mr-2 h-4 w-4" /> Live Platform
             </Link>
@@ -125,7 +125,7 @@ export default function AcCorePage() {
           <Button
             asChild
             variant="outline"
-            className="flex-1 md:flex-none font-bold"
+            className="flex-1 md:flex-none font-medium"
           >
             <Link href="https://github.com/MMPA-Works/AC-CORE" target="_blank">
               <Github className="mr-2 h-4 w-4" /> Source Code
@@ -140,7 +140,7 @@ export default function AcCorePage() {
         <div className="xl:col-span-2 space-y-12">
           {/* Core Features */}
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Layout className="w-6 h-6 text-primary" /> Core Features
             </h2>
             <div className="grid gap-4">
@@ -173,7 +173,7 @@ export default function AcCorePage() {
 
           {/* Development Process */}
           <section className="space-y-6">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Cpu className="w-6 h-6 text-primary" /> Development Process
             </h2>
 
@@ -202,7 +202,7 @@ export default function AcCorePage() {
 
           {/* Performance & Security */}
           <section className="space-y-6">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <ShieldCheck className="w-6 h-6 text-primary" /> Security & Performance
             </h2>
             <p className="text-muted-foreground leading-relaxed">
@@ -230,7 +230,7 @@ export default function AcCorePage() {
 
           {/* Key Takeaways */}
           <section className="space-y-4">
-            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <h2 className="text-2xl font-semibold tracking-[-0.015em] flex items-center gap-2">
               <Briefcase className="w-6 h-6 text-primary" /> Key Takeaways
             </h2>
             <p className="text-muted-foreground leading-relaxed">
