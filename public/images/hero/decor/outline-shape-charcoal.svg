@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <path
+    fill="none"
+    stroke="#11110F"
+    stroke-width="4"
+    stroke-linejoin="miter"
+    d="M380,50 L620,50 L620,150 A230,230 0 0 0 850,380 L950,380 L950,620 L850,620 A230,230 0 0 0 620,850 L620,950 L380,950 L380,850 A230,230 0 0 0 150,620 L50,620 L50,380 L150,380 A230,230 0 0 0 380,150 Z"
+  />
+</svg>

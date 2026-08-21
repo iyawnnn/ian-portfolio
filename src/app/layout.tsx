@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { neueMontreal, bradford } from "@/lib/fonts";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { SidebarProvider } from "@/hooks/use-sidebar";
@@ -96,7 +97,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${geistSans.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${neueMontreal.variable} ${bradford.variable} ${geistSans.className} antialiased`}
       >
         <ThemeProvider
           attribute="class"

@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { CircleNotch as LoaderCircle } from "@phosphor-icons/react/ssr";
 import { AiChatLauncher } from "@/components/ui/ai-chat-launcher";
@@ -26,6 +27,7 @@ function ChatPanelLoading() {
 }
 
 export function ChatWidget() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const openChat = useCallback(() => {
@@ -36,6 +38,10 @@ export function ChatWidget() {
     window.addEventListener("open-chat", openChat);
     return () => window.removeEventListener("open-chat", openChat);
   }, [openChat]);
+
+  // Temporarily hidden on the V2 homepage hero — the hero owns the full
+  // viewport and the launcher would overlap its composition.
+  if (pathname === "/") return null;
 
   return (
     <>

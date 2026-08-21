@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { usePathname } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar/index";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { MobileHeader } from "@/components/layout/mobile-header";
@@ -10,10 +11,23 @@ import { cn } from "@/lib/utils";
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const { isCollapsed } = useSidebar();
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
+
+  if (isHomepage) {
+    return (
+      <div className="min-h-screen bg-background overflow-x-hidden">
+        <main className="flex flex-col min-h-screen w-full">
+          {children}
+          <SiteFooter />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* DESKTOP: Sidebar 
+      {/* DESKTOP: Sidebar
           Added transform-gpu and will-change-transform to offload animation to the GPU.
           This prevents the browser from recalculating layout every frame.
       */}
@@ -31,7 +45,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
         <MobileHeader />
       </div>
 
-      {/* MAIN CONTENT AREA 
+      {/* MAIN CONTENT AREA
           Switched from margin (ml) to padding (pl) to prevent viewport blowout.
           Added min-w-0 to strictly enforce content wrapping boundaries.
       */}
