@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { Pinyon_Script } from "next/font/google";
 
 export const neueMontreal = localFont({
   src: [
@@ -36,6 +37,18 @@ export const bradford = localFont({
     },
   ],
   variable: "--font-bradford",
+  display: "swap",
+  preload: false,
+});
+
+// Single-purpose exception: used ONLY for the "Full-stack developer" hero
+// role annotation, which needs a genuinely connected cursive silhouette
+// that Bradford Italic (an editorial italic serif, not true script) can't
+// give. Not applied anywhere else in the site.
+export const pinyonScript = Pinyon_Script({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-pinyon-script",
   display: "swap",
   preload: false,
 });

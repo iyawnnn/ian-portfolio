@@ -1,6 +1,8 @@
 import { ScrollRestoration } from "@/components/ui/scroll-restoration";
 import { Hero } from "@/components/v2/hero";
 import { HeroMotion } from "@/components/v2/hero-motion";
+import { AboutManifesto } from "@/components/v2/about-manifesto";
+import { NavIslandLoader } from "@/components/v2/nav-island-loader";
 import { SmoothScroll } from "@/components/v2/smooth-scroll";
 
 // Below-hero sections (Projects Overview, GitHub activity, Spotify/WakaTime,
@@ -11,7 +13,9 @@ export default function ExplorePage() {
   return (
     <>
       <ScrollRestoration />
+      <NavIslandLoader />
       <Hero />
+      <AboutManifesto />
       <SmoothScroll />
       <HeroMotion />
     </>
