@@ -31,12 +31,16 @@ const PRACTICE_ITEMS = [
   },
 ] as const;
 
-// Breakpoint strategy for this section only: mobile < 768 (base) · tablet /
-// narrow laptop 768-1119 (min-[768px]:, min-[900px]: for the wider half of
-// that range) — full-width stacked modules sharing the headline's left
-// edge, not a centered column · desktop 3-column grid >= 1120
-// (min-[1120px]:, deliberately custom — 1024 left each column too narrow)
-// · decor grows again from 1440 (min-[1440px]:).
+// Breakpoint strategy for this section only: mobile < 768 (base) — each
+// principle stacks text above its square image (natural document flow,
+// no grid) · tablet / compact desktop 768-1119 (min-[768px]:, min-[900px]:
+// and min-[1024px]: for progressively larger image caps within that
+// range) — each principle becomes a 2-column editorial row (~42% copy /
+// ~58% image) that alternates image side per row via `order`, so column 2
+// (SYSTEMS) reads image-left/copy-right against its odd/even siblings ·
+// desktop 3-column grid >= 1120 (min-[1120px]:, deliberately custom — 1024
+// left each column too narrow) · decor grows again from 1440
+// (min-[1440px]:).
 //
 // Every breakpoint here is written as an arbitrary `min-[Npx]:` variant —
 // none of Tailwind's named breakpoints (md/lg/xl) are used. Mixing a named
@@ -91,52 +95,71 @@ export function Practice() {
           <PracticeDecor />
         </div>
 
-        {/* Three practice areas — each module is text above a square
-            image, no vertical separators (whitespace + the shared row
-            grid below do the structural work). Below 1120px it's a
-            full-width stack of modules sharing the section's left gutter
-            (not centered); from 1120px it's a real 3-column grid where
-            each article is a 2-row subgrid
-            (copy, image) sharing row tracks with its siblings, so the
-            images' top edges line up exactly no matter how each module's
-            copy wraps. */}
+        {/* Three practice areas.
+            Mobile (<768): each module is text above a square image, plain
+            document flow, no grid — spacing alone separates modules, no
+            border/divider anywhere in the section.
+            Tablet/compact desktop (768-1119): each module becomes a
+            2-column editorial row (~42% copy / ~58% image, vertically
+            centered). Image side alternates per module via *explicit grid
+            placement* (`col-start-1`/`col-start-2` + a mirrored
+            `grid-template-columns` for reversed rows), not `order`: with
+            two explicit tracks, `order` changes which *track* an
+            auto-placed item is assigned (i.e. which fr-share it gets),
+            not just its paint position, so a reversed row's image was
+            landing in the narrow 0.42fr copy-track instead of the wide
+            0.58fr image-track — that's why INTERFACES/EXPERIMENTS (not
+            reversed) rendered larger than SYSTEMS (reversed). Explicit
+            placement keeps the image on the 0.58fr track regardless of
+            which side of the row it's visually on, so 01/02/03 always
+            resolve to the exact same size. DOM/reading order stays
+            text-then-image throughout — only the mirrored template swaps
+            which physical column is 0.58fr wide.
+            Desktop (>=1120): a real 3-column grid where each article is a
+            2-row subgrid (copy, image) sharing row tracks with its
+            siblings, so the images' top edges line up exactly no matter
+            how each module's copy wraps — entirely unchanged from before
+            this pass. */}
         <div className="mt-12 grid grid-cols-1 gap-0 min-[1120px]:mt-[clamp(2.75rem,3vw,3.75rem)] min-[1120px]:grid-cols-3 min-[1120px]:grid-rows-[auto_auto] min-[1120px]:gap-x-[clamp(2rem,2.4vw,3rem)] min-[1120px]:gap-y-0">
-          {PRACTICE_ITEMS.map((item) => (
-            <article
-              key={item.id}
-              data-practice-item={item.id}
-              className="min-w-0 w-full border-t border-ink/[0.07] pt-16 first:border-t-0 first:pt-0 min-[1120px]:grid min-[1120px]:max-w-none min-[1120px]:grid-rows-subgrid min-[1120px]:row-span-2 min-[1120px]:border-t-0 min-[1120px]:pt-0"
-            >
-              <div
-                data-practice="item-text"
-                className="min-w-0 min-[768px]:max-w-[560px] min-[900px]:max-w-[640px] min-[1120px]:max-w-none"
+          {PRACTICE_ITEMS.map((item, index) => {
+            const isReversed = index % 2 === 1;
+            return (
+              <article
+                key={item.id}
+                data-practice-item={item.id}
+                className={`min-w-0 w-full pt-[clamp(64px,9vw,80px)] first:pt-0 min-[768px]:grid min-[768px]:items-center min-[768px]:gap-x-[clamp(24px,4vw,48px)] min-[768px]:pt-[clamp(72px,6vw,112px)] min-[1120px]:grid-cols-none min-[1120px]:items-stretch min-[1120px]:max-w-none min-[1120px]:grid-rows-subgrid min-[1120px]:row-span-2 min-[1120px]:pt-0 ${isReversed ? "min-[768px]:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)]" : "min-[768px]:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]"}`}
               >
-                <p data-practice="text-part" className="font-display text-[0.85rem] text-ink/40 min-[1120px]:text-[0.95rem]">
-                  {item.number}
-                </p>
-                <h3
-                  data-practice="text-part"
-                  className="mt-3 font-display text-[1.5rem] font-medium uppercase tracking-tight min-[1120px]:text-[1.7rem]"
+                <div
+                  data-practice="item-text"
+                  className={`min-w-0 min-[1120px]:col-start-auto ${isReversed ? "min-[768px]:col-start-2" : "min-[768px]:col-start-1"}`}
                 >
-                  {item.title}
-                </h3>
-                <p
-                  data-practice="text-part"
-                  className="mt-3 font-editorial text-[1rem] italic text-oxblood"
-                >
-                  {item.italic}
-                </p>
-                <p
-                  data-practice="text-part"
-                  className="mt-5 max-w-[40ch] font-sans text-[0.95rem] leading-[1.6] text-ink/65"
-                >
-                  {item.copy}
-                </p>
-              </div>
+                  <p data-practice="text-part" className="font-display text-[0.85rem] text-ink/40 min-[1120px]:text-[0.95rem]">
+                    {item.number}
+                  </p>
+                  <h3
+                    data-practice="text-part"
+                    className="mt-3 font-display text-[1.5rem] font-medium uppercase tracking-tight min-[1120px]:text-[1.7rem]"
+                  >
+                    {item.title}
+                  </h3>
+                  <p
+                    data-practice="text-part"
+                    className="mt-3 font-editorial text-[1rem] italic text-oxblood"
+                  >
+                    {item.italic}
+                  </p>
+                  <p
+                    data-practice="text-part"
+                    className="mt-5 max-w-[40ch] font-sans text-[0.95rem] leading-[1.6] text-ink/65"
+                  >
+                    {item.copy}
+                  </p>
+                </div>
 
-              <PracticeImage src={item.image} alt={item.alt} />
-            </article>
-          ))}
+                <PracticeImage src={item.image} alt={item.alt} reversed={isReversed} />
+              </article>
+            );
+          })}
         </div>
       </div>
 
@@ -168,11 +191,11 @@ function PracticeDecor() {
   );
 }
 
-function PracticeImage({ src, alt }: { src: string; alt: string }) {
+function PracticeImage({ src, alt, reversed }: { src: string; alt: string; reversed: boolean }) {
   return (
     <div
       data-practice="item-visual"
-      className="group relative mt-8 aspect-square w-full min-w-0 max-w-full overflow-hidden shadow-[0_18px_50px_rgba(17,17,15,0.07)] transition-shadow duration-500 motion-safe:hover:shadow-[0_22px_60px_rgba(17,17,15,0.1)] min-[768px]:max-w-[540px] min-[900px]:max-w-[620px] min-[1120px]:mt-10 min-[1120px]:max-w-none"
+      className={`group relative mt-8 aspect-square w-full max-w-[min(82vw,420px)] mx-auto min-w-0 overflow-hidden shadow-[0_18px_50px_rgba(17,17,15,0.07)] transition-shadow duration-500 motion-safe:hover:shadow-[0_22px_60px_rgba(17,17,15,0.1)] min-[768px]:mt-0 min-[768px]:mx-0 min-[768px]:max-w-[360px] min-[900px]:max-w-[395px] min-[1024px]:max-w-[420px] min-[1120px]:mt-10 min-[1120px]:max-w-none min-[1120px]:col-start-auto min-[1120px]:justify-self-auto ${reversed ? "min-[768px]:col-start-1 min-[768px]:justify-self-start" : "min-[768px]:col-start-2 min-[768px]:justify-self-end"}`}
     >
       <div
         data-practice="visual-hover-scale"
@@ -182,7 +205,7 @@ function PracticeImage({ src, alt }: { src: string; alt: string }) {
           src={src}
           alt={alt}
           fill
-          sizes="(min-width: 1120px) 30vw, (min-width: 900px) 620px, (min-width: 768px) 540px, 90vw"
+          sizes="(min-width: 1120px) 30vw, (min-width: 1024px) 420px, (min-width: 900px) 395px, (min-width: 768px) 360px, 90vw"
           className="object-cover"
         />
       </div>
