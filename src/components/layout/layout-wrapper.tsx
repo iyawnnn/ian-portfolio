@@ -15,8 +15,19 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const isHomepage = pathname === "/";
 
   if (isHomepage) {
+    // V2 sections each locally paint `bg-paper` (the fixed editorial
+    // palette — see globals.css's "not theme-toggled" comment) against
+    // this wrapper's default `bg-background`, which is near-black in the
+    // site's dark theme. At non-integer viewport widths, adjacent
+    // same-color sections (e.g. Practice → WorkTransition) can leave a
+    // 1-device-pixel anti-aliasing seam at their shared boundary where
+    // that dark ancestor briefly shows through as a hairline. Painting
+    // the wrapper itself `bg-paper` removes the color mismatch entirely,
+    // so any such seam blends paper-on-paper (invisible) instead of
+    // dark-on-paper (a visible line above/below WorkTransition on small
+    // devices).
     return (
-      <div className="min-h-screen bg-background overflow-x-hidden">
+      <div className="min-h-screen bg-paper overflow-x-hidden">
         <main className="flex flex-col min-h-screen w-full">
           {children}
           <SiteFooter />

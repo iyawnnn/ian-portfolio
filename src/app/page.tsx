@@ -2,6 +2,9 @@ import { ScrollRestoration } from "@/components/ui/scroll-restoration";
 import { Hero } from "@/components/v2/hero";
 import { HeroMotion } from "@/components/v2/hero-motion";
 import { AboutManifesto } from "@/components/v2/about-manifesto";
+import { Practice } from "@/components/v2/practice";
+import { WorkTransition } from "@/components/v2/work-transition";
+import { SelectedWork } from "@/components/v2/selected-work";
 import { NavIslandLoader } from "@/components/v2/nav-island-loader";
 import { SmoothScroll } from "@/components/v2/smooth-scroll";
 
@@ -16,6 +19,9 @@ export default function ExplorePage() {
       <NavIslandLoader />
       <Hero />
       <AboutManifesto />
+      <Practice />
+      <WorkTransition />
+      <SelectedWork />
       <SmoothScroll />
       <HeroMotion />
     </>
