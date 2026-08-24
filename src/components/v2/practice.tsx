@@ -131,7 +131,7 @@ export function Practice() {
               >
                 <div
                   data-practice="item-text"
-                  className={`min-w-0 min-[1120px]:col-start-auto ${isReversed ? "min-[768px]:col-start-2" : "min-[768px]:col-start-1"}`}
+                  className={`min-w-0 min-[768px]:row-start-1 min-[1120px]:col-start-auto min-[1120px]:row-start-auto ${isReversed ? "min-[768px]:col-start-2" : "min-[768px]:col-start-1"}`}
                 >
                   <p data-practice="text-part" className="font-display text-[0.85rem] text-ink/40 min-[1120px]:text-[0.95rem]">
                     {item.number}
@@ -195,7 +195,7 @@ function PracticeImage({ src, alt, reversed }: { src: string; alt: string; rever
   return (
     <div
       data-practice="item-visual"
-      className={`group relative mt-8 aspect-square w-full max-w-[min(82vw,420px)] mx-auto min-w-0 overflow-hidden shadow-[0_18px_50px_rgba(17,17,15,0.07)] transition-shadow duration-500 motion-safe:hover:shadow-[0_22px_60px_rgba(17,17,15,0.1)] min-[768px]:mt-0 min-[768px]:mx-0 min-[768px]:max-w-[360px] min-[900px]:max-w-[395px] min-[1024px]:max-w-[420px] min-[1120px]:mt-10 min-[1120px]:max-w-none min-[1120px]:col-start-auto min-[1120px]:justify-self-auto ${reversed ? "min-[768px]:col-start-1 min-[768px]:justify-self-start" : "min-[768px]:col-start-2 min-[768px]:justify-self-end"}`}
+      className={`group relative mt-8 aspect-square w-full max-w-[min(82vw,420px)] mx-auto min-w-0 overflow-hidden shadow-[0_18px_50px_rgba(17,17,15,0.07)] transition-shadow duration-500 motion-safe:hover:shadow-[0_22px_60px_rgba(17,17,15,0.1)] min-[768px]:mt-0 min-[768px]:mx-0 min-[768px]:row-start-1 min-[768px]:max-w-[360px] min-[900px]:max-w-[395px] min-[1024px]:max-w-[420px] min-[1120px]:mt-10 min-[1120px]:max-w-none min-[1120px]:col-start-auto min-[1120px]:row-start-auto min-[1120px]:justify-self-auto ${reversed ? "min-[768px]:col-start-1 min-[768px]:justify-self-start" : "min-[768px]:col-start-2 min-[768px]:justify-self-end"}`}
     >
       <div
         data-practice="visual-hover-scale"

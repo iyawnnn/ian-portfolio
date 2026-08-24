@@ -5,6 +5,7 @@ import { AboutManifesto } from "@/components/v2/about-manifesto";
 import { Practice } from "@/components/v2/practice";
 import { WorkTransition } from "@/components/v2/work-transition";
 import { SelectedWork } from "@/components/v2/selected-work";
+import { WorkingSet } from "@/components/v2/working-set";
 import { NavIslandLoader } from "@/components/v2/nav-island-loader";
 import { SmoothScroll } from "@/components/v2/smooth-scroll";
 
@@ -22,6 +23,7 @@ export default function ExplorePage() {
       <Practice />
       <WorkTransition />
       <SelectedWork />
+      <WorkingSet />
       <SmoothScroll />
       <HeroMotion />
     </>

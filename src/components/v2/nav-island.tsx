@@ -10,10 +10,10 @@ import useSWR from "swr";
 import { FaGithub, FaLinkedin, FaTiktok, FaEnvelope } from "react-icons/fa6";
 import type { SpotifyData } from "@/components/ui/spotify-card-client";
 
-// The user's actual WakaTime badge asset (confirmed the only "waka"-named
-// file in public/images — no ambiguity to guess between). One constant;
+// Reuses the existing Hero keyboard shot for the WakaTime / coding-activity
+// state (swapped from the old wakatime-activity-badge.webp). One constant;
 // changing the image later means changing only this line.
-const WAKATIME_IMAGE_SRC = "/images/hero/wakatime-activity-badge.webp";
+const WAKATIME_IMAGE_SRC = "/images/hero/keyboard-hero.webp";
 
 // Route hrefs point at today's real, working routes. Once the homepage grows
 // dedicated #work/#about/#writing/#contact sections, only these four href
@@ -201,7 +201,20 @@ function WakaTimeExpandedContent({ weeklyLabel }: { weeklyLabel: string }) {
   return (
     <>
       <ActivityImage src={WAKATIME_IMAGE_SRC} size={36} />
-      <span className="flex min-w-0 flex-1 flex-col justify-center leading-tight">
+      {/* `relative` + the accent bar positioned `absolute` keeps the accent
+          out of this span's own content height, so `items-center` on the
+          parent row (which centers this span against the 36px image) only
+          ever measures the two text lines — previously the accent's extra
+          ~10px (margin + bar) was counted too, so the row centered the
+          *whole* 3-part group against the image instead of just the
+          readable text, leaving the two lines visibly sitting above the
+          image's true center. The accent still renders at the exact same
+          spot relative to the text (anchored to this span's own bottom
+          edge via `top-full`), just without skewing the centering math —
+          and since it's excluded from flow, nothing here needs a
+          breakpoint-specific pixel nudge to stay correct at every text
+          size mobile through desktop. */}
+      <span className="relative flex min-w-0 flex-1 flex-col justify-center text-center leading-tight">
         <span className="truncate font-sans text-lg font-semibold text-paper sm:text-xl">
           {weeklyLabel}
         </span>
@@ -211,7 +224,7 @@ function WakaTimeExpandedContent({ weeklyLabel }: { weeklyLabel: string }) {
         <span
           data-wakatime-accent
           aria-hidden="true"
-          className="mt-2 block h-[2px] w-14 origin-left scale-x-0 rounded-full bg-[#6E1E24]"
+          className="absolute left-0 top-full mt-2 block h-[2px] w-14 origin-left scale-x-0 rounded-full bg-[#6E1E24]"
         />
       </span>
     </>
@@ -815,7 +828,12 @@ export function NavIsland() {
           {collapsedActivity === "wakatime" && (
             <div data-activity-reveal className="flex min-w-0 items-center gap-2.5">
               <ActivityImage src={WAKATIME_IMAGE_SRC} size={34} />
-              <ActivityMeta primary={weeklyLabel} secondary="coded this week" size="sm" />
+              <ActivityMeta
+                primary={weeklyLabel}
+                secondary="coded this week"
+                size="sm"
+                className="text-center"
+              />
             </div>
           )}
 
