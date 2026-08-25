@@ -44,3 +44,101 @@ Required in `.env.local` (see that file for the full list of names): `GROQ_API_K
 ### UI components
 - `src/components/ui/` mixes shadcn/ui-generated primitives (button, dialog, sheet, sidebar, avatar, etc. — see `components.json` for the shadcn config: New York style, zinc base, RSC-enabled, path aliases `@/components`, `@/lib`, `@/hooks`) with bespoke portfolio components (spotify-card, wakatime-card, hover-video-card, animated-backgrounds, typewriter-effect, etc.). When adding shadcn primitives, follow the existing aliasing rather than hand-rolling equivalents.
 - Path alias `@/*` maps to `./src/*` (see `tsconfig.json`).
+
+## Frontend design and motion guidance
+
+This repository is an existing personal portfolio redesign. Preserve the established visual identity and architecture unless a redesign task explicitly requires changing them.
+
+### Skill usage
+
+Use the smallest relevant skill set for the task. Do not invoke every frontend/design skill by default.
+
+- `design-taste-frontend`
+  - Use for redesign exploration, anti-generic layout thinking, and proposing alternative compositions.
+  - Best when a section feels predictable, templated, or overly AI-generated.
+  - Treat it as an exploration tool, not the final design authority.
+
+- `impeccable`
+  - Use as the primary critique and refinement skill for hierarchy, typography, spacing, composition, responsiveness, accessibility, and final visual polish.
+  - Prefer it when an existing direction already exists and needs improvement rather than replacement.
+
+- `emil-design-eng`
+  - Use primarily for animation and interaction quality: easing, durations, transitions, hover/pointer behavior, scroll interactions, micro-interactions, interruption behavior, and perceived responsiveness.
+  - Do not substantially redesign a section during a motion-only pass.
+
+- `frontend-design`
+  - Use only when broader visual direction needs exploration and the current design direction is insufficient.
+  - Do not automatically combine it with `design-taste-frontend`.
+
+- `redesign-skill`
+  - Use only for deliberate large-scale redesign audits.
+  - Avoid invoking it for small styling or component changes.
+
+- `gpt-tasteskill`
+  - Do not use by default in Claude Code.
+  - Reserve it for explicitly experimental, GSAP-heavy motion/layout exploration.
+
+- `soft-skill`, `minimalist-skill`, and `brutalist-skill`
+  - Use only when that specific visual direction is explicitly requested or clearly relevant.
+
+- `imagegen-frontend-web`
+  - Use only when visual reference generation is explicitly requested.
+  - Do not generate reference images during normal implementation tasks.
+
+### Design workflow
+
+For unclear design problems:
+1. Use Superpowers brainstorming to clarify the section's purpose and possible directions.
+2. Use `design-taste-frontend` when useful to challenge predictable solutions.
+3. Use `impeccable` to critique and refine the selected direction.
+4. Implement using the existing project architecture and conventions.
+5. Use `emil-design-eng` for the dedicated motion/interaction pass.
+6. Use `impeccable` again for final polish when appropriate.
+
+Do not combine these stages unnecessarily for small changes.
+
+### Visual direction
+
+Favor:
+- editorial composition
+- contemporary developer-portfolio aesthetics
+- strong typography and hierarchy
+- intentional asymmetry when appropriate
+- restrained but distinctive visual details
+- generous negative space
+- designs that feel authored rather than template-generated
+
+Avoid:
+- generic bento-grid layouts unless structurally justified
+- excessive cards
+- glassmorphism
+- gradient blobs
+- floating decorative pills
+- unnecessary glow effects
+- generic SaaS landing-page aesthetics
+- repetitive centered section layouts
+- decoration that does not support hierarchy or meaning
+
+### Motion direction
+
+Motion should communicate hierarchy, continuity, spatial relationships, or interaction.
+
+Prefer:
+- purposeful GSAP/ScrollTrigger effects where they materially improve the experience
+- subtle micro-interactions
+- deliberate easing and timing
+- transform/opacity animation where appropriate
+- responsive interruption behavior
+- restrained motion density
+- reduced-motion support
+
+Avoid:
+- applying the same fade-up entrance to every section
+- arbitrary parallax
+- excessive staggering
+- animation added only because an element enters the viewport
+- scroll-jacking
+- effects that make content harder to read or interact with
+- `transition-all` when specific properties are sufficient
+
+Project instructions and the existing portfolio design language take precedence over generic recommendations from installed design skills.
