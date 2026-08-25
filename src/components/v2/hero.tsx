@@ -208,7 +208,10 @@ export function Hero() {
               than depending on the (already-correct, but implicit) default
               rule that positioned z-indexed elements paint over static
               ones. */}
-          <div data-hero-bp="desktop" className="relative z-0 hidden lg:block">
+          <div
+            data-hero-bp="desktop"
+            className="relative z-0 hidden [&>div]:[clip-path:inset(0_0_1rem_0)] lg:block"
+          >
             <div className="overflow-clip -mb-4 px-20 pb-4">
               <span
                 data-hero="headline-line"
@@ -279,7 +282,10 @@ export function Hero() {
               the ONLY spacing source on the right; the left side is
               intentionally untouched (its balance already comes from the
               pill's own centered slot width, not a margin). */}
-          <div data-hero-bp="tablet" className="relative z-0 hidden sm:block lg:hidden">
+          <div
+            data-hero-bp="tablet"
+            className="relative z-0 hidden [&>div]:[clip-path:inset(0_0_1rem_0)] sm:block lg:hidden"
+          >
             <div className="overflow-clip -mb-2 px-16 pb-4">
               <span
                 data-hero="headline-line"
@@ -356,7 +362,7 @@ export function Hero() {
               pill margin, leading space lives on the following text). */}
           <div
             data-hero-bp="mobile-lg"
-            className="relative z-0 hidden min-[550px]:block sm:hidden"
+            className="relative z-0 hidden [&>div]:[clip-path:inset(0_0_1rem_0)] min-[550px]:block sm:hidden"
           >
             <div className="overflow-clip -mb-4 px-8 pb-4">
               <span
@@ -434,7 +440,7 @@ export function Hero() {
               tier above. */}
           <div
             data-hero-bp="mobile"
-            className="relative z-0 block min-[550px]:hidden"
+            className="relative z-0 block [&>div]:[clip-path:inset(0_0_1rem_0)] min-[550px]:hidden"
           >
             <div className="overflow-clip -mb-4 px-8 pb-4">
               <span

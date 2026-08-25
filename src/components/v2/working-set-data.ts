@@ -1,4 +1,5 @@
 import type { IconType } from "react-icons";
+import { FaJava } from "react-icons/fa";
 import {
   SiAmazonwebservices,
   SiAngular,
@@ -8,7 +9,6 @@ import {
   SiExpress,
   SiFastapi,
   SiFastify,
-  SiFigma,
   SiFlutter,
   SiGit,
   SiGithub,
@@ -28,7 +28,6 @@ import {
   SiSqlite,
   SiTailwindcss,
   SiTypescript,
-  SiVercel,
   SiVitest,
   SiVuedotjs,
   SiWordpress,
@@ -51,18 +50,53 @@ export interface TechZone {
   items: readonly TechItem[];
 }
 
+/** Curated identity picks for the two LogoLoop rails — full-stack
+ *  language/framework/db/cloud marks, not generic workflow tooling. The
+ *  broader stack (including items dropped here) still lives in
+ *  `WORKING_SET` below, surfaced through the full toolkit panel. */
+export const RAIL_ONE: readonly TechItem[] = [
+  { name: "TypeScript", Icon: SiTypescript },
+  { name: "Next.js", Icon: SiNextdotjs },
+  { name: "React", Icon: SiReact, opticalScale: 1.12 },
+  { name: "Angular", Icon: SiAngular },
+  { name: "MongoDB", Icon: SiMongodb },
+  { name: "PostgreSQL", Icon: SiPostgresql },
+  { name: "AWS", Icon: SiAmazonwebservices, opticalScale: 0.88 },
+  { name: "Tailwind CSS", Icon: SiTailwindcss, opticalScale: 1.08 },
+  { name: "Laravel", Icon: SiLaravel },
+];
+
+export const RAIL_TWO: readonly TechItem[] = [
+  { name: "Node.js", Icon: SiNodedotjs },
+  { name: "Python", Icon: SiPython },
+  { name: "Fastify", Icon: SiFastify },
+  { name: "Java", Icon: FaJava, opticalScale: 0.92 },
+  { name: "PHP", Icon: SiPhp },
+  { name: "NestJS", Icon: SiNestjs },
+  { name: "React Native", Icon: SiReact, opticalScale: 1.12 },
+  { name: "Expo", Icon: SiExpo },
+  { name: "Express.js", Icon: SiExpress },
+];
+
+// The full public toolkit — five categories, surfaced in the toolkit
+// panel. Array order is meaningful: `ToolkitPanel` destructures this by
+// position (Frontend, Backend, Database, Testing & Tools, Infrastructure).
 export const WORKING_SET: readonly TechZone[] = [
   {
     number: "01",
     title: "FRONTEND",
     items: [
+      { name: "TypeScript", Icon: SiTypescript },
       { name: "Next.js", Icon: SiNextdotjs },
       { name: "React", Icon: SiReact, opticalScale: 1.12 },
-      { name: "TypeScript", Icon: SiTypescript },
+      { name: "Angular", Icon: SiAngular },
       { name: "Tailwind CSS", Icon: SiTailwindcss, opticalScale: 1.08 },
       { name: "Vue.js", Icon: SiVuedotjs },
-      { name: "Angular", Icon: SiAngular },
       { name: "Bootstrap", Icon: SiBootstrap },
+      { name: "React Native", Icon: SiReact, opticalScale: 1.12 },
+      { name: "Expo", Icon: SiExpo },
+      { name: "Flutter", Icon: SiFlutter },
+      { name: "Dart", Icon: SiDart },
     ],
   },
   {
@@ -71,24 +105,30 @@ export const WORKING_SET: readonly TechZone[] = [
     items: [
       { name: "Node.js", Icon: SiNodedotjs },
       { name: "Laravel", Icon: SiLaravel },
-      { name: "Express.js", Icon: SiExpress },
-      { name: "Fastify", Icon: SiFastify },
-      { name: "FastAPI", Icon: SiFastapi },
       { name: "NestJS", Icon: SiNestjs },
+      { name: "Fastify", Icon: SiFastify },
+      { name: "Express.js", Icon: SiExpress },
       { name: "Python", Icon: SiPython },
-      { name: "Java", iconSrc: "/logos/java.svg" },
+      { name: "FastAPI", Icon: SiFastapi },
+      { name: "Java", Icon: FaJava, opticalScale: 0.92 },
       { name: "PHP", Icon: SiPhp },
       { name: "Rust", Icon: SiRust },
     ],
   },
   {
     number: "03",
-    title: "DATABASE & TESTING",
+    title: "DATABASE",
     items: [
       { name: "PostgreSQL", Icon: SiPostgresql },
       { name: "MongoDB", Icon: SiMongodb },
       { name: "MySQL", Icon: SiMysql },
       { name: "SQLite", Icon: SiSqlite },
+    ],
+  },
+  {
+    number: "04",
+    title: "TESTING & TOOLS",
+    items: [
       { name: "Vitest", Icon: SiVitest },
       { name: "Jest", Icon: SiJest },
       { name: "Playwright", iconSrc: "/logos/playwright.svg" },
@@ -96,19 +136,13 @@ export const WORKING_SET: readonly TechZone[] = [
     ],
   },
   {
-    number: "04",
-    title: "INFRASTRUCTURE / WORKFLOW / MOBILE",
+    number: "05",
+    title: "INFRASTRUCTURE & WORKFLOW",
     items: [
-      { name: "Vercel", Icon: SiVercel },
       { name: "AWS", Icon: SiAmazonwebservices, opticalScale: 0.88 },
       { name: "Git", Icon: SiGit },
       { name: "GitHub", Icon: SiGithub },
-      { name: "Figma", Icon: SiFigma },
       { name: "WordPress", Icon: SiWordpress },
-      { name: "Flutter", Icon: SiFlutter },
-      { name: "Dart", Icon: SiDart },
-      { name: "React Native", Icon: SiReact, opticalScale: 1.12 },
-      { name: "Expo", Icon: SiExpo },
     ],
   },
 ] as const;

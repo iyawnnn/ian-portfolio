@@ -327,6 +327,24 @@ html[data-intro-active="true"] [data-homepage-shell] {
   background-color: #11110f;
 }
 
+/* Custom cursor (src/components/v2/custom-cursor.tsx). The component only
+   ever adds `has-custom-cursor` on fine-pointer devices, so touch devices
+   are untouched; `:not([data-intro-active])` reuses the existing intro flag
+   so the cursor reveals itself the instant IntroLoader clears it, with no
+   separate JS wiring needed. */
+html.has-custom-cursor:not([data-intro-active]) {
+  cursor: none;
+}
+
+html.has-custom-cursor:not([data-intro-active]) * {
+  cursor: none !important;
+}
+
+html.has-custom-cursor:not([data-intro-active]) [data-custom-cursor-root] {
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
 @keyframes route-loader-draw {
   0%, 100% {
     stroke-dashoffset: 320;

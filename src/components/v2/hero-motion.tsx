@@ -62,6 +62,9 @@ export function HeroMotion() {
       ? activeGroup.querySelectorAll('[data-hero="headline-line"]')
       : [];
     const lines = Array.from(lineWraps);
+    const lineMasks = lines
+      .map((line) => line.parentElement)
+      .filter((mask): mask is HTMLElement => Boolean(mask));
     const pills = activeGroup
       ? activeGroup.querySelectorAll<HTMLElement>('[data-hero="image"]')
       : root.querySelectorAll<HTMLElement>('[data-hero="image"]');
@@ -231,6 +234,11 @@ export function HeroMotion() {
         0.15,
       )
       .to(lines, { yPercent: 0, duration: 0.7, stagger: 0.1 }, 0.15)
+      .set(
+        lineMasks,
+        { clipPath: "none" },
+        0.15 + 0.7 + 0.1 * Math.max(0, lines.length - 1),
+      )
       // Pills insert into the sentence noticeably after the headline/role
       // text have started appearing — like the images are dropped into
       // typography that's already there, not part of the initial

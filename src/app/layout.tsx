@@ -8,6 +8,7 @@ import { LayoutWrapper } from "@/components/layout/layout-wrapper";
 import { Analytics } from "@vercel/analytics/react";
 import { ChatWidget } from "@/components/layout/chat-widget";
 import { CommandMenuLoader } from "@/components/layout/command-menu-loader";
+import { CustomCursor } from "@/components/v2/custom-cursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -128,6 +129,7 @@ export default function RootLayout({
         </ThemeProvider>
         <CommandMenuLoader />
         <ChatWidget />
+        <CustomCursor />
         <Analytics />
       </body>
     </html>

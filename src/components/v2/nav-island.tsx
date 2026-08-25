@@ -802,6 +802,7 @@ export function NavIsland() {
       <div
         ref={boxRef}
         data-island-surface={isDarkSurface ? "dark" : "default"}
+        data-cursor-theme="dark"
         className={`relative z-50 overflow-hidden text-paper transition-[background-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
           isDarkSurface
             ? "bg-[#181816] shadow-[inset_0_0_0_1px_rgba(242,240,233,0.10),0_10px_30px_rgba(0,0,0,0.28)]"

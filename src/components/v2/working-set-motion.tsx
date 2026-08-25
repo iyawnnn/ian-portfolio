@@ -22,10 +22,10 @@ export function WorkingSetMotion() {
     const doesnt = root.querySelector<HTMLElement>('[data-working-set="headline-doesnt"]');
     const dividerLines = Array.from(root.querySelectorAll<HTMLElement>('[data-working-set="divider-line"]'));
     const dividerMark = root.querySelector<HTMLElement>('[data-working-set="divider-mark"]');
-    const zones = Array.from(root.querySelectorAll<HTMLElement>('[data-working-set="zone"]'));
-    const items = Array.from(root.querySelectorAll<HTMLElement>('[data-working-set="tech-item"]'));
+    const rails = Array.from(root.querySelectorAll<HTMLElement>('[data-working-set="rail"]'));
+    const cta = root.querySelector<HTMLElement>('[data-working-set="cta"]');
 
-    const targets = [fillMask, doesnt, ...dividerLines, dividerMark, ...zones, ...items];
+    const targets = [fillMask, doesnt, ...dividerLines, dividerMark, ...rails, cta];
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       if (fillMask) gsap.set(fillMask, { clipPath: "inset(0 0% 0 0)" });
@@ -35,8 +35,8 @@ export function WorkingSetMotion() {
 
     gsap.set(dividerLines, { scaleX: 0 });
     gsap.set(dividerMark, { opacity: 0 });
-    gsap.set(zones, { opacity: 0, y: 18 });
-    gsap.set(items, { opacity: 0, y: 12, scale: 0.97 });
+    gsap.set(rails, { opacity: 0, y: 18 });
+    if (cta) gsap.set(cta, { opacity: 0, y: 12 });
     if (doesnt) gsap.set(doesnt, { opacity: 0, y: 10, rotate: -1 });
     // fillMask's clip-path starting state is already baked into the JSX
     // (inset(0 100% 0 0)) — no gsap.set needed for it, and skipping it
@@ -60,8 +60,8 @@ export function WorkingSetMotion() {
         }
         tl.to(dividerLines, { scaleX: 1, duration: 0.6 }, 0.85)
           .to(dividerMark, { opacity: 1, duration: 0.4 }, 1.1)
-          .to(zones, { opacity: 1, y: 0, duration: 0.55, stagger: 0.1 }, 1.15)
-          .to(items, { opacity: 1, y: 0, scale: 1, duration: 0.45, stagger: 0.035 }, 1.35);
+          .to(rails, { opacity: 1, y: 0, duration: 0.55, stagger: 0.12 }, 1.15);
+        if (cta) tl.to(cta, { opacity: 1, y: 0, duration: 0.4 }, 1.5);
       },
     });
   }, []);

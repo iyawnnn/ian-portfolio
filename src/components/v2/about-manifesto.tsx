@@ -14,6 +14,7 @@ export function AboutManifesto() {
       id="about"
       data-about-manifesto="root"
       data-island-theme="dark"
+      data-cursor-theme="dark"
       aria-label="Personal manifesto"
       className="relative isolate min-h-svh overflow-clip bg-[#11110F] text-[#F2F0E9]"
     >
