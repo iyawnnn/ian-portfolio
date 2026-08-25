@@ -3,6 +3,10 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import {
+  INTRO_COMPLETED_FLAG,
+  INTRO_COMPLETE_EVENT,
+} from "@/lib/portfolio-intro-events";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -108,12 +112,26 @@ export function AboutManifestoMotion() {
 
     // Portrait + signature reveal once, the first time the section is
     // approached — this is intentionally one-shot and does not replay.
-    ScrollTrigger.create({
-      trigger: root,
-      start: "top 92%",
-      once: true,
-      onEnter: revealLeft,
-    });
+    let signatureTrigger: ScrollTrigger | null = null;
+    const createSignatureTrigger = () => {
+      if (signatureTrigger) return;
+      signatureTrigger = ScrollTrigger.create({
+        trigger: root,
+        start: "top 92%",
+        once: true,
+        onEnter: revealLeft,
+      });
+    };
+
+    const introAlreadyComplete =
+      document.documentElement.dataset[INTRO_COMPLETED_FLAG] === "true";
+    if (introAlreadyComplete) {
+      createSignatureTrigger();
+    } else {
+      window.addEventListener(INTRO_COMPLETE_EVENT, createSignatureTrigger, {
+        once: true,
+      });
+    }
 
     // Manifesto word reveal: one GSAP timeline, directly scrubbed by scroll
     // position. No latched/monotonic state — scrolling up reverses it.
@@ -174,6 +192,8 @@ export function AboutManifestoMotion() {
     }
 
     return () => {
+      window.removeEventListener(INTRO_COMPLETE_EVENT, createSignatureTrigger);
+      signatureTrigger?.kill();
       mm.revert();
       signatureTimeline?.kill();
     };
