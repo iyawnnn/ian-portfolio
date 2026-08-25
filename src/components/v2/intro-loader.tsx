@@ -128,27 +128,32 @@ export function IntroLoader() {
       }}
     >
       <div
-        ref={wordRef}
-        data-intro-word
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 [--intro-word-optical-offset:clamp(14px,calc(1vh_+_1vw),26px)] translate-y-[calc(-50%_-_var(--intro-word-optical-offset))] [--intro-stroke:1px] md:[--intro-stroke:1.5px] lg:[--intro-stroke:1.75px]"
-        style={{ opacity: 0 }}
+        data-intro-word-positioner
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 [--intro-word-optical-offset:clamp(14px,calc(1vh_+_1vw),26px)] translate-y-[calc(-50%_-_var(--intro-word-optical-offset))]"
       >
-        <div className="relative">
-          <div
-            data-intro-outline
-            className={`${WORD_CLASS_NAME} text-transparent`}
-            style={{ WebkitTextStroke: "var(--intro-stroke) #F2F0E9" }}
-          >
-            IYAWN
-          </div>
+        <div
+          ref={wordRef}
+          data-intro-word
+          className="[--intro-stroke:1px] md:[--intro-stroke:1.5px] lg:[--intro-stroke:1.75px]"
+          style={{ opacity: 0 }}
+        >
+          <div className="relative">
+            <div
+              data-intro-outline
+              className={`${WORD_CLASS_NAME} text-transparent`}
+              style={{ WebkitTextStroke: "var(--intro-stroke) #F2F0E9" }}
+            >
+              IYAWN
+            </div>
 
-          <div
-            ref={fillRef}
-            data-intro-fill
-            className="absolute inset-0 overflow-hidden text-[#F2F0E9] will-change-[clip-path]"
-            style={{ clipPath: "inset(0 100% 0 0)" }}
-          >
-            <div className={WORD_CLASS_NAME}>IYAWN</div>
+            <div
+              ref={fillRef}
+              data-intro-fill
+              className="absolute inset-0 overflow-hidden text-[#F2F0E9] will-change-[clip-path]"
+              style={{ clipPath: "inset(0 100% 0 0)" }}
+            >
+              <div className={WORD_CLASS_NAME}>IYAWN</div>
+            </div>
           </div>
         </div>
       </div>
