@@ -1,0 +1,287 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - generic:
+        - generic:
+          - generic:
+            - generic: IYAWN
+            - generic: IYAWN
+      - generic [ref=e5]:
+        - heading "Full-Stack Developer I About BUILD FOR THE WEB, SHIP WHAT Selected Work MATTERS, FIX WHAT BREAKS." [level=1] [ref=e8]:
+          - generic: Full-Stack Developer
+          - generic [ref=e9]:
+            - generic [ref=e11]:
+              - text: I
+              - link "About" [ref=e14] [cursor=pointer]:
+                - /url: /about
+                - generic: About me
+              - text: BUILD FOR THE WEB,
+            - generic [ref=e20]:
+              - text: SHIP WHAT
+              - link "Selected Work" [ref=e23] [cursor=pointer]:
+                - /url: /projects
+                - generic: Work
+              - text: MATTERS,
+            - generic [ref=e28]: FIX WHAT BREAKS.
+        - generic [ref=e30]:
+          - generic [ref=e31]: © 2026 Ian Macabulos
+          - generic [ref=e32]: GMT+8 · 9:16 AM
+          - generic [ref=e33]: Based in Philippines
+      - region "Personal manifesto" [ref=e34]:
+        - generic [ref=e36]:
+          - img "Portrait of Ian Macabulos" [ref=e40]
+          - generic [ref=e41]:
+            - generic [ref=e42]:
+              - paragraph [ref=e43]: I turn complicated ideas into things people can actually use. I care about the details, probably more than I should, and I like building products that feel as good as they work.
+              - paragraph [ref=e44]: Most days, I’m somewhere between shipping something useful, fixing something I broke, and wondering why it worked yesterday.
+            - generic [ref=e45]:
+              - paragraph [ref=e46]:
+                - generic [ref=e47]: I
+                - generic [ref=e48]: turn
+                - generic [ref=e49]: complicated
+                - generic [ref=e50]: ideas
+                - generic [ref=e51]: into
+                - generic [ref=e52]: things
+                - generic [ref=e53]: people
+                - generic [ref=e54]: can
+                - generic [ref=e55]: actually
+                - generic [ref=e56]: use.
+                - generic [ref=e57]: I
+                - generic [ref=e58]: care
+                - generic [ref=e59]: about
+                - generic [ref=e60]: the
+                - generic [ref=e61]: details,
+                - generic [ref=e62]: probably
+                - generic [ref=e63]: more
+                - generic [ref=e64]: than
+                - generic [ref=e65]: I
+                - generic [ref=e66]: should,
+                - generic [ref=e67]: and
+                - generic [ref=e68]: I
+                - generic [ref=e69]: like
+                - generic [ref=e70]: building
+                - generic [ref=e71]: products
+                - generic [ref=e72]: that
+                - generic [ref=e73]: feel
+                - generic [ref=e74]: as
+                - generic [ref=e75]: good
+                - generic [ref=e76]: as
+                - generic [ref=e77]: they
+                - text: work.
+              - paragraph [ref=e78]:
+                - generic [ref=e79]: Most
+                - generic [ref=e80]: days,
+                - generic [ref=e81]: I’m
+                - generic [ref=e82]: somewhere
+                - generic [ref=e83]: between
+                - generic [ref=e84]: shipping
+                - generic [ref=e85]: something
+                - generic [ref=e86]: useful,
+                - generic [ref=e87]: fixing
+                - generic [ref=e88]: something
+                - generic [ref=e89]: I
+                - generic [ref=e90]: broke,
+                - generic [ref=e91]: and
+                - generic [ref=e92]: wondering
+                - generic [ref=e93]: why
+                - generic [ref=e94]: it
+                - generic [ref=e95]: worked
+                - text: yesterday.
+      - region [ref=e96]:
+        - generic [ref=e97]:
+          - heading "I LIKE MAKING THINGS THAT LIVE between DESIGN AND CODE." [level=2] [ref=e99]:
+            - generic [ref=e100]: I LIKE MAKING THINGS
+            - generic [ref=e102]: THAT LIVE between
+            - generic [ref=e104]: DESIGN AND CODE.
+          - generic [ref=e107]:
+            - article [ref=e108]:
+              - generic [ref=e109]:
+                - paragraph [ref=e110]: "01"
+                - heading "INTERFACES" [level=3] [ref=e111]
+                - paragraph [ref=e112]: The part people see and feel.
+                - paragraph [ref=e113]: I care about interfaces that feel deliberate — shaped around the product instead of borrowed from the same familiar template.
+              - img "Close-up editorial view of a person interacting with a computer interface" [ref=e116]
+            - article [ref=e117]:
+              - generic [ref=e118]:
+                - paragraph [ref=e119]: "02"
+                - heading "SYSTEMS" [level=3] [ref=e120]
+                - paragraph [ref=e121]: The part I think about first.
+                - paragraph [ref=e122]: Architecture, security and structure come early. I would rather prevent the problems I can already see than rebuild around them later.
+              - img "Editorial workspace showing system planning and architecture sketches" [ref=e125]
+            - article [ref=e126]:
+              - generic [ref=e127]:
+                - paragraph [ref=e128]: "03"
+                - heading "EXPERIMENTS" [level=3] [ref=e129]
+                - paragraph [ref=e130]: The part nobody asked for.
+                - paragraph [ref=e131]: Side projects keep me learning. Sometimes that means trying something new. Sometimes it means overengineering something that really did not need it.
+              - img "Creative technology workspace showing an abstract motion experiment" [ref=e134]
+      - 'region "Transition: System to screen, into Selected Work" [ref=e135]':
+        - generic [ref=e136]: System to screen — Selected Work
+        - img [ref=e139]:
+          - generic [ref=e141]: SYSTEM TO SCREEN SELECTED WORK
+          - generic [ref=e142]: SYSTEM TO SCREEN SELECTED WORK
+      - region "Selected work" [ref=e143]:
+        - generic [ref=e145]:
+          - link "AC-CORE (Angeles City Center for Operational Reporting and Engineering) 01 AC-CORE Angular Node.js Express MongoDB" [ref=e146] [cursor=pointer]:
+            - /url: /projects/ac-core
+            - generic [ref=e147]:
+              - img "AC-CORE (Angeles City Center for Operational Reporting and Engineering)" [ref=e148]
+              - generic [ref=e149]:
+                - generic [ref=e150]: "01"
+                - generic [ref=e151]: AC-CORE
+                - list [ref=e153]:
+                  - listitem [ref=e154]: Angular
+                  - listitem [ref=e157]: Node.js
+                  - listitem [ref=e160]: Express
+                  - listitem [ref=e163]: MongoDB
+          - link "UA LabSign — Laboratory Attendance System 02 UA LabSign Next.js PostgreSQL React Native Expo" [ref=e166] [cursor=pointer]:
+            - /url: /projects/ua-attendance
+            - generic [ref=e167]:
+              - img "UA LabSign — Laboratory Attendance System" [ref=e168]
+              - generic [ref=e169]:
+                - generic [ref=e170]: "02"
+                - generic [ref=e171]: UA LabSign
+                - list [ref=e173]:
+                  - listitem [ref=e174]: Next.js
+                  - listitem [ref=e177]: PostgreSQL
+                  - listitem [ref=e180]: React Native
+                  - listitem [ref=e183]: Expo
+          - link "Grit 03 Grit Laravel Livewire PostgreSQL" [ref=e186] [cursor=pointer]:
+            - /url: /projects/grit
+            - generic [ref=e187]:
+              - img "Grit" [ref=e188]
+              - generic [ref=e189]:
+                - generic [ref=e190]: "03"
+                - generic [ref=e191]: Grit
+                - list [ref=e193]:
+                  - listitem [ref=e194]: Laravel
+                  - listitem [ref=e197]: Livewire
+                  - listitem [ref=e200]: PostgreSQL
+          - link "SubVantage 04 SubVantage Next.js TypeScript PostgreSQL Prisma" [ref=e203] [cursor=pointer]:
+            - /url: /projects/subvantage
+            - generic [ref=e204]:
+              - img "SubVantage" [ref=e205]
+              - generic [ref=e206]:
+                - generic [ref=e207]: "04"
+                - generic [ref=e208]: SubVantage
+                - list [ref=e210]:
+                  - listitem [ref=e211]: Next.js
+                  - listitem [ref=e214]: TypeScript
+                  - listitem [ref=e217]: PostgreSQL
+                  - listitem [ref=e220]: Prisma
+          - link "KodaSync 05 KodaSync Next.js FastAPI Python PostgreSQL" [ref=e223] [cursor=pointer]:
+            - /url: /projects/kodasync
+            - generic [ref=e224]:
+              - img "KodaSync" [ref=e225]
+              - generic [ref=e226]:
+                - generic [ref=e227]: "05"
+                - generic [ref=e228]: KodaSync
+                - list [ref=e230]:
+                  - listitem [ref=e231]: Next.js
+                  - listitem [ref=e234]: FastAPI
+                  - listitem [ref=e237]: Python
+                  - listitem [ref=e240]: PostgreSQL
+          - link "View all projects" [ref=e243] [cursor=pointer]:
+            - /url: /projects
+            - generic [ref=e244]: View allProjects
+      - 'region "Working set: technologies I use" [ref=e248]':
+        - generic [ref=e249]:
+          - heading "THE TOOLS CHANGE. THE WAY I BUILD doesn’t." [level=2] [ref=e251]:
+            - generic [ref=e252]: THE TOOLS CHANGE.
+            - generic [ref=e253]: THE WAY I BUILD doesn’t.
+            - generic:
+              - generic: THE TOOLS CHANGE.
+              - generic: THE WAY I BUILD
+          - generic [ref=e258]:
+            - generic [ref=e259]:
+              - generic [ref=e260]:
+                - generic [ref=e261]: "01"
+                - heading "FRONTEND" [level=3] [ref=e262]
+              - generic [ref=e263]:
+                - listitem [ref=e265]:
+                  - generic [ref=e269]: Next.js
+                - listitem [ref=e271]:
+                  - generic [ref=e275]: React
+                - listitem [ref=e277]:
+                  - generic [ref=e281]: TypeScript
+                - listitem [ref=e283]:
+                  - generic [ref=e287]: Tailwind CSS
+                - listitem [ref=e289]:
+                  - generic [ref=e293]: Vue.js
+                - listitem [ref=e295]:
+                  - generic [ref=e299]: Angular
+                - listitem [ref=e301]:
+                  - generic [ref=e305]: Bootstrap
+            - generic [ref=e306]:
+              - generic [ref=e307]:
+                - generic [ref=e308]: "02"
+                - heading "BACKEND" [level=3] [ref=e309]
+              - generic [ref=e310]:
+                - listitem [ref=e312]:
+                  - generic [ref=e316]: Node.js
+                - listitem [ref=e318]:
+                  - generic [ref=e322]: Laravel
+                - listitem [ref=e324]:
+                  - generic [ref=e328]: Express.js
+                - listitem [ref=e330]:
+                  - generic [ref=e334]: Fastify
+                - listitem [ref=e336]:
+                  - generic [ref=e340]: FastAPI
+                - listitem [ref=e342]:
+                  - generic [ref=e346]: NestJS
+                - listitem [ref=e348]:
+                  - generic [ref=e352]: Python
+                - listitem [ref=e354]:
+                  - generic [ref=e357]: Java
+                - listitem [ref=e359]:
+                  - generic [ref=e363]: PHP
+                - listitem [ref=e365]:
+                  - generic [ref=e369]: Rust
+            - generic [ref=e370]:
+              - generic [ref=e371]:
+                - generic [ref=e372]: "03"
+                - heading "DATABASE & TESTING" [level=3] [ref=e373]
+              - generic [ref=e374]:
+                - listitem [ref=e376]:
+                  - generic [ref=e380]: PostgreSQL
+                - listitem [ref=e382]:
+                  - generic [ref=e386]: MongoDB
+                - listitem [ref=e388]:
+                  - generic [ref=e392]: MySQL
+                - listitem [ref=e394]:
+                  - generic [ref=e398]: SQLite
+                - listitem [ref=e400]:
+                  - generic [ref=e404]: Vitest
+                - listitem [ref=e406]:
+                  - generic [ref=e410]: Jest
+                - listitem [ref=e412]:
+                  - generic [ref=e415]: Playwright
+                - listitem [ref=e417]:
+                  - generic [ref=e421]: Postman
+            - generic [ref=e422]:
+              - generic [ref=e423]:
+                - generic [ref=e424]: "04"
+                - heading "INFRASTRUCTURE / WORKFLOW / MOBILE" [level=3] [ref=e425]
+              - generic [ref=e426]:
+                - listitem [ref=e428]:
+                  - generic [ref=e432]: Vercel
+                - listitem [ref=e434]:
+                  - generic [ref=e438]: AWS
+                - listitem [ref=e440]:
+                  - generic [ref=e444]: Git
+                - listitem [ref=e446]:
+                  - generic [ref=e450]: GitHub
+                - listitem [ref=e452]:
+                  - generic [ref=e456]: Figma
+                - listitem [ref=e458]:
+                  - generic [ref=e462]: WordPress
+                - listitem [ref=e464]:
+                  - generic [ref=e468]: Flutter
+                - listitem [ref=e470]:
+                  - generic [ref=e474]: Dart
+                - listitem [ref=e476]:
+                  - generic [ref=e480]: React Native
+                - listitem [ref=e482]:
+                  - generic [ref=e486]: Expo
+    - paragraph [ref=e489]: © 2026 Ian Macabulos. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e495] [cursor=pointer]

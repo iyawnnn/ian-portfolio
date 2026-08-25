@@ -3,6 +3,12 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import {
+  INTRO_COMPLETED_FLAG,
+  INTRO_COMPLETE_EVENT,
+  NAV_START_DISPATCHED_FLAG,
+  NAV_START_EVENT,
+} from "@/lib/portfolio-intro-events";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -105,6 +111,8 @@ export function HeroMotion() {
         clipPath: "none",
         strokeDashoffset: 0,
       });
+      document.documentElement.dataset[NAV_START_DISPATCHED_FLAG] = "true";
+      window.dispatchEvent(new Event(NAV_START_EVENT));
       return;
     }
 
@@ -190,7 +198,10 @@ export function HeroMotion() {
       x: outlineMotion.entranceX,
       y: outlineMotion.entranceY,
     });
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const tl = gsap.timeline({
+      paused: true,
+      defaults: { ease: "power3.out" },
+    });
 
     tl.to(grid, { opacity: 1, duration: 0.6 }, 0)
       .to(
@@ -295,7 +306,7 @@ export function HeroMotion() {
       // revealing (0.15) so the two feel like one continuous entrance.
       .fromTo(
         roleText,
-        { clipPath: "polygon(0% 0%, -3% 0%, -15% 100%, 0% 100%)" },
+        { clipPath: "polygon(-1% 0%, -3% 0%, -15% 100%, -1% 100%)" },
         {
           clipPath: "polygon(0% 0%, 115% 0%, 103% 100%, 0% 100%)",
           duration: 1.4,
@@ -309,7 +320,12 @@ export function HeroMotion() {
       // stroke rather than a separate, later beat.
       .to(
         roleUnderline,
-        { strokeDashoffset: 0, duration: 0.55, ease: "power2.out" },
+        {
+          onStart: () => gsap.set(roleUnderline, { opacity: 1 }),
+          strokeDashoffset: 0,
+          duration: 0.55,
+          ease: "power2.out",
+        },
         0.3 + 1.4 * 0.84,
       )
       .to(bottomRail, { opacity: 1, duration: 0.4 }, 0.9);
@@ -398,6 +414,28 @@ export function HeroMotion() {
       });
     }
 
+    let entranceStarted = false;
+    let entranceDelay: gsap.core.Tween | undefined;
+
+    const startEntrance = () => {
+      if (entranceStarted) return;
+      entranceStarted = true;
+      entranceDelay = gsap.delayedCall(0.03, () => {
+        tl.play(0);
+        document.documentElement.dataset[NAV_START_DISPATCHED_FLAG] = "true";
+        window.dispatchEvent(new Event(NAV_START_EVENT));
+      });
+    };
+
+    window.addEventListener(INTRO_COMPLETE_EVENT, startEntrance, {
+      once: true,
+    });
+    if (
+      document.documentElement.dataset[INTRO_COMPLETED_FLAG] === "true"
+    ) {
+      startEntrance();
+    }
+
     // --- Pointer parallax (desktop/tablet, fine-pointer only) --------------
     const canHover = window.matchMedia(
       "(hover: hover) and (pointer: fine)",
@@ -410,6 +448,7 @@ export function HeroMotion() {
       canHover &&
       (activeBreakpoint === "desktop" || activeBreakpoint === "tablet");
 
+    let removePointerListener: (() => void) | undefined;
     if (parallaxEnabled && pills.length) {
       // Reduced and hard-clamped so pointer drift can never visually reach
       // the edge of the pill's own centered slot (see portrait-pill.tsx) —
@@ -448,10 +487,15 @@ export function HeroMotion() {
       window.addEventListener("pointermove", handlePointerMove, {
         passive: true,
       });
-
-      return () =>
+      removePointerListener = () =>
         window.removeEventListener("pointermove", handlePointerMove);
     }
+
+    return () => {
+      window.removeEventListener(INTRO_COMPLETE_EVENT, startEntrance);
+      removePointerListener?.();
+      entranceDelay?.kill();
+    };
   }, []);
 
   return null;

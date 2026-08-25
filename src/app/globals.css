@@ -305,6 +305,28 @@
   }
 }
 
+/* IYAWN intro first-paint guard. `data-intro-active` is set directly on
+   <html> in the server-rendered markup (src/app/layout.tsx) so the browser's
+   very first paint already owns html/body in Warm Black and has scrolling
+   locked — before hydration, before IntroLoader mounts. Locking overflow
+   here (rather than in a client effect) means no scrollbar can ever appear
+   during the intro in the first place, which also removes any need to style
+   a scrollbar track/gutter separately. IntroLoader removes the attribute the
+   instant the intro has fully exited (or unmounts early); a tiny inline
+   script in layout.tsx removes it immediately on every route except "/".
+   One flag drives background + scroll lock — no :has(), no separate
+   component-local stylesheet. */
+html[data-intro-active="true"],
+html[data-intro-active="true"] body {
+  background: #11110f;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+html[data-intro-active="true"] [data-homepage-shell] {
+  background-color: #11110f;
+}
+
 @keyframes route-loader-draw {
   0%, 100% {
     stroke-dashoffset: 320;

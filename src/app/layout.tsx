@@ -59,6 +59,22 @@ export const metadata: Metadata = {
   },
 };
 
+// IYAWN intro first-paint guard (see the matching CSS in globals.css). The
+// `data-intro-active="true"` attribute below must be part of the initial
+// server-rendered HTML — it's outside the root `loading.tsx` Suspense
+// boundary that wraps `{children}`, unlike anything rendered from page.tsx
+// (which streams in behind a hidden placeholder, too late to stop the
+// fallback's Paper-colored shell from being the first thing painted).
+//
+// Set unconditionally on every route (root layout has no cheap,
+// static-generation-safe way to know the request path — reading it via
+// headers()/cookies() would force the whole site into dynamic rendering),
+// and immediately removed by this one required inline script on every route
+// except "/", before that route's own body content is even parsed. On "/",
+// IntroLoader removes the same attribute once the intro has fully exited.
+const INTRO_FIRST_PAINT_GUARD =
+  'if(location.pathname!=="/"){document.documentElement.removeAttribute("data-intro-active")}';
+
 export default function RootLayout({
   children,
 }: {
@@ -89,12 +105,13 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning data-intro-active="true">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script dangerouslySetInnerHTML={{ __html: INTRO_FIRST_PAINT_GUARD }} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${neueMontreal.variable} ${bradford.variable} ${pinyonScript.variable} ${geistSans.className} antialiased`}

@@ -6,6 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import {
+  NAV_START_DISPATCHED_FLAG,
+  NAV_START_EVENT,
+} from "@/lib/portfolio-intro-events";
 import useSWR from "swr";
 import { FaGithub, FaLinkedin, FaTiktok, FaEnvelope } from "react-icons/fa6";
 import type { SpotifyData } from "@/components/ui/spotify-card-client";
@@ -407,10 +411,10 @@ export function NavIsland() {
     };
   }, [scrolled]);
 
-  // A. Island entrance — one-shot, mount-only (empty dependency array, so it
-  // can NEVER replay for any reason — not a track change, not an activity
-  // switch, not a resize, not opening navigation). Targets only the shell's
-  // opacity/y/scale. Never touches width/height/borderRadius (owned
+  // A. Island entrance — one-shot and signal-gated (empty dependency array,
+  // so it can NEVER replay for any reason — not a track change, not an
+  // activity switch, not a resize, not opening navigation). Targets only the
+  // shell's opacity/y/scale. Never touches width/height/borderRadius (owned
   // exclusively by timeline B / effect E), so the two can never fight.
   useGSAP(
     () => {
@@ -424,14 +428,36 @@ export function NavIsland() {
         return;
       }
       gsap.set(box, { opacity: 0, y: -10, scale: 0.96 });
-      gsap.to(box, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.6,
-        ease: "power3.out",
-        delay: 0.45,
-      });
+      let entranceTween: gsap.core.Tween | undefined;
+      let entranceDelay: gsap.core.Tween | undefined;
+      let entranceStarted = false;
+
+      const startEntrance = () => {
+        if (entranceStarted) return;
+        entranceStarted = true;
+        entranceDelay = gsap.delayedCall(0.13, () => {
+          entranceTween = gsap.to(box, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            ease: "power3.out",
+          });
+        });
+      };
+
+      window.addEventListener(NAV_START_EVENT, startEntrance, { once: true });
+      if (
+        document.documentElement.dataset[NAV_START_DISPATCHED_FLAG] === "true"
+      ) {
+        startEntrance();
+      }
+
+      return () => {
+        window.removeEventListener(NAV_START_EVENT, startEntrance);
+        entranceDelay?.kill();
+        entranceTween?.kill();
+      };
     },
     { scope: rootRef, dependencies: [] },
   );

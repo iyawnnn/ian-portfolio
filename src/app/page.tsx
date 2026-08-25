@@ -8,6 +8,7 @@ import { SelectedWork } from "@/components/v2/selected-work";
 import { WorkingSet } from "@/components/v2/working-set";
 import { NavIslandLoader } from "@/components/v2/nav-island-loader";
 import { SmoothScroll } from "@/components/v2/smooth-scroll";
+import { IntroLoader } from "@/components/v2/intro-loader";
 
 // Below-hero sections (Projects Overview, GitHub activity, Spotify/WakaTime,
 // blog preview, Stack/Resume cards) are temporarily not rendered on "/"
@@ -16,6 +17,7 @@ import { SmoothScroll } from "@/components/v2/smooth-scroll";
 export default function ExplorePage() {
   return (
     <>
+      <IntroLoader />
       <ScrollRestoration />
       <NavIslandLoader />
       <Hero />

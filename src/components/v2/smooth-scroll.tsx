@@ -21,6 +21,29 @@ export function SmoothScroll() {
       smoothWheel: true,
     });
 
+    const root = document.documentElement;
+    const keepIntroAtTop = () => {
+      if (root.dataset.introActive === "true" && window.scrollY !== 0) {
+        window.scrollTo(0, 0);
+      }
+    };
+    const syncIntroScrollState = () => {
+      if (root.dataset.introActive === "true") {
+        lenis.stop();
+        keepIntroAtTop();
+      } else {
+        lenis.start();
+      }
+    };
+    const introStateObserver = new MutationObserver(syncIntroScrollState);
+
+    introStateObserver.observe(root, {
+      attributes: true,
+      attributeFilter: ["data-intro-active"],
+    });
+    window.addEventListener("scroll", keepIntroAtTop, { passive: true });
+    syncIntroScrollState();
+
     lenis.on("scroll", ScrollTrigger.update);
 
     const tick = (time: number) => lenis.raf(time * 1000);
@@ -28,6 +51,8 @@ export function SmoothScroll() {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      introStateObserver.disconnect();
+      window.removeEventListener("scroll", keepIntroAtTop);
       gsap.ticker.remove(tick);
       lenis.destroy();
     };

@@ -147,7 +147,7 @@ export function Hero() {
             <span
               data-hero="role-annotation-text"
               style={{
-                clipPath: "polygon(0% 0%, -3% 0%, -15% 100%, 0% 100%)",
+                clipPath: "polygon(-1% 0%, -3% 0%, -15% 100%, -1% 100%)",
               }}
               className="block whitespace-nowrap py-2 font-script text-[26px] text-oxblood sm:text-[34px] lg:text-[54px]"
             >
@@ -191,7 +191,11 @@ export function Hero() {
                 strokeLinejoin="round"
                 vectorEffect="non-scaling-stroke"
                 className="[stroke-width:1.85px] sm:[stroke-width:2.1px] lg:[stroke-width:2.4px]"
-                style={{ strokeDasharray: 260, strokeDashoffset: 260 }}
+                style={{
+                  strokeDasharray: 260,
+                  strokeDashoffset: 262,
+                  opacity: 0,
+                }}
               />
             </svg>
           </div>

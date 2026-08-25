@@ -27,7 +27,10 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
     // dark-on-paper (a visible line above/below WorkTransition on small
     // devices).
     return (
-      <div className="min-h-screen bg-paper overflow-x-hidden">
+      <div
+        data-homepage-shell
+        className="min-h-screen bg-paper overflow-x-hidden"
+      >
         <main className="flex flex-col min-h-screen w-full">
           {children}
           <SiteFooter />
