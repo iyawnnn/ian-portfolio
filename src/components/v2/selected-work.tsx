@@ -1,23 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react/ssr";
-import type { IconType } from "react-icons";
-import {
-  SiAngular,
-  SiExpo,
-  SiExpress,
-  SiFastapi,
-  SiLaravel,
-  SiLivewire,
-  SiMongodb,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiPostgresql,
-  SiPrisma,
-  SiPython,
-  SiReact,
-  SiTypescript,
-} from "react-icons/si";
 
 import { PROJECTS } from "@/lib/projects";
 import { SelectedWorkMotion } from "@/components/v2/selected-work-motion";
@@ -25,78 +7,166 @@ import { SelectedWorkMotion } from "@/components/v2/selected-work-motion";
 // The curved ribbon above (work-transition.tsx) already reads
 // "SYSTEM TO SCREEN — SELECTED WORK", so this section deliberately carries
 // no heading, eyebrow or intro copy — the work enters straight from the
-// ribbon.
+// ribbon. 8 of the 9 entries in `PROJECTS` render here directly (no
+// "view all" CTA) — ClimaPH is deliberately excluded from this homepage
+// showcase only (its data stays in `src/lib/projects.ts` untouched, since
+// it still needs to serve /projects and its own /projects/climaph page);
+// this gallery is otherwise the full Projects experience on the homepage.
 //
-// The gallery shows a *curated* 3-4 item core stack per project (frontend
-// framework, backend framework/runtime, language, primary database), not
-// the full tag list from /projects — implementation details, feature
-// flags (2FA), SDKs, and hosting providers (Neon, Supabase) are dropped
-// in favor of the underlying technology (PostgreSQL). This intentionally
-// diverges from `project.tags` (the richer /projects-page metadata, left
-// untouched) rather than corrupting it, per confirmed stacks in each
-// project's own /projects/<slug> page.
-const FEATURED: { link: string; tech: string[] }[] = [
-  { link: "/projects/ac-core", tech: ["Angular", "Node.js", "Express", "MongoDB"] },
-  { link: "/projects/ua-attendance", tech: ["Next.js", "PostgreSQL", "React Native", "Expo"] },
-  { link: "/projects/grit", tech: ["Laravel", "Livewire", "PostgreSQL"] },
-  { link: "/projects/subvantage", tech: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"] },
-  { link: "/projects/kodasync", tech: ["Next.js", "FastAPI", "Python", "PostgreSQL"] },
+// A fixed, HAOQI-inspired 4-row desktop composition — a 12-column grid
+// used purely as an alignment system, not a mandate to consume all 12
+// columns (row spans deliberately never sum to 12; negative space is
+// permanent, not something to optimize away):
+//   Row 1 — AC-CORE alone, top-right, large but contained.
+//   Row 2 — UA LabSign + SubVantage, two medium landscape rectangles.
+//   Row 3 — Grit + Mama R's, two small horizontal rectangles grouped
+//           toward the right, leaving the row's left half intentionally
+//           open (an art-directed void, not a bug).
+//   Row 4 — KodaSync (portrait) + Thryve (square) + MovieLoom (square).
+// `col`/`row` per project are explicit grid coordinates (not auto-placed),
+// so this exact composition is guaranteed rather than left to the grid's
+// packing algorithm. `meta` is a concise, real "category / timeline"
+// string pulled from each project's own /projects/<slug> detail page
+// (Type + Timeline fields there) — not the richer `tags` list on
+// `Project`, which stays untouched and keeps serving the /projects index.
+const FEATURED: {
+  link: string;
+  meta: string;
+  aspect: string;
+  md: string;
+  lg: string;
+  sizes: string;
+}[] = [
+  {
+    // Row 1 — the only solo row. Right-anchored (touches col 12, flush
+    // with the gallery's right gutter) at 8/12 (~67% of usable width, the
+    // "large HAOQI-reference" scale target), up from 7/12. Left margin
+    // (cols 1–4, ~33%) stays intentional negative space.
+    link: "/projects/ac-core",
+    meta: "Academic / 2026",
+    aspect: "aspect-[16/9]",
+    md: "md:col-span-2",
+    lg: "lg:col-start-5 lg:col-span-8 lg:row-start-1",
+    sizes: "(min-width: 1024px) 67vw, (min-width: 768px) 100vw, 100vw",
+  },
+  {
+    // Row 2, left — medium landscape, flush to col 1, span/position
+    // unchanged (5/12, ~42%). `w-[calc(100%+16px)]` + `-ml-2` grows the
+    // rendered box by a genuinely tiny 16px total (split 8px each side)
+    // without touching the grid's own column allocation — CSS Grid items
+    // are positioned by their line assignment, not by sibling box size,
+    // so this overflow can't shift SubVantage or misalign the row.
+    // `mt-4` (16px) is the only remaining per-row spacing override — on
+    // top of the shared `gap-y` it's what makes Row 1→2 the most generous
+    // gap in the gallery. The matching `mb-*` this used to carry was
+    // removed: Row 2→3 is generous enough from the bigger shared gap
+    // alone now, so a second stacked margin was just adding unpredictable
+    // extra whitespace on top of it.
+    link: "/projects/ua-attendance",
+    meta: "Web + Android / Academic",
+    aspect: "aspect-[16/9]",
+    md: "md:col-span-1",
+    lg: "lg:col-start-1 lg:col-span-5 lg:row-start-2 lg:mt-4 lg:-ml-2 lg:w-[calc(100%+16px)]",
+    sizes: "(min-width: 1024px) 42vw, (min-width: 768px) 50vw, 100vw",
+  },
+  {
+    // Row 2, right — same tiny width bump as UA LabSign (identical
+    // rendered size preserved). Start moved 8→7 (one column left): opens
+    // a real, comfortable right-hand margin at col 12 without centering,
+    // and leaves a real (if now single-column) gap to UA LabSign — not
+    // touching, not huge.
+    link: "/projects/subvantage",
+    meta: "Personal / 2025",
+    aspect: "aspect-[16/9]",
+    md: "md:col-span-1",
+    lg: "lg:col-start-7 lg:col-span-5 lg:row-start-2 lg:mt-4 lg:-ml-2 lg:w-[calc(100%+16px)]",
+    sizes: "(min-width: 1024px) 42vw, (min-width: 768px) 50vw, 100vw",
+  },
+  {
+    // Row 3, right side — a reduced echo of Row 2's landscape treatment:
+    // same span (3/12, ~25%) and same aspect as Mama R's below, so the two
+    // "match each other in dimensions" exactly. `w-[calc(100%+96px)]` +
+    // `-ml-24` grows the rendered box by a fixed 96px, entirely leftward —
+    // the right edge stays exactly where the grid puts it. `col-start`
+    // stays at 5, unchanged — only the growth amount has moved.
+    link: "/projects/grit",
+    meta: "Personal / 2026",
+    aspect: "aspect-[3/2]",
+    md: "md:col-span-1",
+    lg: "lg:col-start-5 lg:col-span-3 lg:row-start-3 lg:-ml-24 lg:w-[calc(100%+96px)]",
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+  },
+  {
+    // Row 3, far right — identical span/aspect to Grit, and the same
+    // leftward-only 96px growth technique, which is what keeps this one
+    // exactly right-flush: growing only via `margin-left`/`width` leaves
+    // the box's right edge pinned at grid line 13, the same line AC-CORE's
+    // own col-span-8 (start 5) lands on — the two still share a right
+    // anchor after the size bump.
+    link: "/projects/mamars",
+    meta: "Freelance / 2025",
+    aspect: "aspect-[3/2]",
+    md: "md:col-span-1",
+    lg: "lg:col-start-10 lg:col-span-3 lg:row-start-3 lg:-ml-24 lg:w-[calc(100%+96px)]",
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+  },
+  {
+    // Row 4, left — the vertical/portrait item in the closing trio.
+    // `w-[calc(100%+32px)]` with no margin grows it rightward only (its
+    // grid-anchored left edge — col 1, the section's own gutter — stays
+    // exactly where it is; the extra 32px overflows into the col-4 gap
+    // toward Thryve, same modest step used for the other two below).
+    link: "/projects/kodasync",
+    meta: "Personal / 2026",
+    aspect: "aspect-[3/4]",
+    md: "md:col-span-1",
+    lg: "lg:col-start-1 lg:col-span-3 lg:row-start-4 lg:w-[calc(100%+32px)]",
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+  },
+  {
+    // Row 4, center — square, balances MovieLoom. Has clearance on both
+    // sides, so it grows symmetrically: `-ml-4` (half of the 32px total)
+    // shifts the left edge out, the rest spills out the right — an even
+    // 16px into each neighboring gap rather than favoring one side.
+    link: "/projects/thryve",
+    meta: "School / 2025",
+    aspect: "aspect-square",
+    md: "md:col-span-1",
+    lg: "lg:col-start-5 lg:col-span-3 lg:row-start-4 lg:-ml-4 lg:w-[calc(100%+32px)]",
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+  },
+  {
+    // Row 4, right — square, balances Thryve. Grows rightward only (no
+    // margin), into the col-12 margin that already existed before the
+    // section's own right-side gutter — the actual gallery gutter is
+    // untouched.
+    link: "/projects/movieloom",
+    meta: "Personal / 2025",
+    aspect: "aspect-square",
+    md: "md:col-span-1",
+    lg: "lg:col-start-9 lg:col-span-3 lg:row-start-4 lg:w-[calc(100%+32px)]",
+    sizes: "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw",
+  },
 ];
 
-const featured = FEATURED.map(({ link, tech }) => {
-  const project = PROJECTS.find((p) => p.link === link);
-  return project ? { ...project, tech } : null;
+const featured = FEATURED.map((entry) => {
+  const project = PROJECTS.find((p) => p.link === entry.link);
+  return project ? { ...entry, project } : null;
 }).filter((p): p is NonNullable<typeof p> => p !== null);
 
-// Only technologies with a real matching icon get one; everything else
-// renders as plain text. Nothing here adds a technology a project doesn't
-// actually use.
-const TAG_ICONS: Record<string, IconType> = {
-  "Next.js": SiNextdotjs,
-  PostgreSQL: SiPostgresql,
-  "React Native": SiReact,
-  Expo: SiExpo,
-  Angular: SiAngular,
-  "Node.js": SiNodedotjs,
-  Express: SiExpress,
-  MongoDB: SiMongodb,
-  Laravel: SiLaravel,
-  Livewire: SiLivewire,
-  FastAPI: SiFastapi,
-  Python: SiPython,
-  TypeScript: SiTypescript,
-  Prisma: SiPrisma,
-};
-
 // Display title: the /projects titles carry long parenthetical/em-dash
-// subtitles that would overflow the square — keep the leading name only.
+// subtitles that would overflow a single line here — keep the leading
+// name only.
 function shortTitle(title: string) {
   return title.split(/\s+—\s+| \(/)[0];
 }
 
 // Very subtle diffuse separation from the warm off-white page background —
 // deliberately soft/low-opacity, not an elevated dashboard-card shadow.
-// Shared by every project square and the closing CTA slide so the whole
-// row reads as one consistent surface treatment.
+// Reused verbatim in field-notes.tsx so its own row thumbnails read as the
+// same artwork surface as this reel.
 const ARTWORK_SHADOW =
   "shadow-[0_8px_30px_rgba(17,17,15,0.06),0_2px_8px_rgba(17,17,15,0.04)]";
-
-// Shared responsive footprint for every horizontal-track item (the five
-// project squares and the closing CTA slide), so travel distance stays
-// visually even and everything lines up on the shared `items-center` row.
-//
-// The GSAP pinned mode (see selected-work-motion.tsx) only activates at
-// `lg` (1024px) and up, where cards are sized against viewport *height*
-// (vh) because the section is pinned to a full 100vh viewport. Below
-// that — mobile and tablet alike — this is a native horizontal scroller
-// with no forced height, so cards are sized against viewport *width*
-// (vw) instead: one large dominant card with a deliberate peek of the
-// next, never two cards squeezed evenly into frame (the previous bug —
-// the `md:` tier here used to size against `vh` while the gallery was
-// still in un-pinned, natural-height layout, so the card had nothing
-// meaningful to size against and rendered far too narrow).
-const SLIDE_WIDTH =
-  "w-[min(84vw,430px)] md:w-[clamp(440px,74vw,620px)] lg:w-[min(58vh,500px)] xl:w-[min(62vh,560px)] 2xl:w-[min(62vh,620px)]";
 
 export function SelectedWork() {
   return (
@@ -104,108 +174,59 @@ export function SelectedWork() {
       id="selected-work"
       aria-label="Selected work"
       data-selected-work="root"
-      // Deliberate breathing room around the native (<lg) horizontal
-      // scroller only — reset to 0 at `lg`, where the section is pinned
-      // to a full h-screen viewport (see selected-work-motion.tsx) and
-      // the GSAP pin geometry already owns the section's vertical
-      // rhythm, unchanged from before this pass.
-      className="relative bg-paper pt-[clamp(48px,10vw,64px)] pb-[clamp(56px,10vw,72px)] md:pt-[clamp(64px,9vw,88px)] md:pb-[clamp(72px,9vw,96px)] lg:pt-0 lg:pb-0"
+      className="relative bg-paper px-5 pt-[clamp(64px,9vw,96px)] pb-[clamp(72px,9vw,112px)] sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20"
     >
-      <div
-        data-selected-work="viewport"
-        // `scroll-ps-*` matches the track's own leading `px-*` below. Without
-        // it, the browser's initial scroll-snap layout pass snaps straight to
-        // AC-CORE's `snap-start` edge and ignores the track's own padding
-        // (padding on a scroll container isn't part of any element's snap
-        // area unless the container's own `scroll-padding` reserves it), so
-        // the page loaded with the gutter already scrolled out of view and
-        // the first card flush against the edge.
-        className="no-scrollbar flex snap-x snap-mandatory items-center overflow-x-auto scroll-ps-[clamp(16px,4vw,20px)] [-webkit-overflow-scrolling:touch] md:scroll-ps-[clamp(24px,3vw,32px)] lg:snap-none lg:motion-safe:h-screen lg:motion-safe:overflow-hidden"
-      >
-        <div
-          data-selected-work="track"
-          className="flex w-max items-center gap-[clamp(24px,3vw,56px)] px-[clamp(16px,4vw,20px)] md:px-[clamp(24px,3vw,32px)] lg:px-[clamp(20px,6vw,120px)]"
-        >
-          {featured.map((project, index) => (
-            <Link
-              key={project.link}
-              href={project.link}
-              data-selected-work="card"
-              className={`group relative block ${SLIDE_WIDTH} shrink-0 snap-start ${ARTWORK_SHADOW} lg:snap-align-none focus:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-4 focus-visible:ring-offset-paper`}
-            >
-              <div className="relative aspect-square w-full overflow-hidden bg-ink/5">
-                <Image
-                  src={project.galleryImage ?? project.image}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 767px) 82vw, 620px"
-                  priority={index === 0}
-                  loading={index === 0 ? undefined : "lazy"}
-                  className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] group-focus-visible:scale-[1.025]"
-                />
-
-                {/* Ink scrim + metadata. Always visible below the `lg`
-                    GSAP-pinned breakpoint (mobile and tablet alike, both
-                    touch-first), hover/focus-revealed from `lg` up. */}
-                <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink/85 via-ink/25 to-transparent p-5 text-paper transition-opacity duration-500 ease-out lg:p-7 lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-visible:opacity-100">
-                  <span className="absolute left-5 top-5 font-sans text-[0.7rem] tracking-[0.18em] text-paper/70 lg:left-7 lg:top-7">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  <span className="block overflow-hidden">
-                    <span className="block translate-y-full font-display text-[1.35rem] font-medium uppercase leading-tight tracking-tight transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-focus-visible:translate-y-0 max-lg:translate-y-0 lg:text-[1.6rem]">
-                      {shortTitle(project.title)}
-                    </span>
-                  </span>
-
-                  <ul className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-                    {project.tech.map((tag, tagIndex) => {
-                      const Icon = TAG_ICONS[tag];
-                      return (
-                        <li
-                          key={tag}
-                          style={{ transitionDelay: `${120 + tagIndex * 60}ms` }}
-                          className="flex items-center gap-1.5 font-sans text-[0.65rem] uppercase tracking-[0.14em] text-paper/75 transition-[opacity,transform] duration-500 ease-out lg:translate-y-2 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100 lg:group-focus-visible:translate-y-0 lg:group-focus-visible:opacity-100"
-                        >
-                          {Icon ? <Icon aria-hidden className="h-4 w-4" /> : null}
-                          {tag}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </Link>
-          ))}
-
-          {/* Closing item of the horizontal sequence, not project "06" —
-              deliberately not a `[data-selected-work="card"]` (no number,
-              no image, no hover-reveal metadata, no card shadow/dimensions)
-              but tagged `cta-card` so it still counts toward GSAP's
-              track-width travel calculation and the entrance stagger. The
-              reserved `SLIDE_WIDTH` is layout-only — no background, border,
-              or shadow renders it as a container, so it floats directly on
-              the section's own `bg-paper`. */}
+      {/* Single grid at every tier. Base: one plain column. md (tablet):
+          2 columns, auto-placed (a span-2 item claims a full row; span-1
+          items pair up — with 7 non-hero items this naturally lands as
+          three pairs plus one leftover, i.e. Grit+Mama R's don't try to
+          preserve the right-offset row, and KodaSync/Thryve/MovieLoom
+          become a 2+1). lg (desktop): explicit 12-column placement per
+          item above, none of which sum to a full 12 — the unclaimed
+          columns are the point. `lg:gap-y-24` (96px) is the shared row
+          gap every row boundary gets by default; Row 2's own `mt-4` (see
+          its comment) is the only remaining exception, stacking on top
+          to make Row 1→2 the most generous gap (~112px) while Row 2→3
+          and Row 3→4 both land at a consistent ~96px. */}
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-x-6 gap-y-14 md:grid-cols-2 md:gap-y-16 lg:grid-cols-12 lg:gap-y-24">
+        {featured.map(({ project, meta, aspect, md, lg, sizes }, index) => (
           <Link
-            href="/projects"
-            aria-label="View all projects"
-            data-selected-work="cta-card"
-            className={`group relative flex ${SLIDE_WIDTH} shrink-0 snap-start flex-col items-center justify-center gap-7 py-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-4 focus-visible:ring-offset-paper lg:snap-align-none`}
+            key={project.link}
+            href={project.link}
+            data-selected-work="item"
+            className={`group block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-4 focus-visible:ring-offset-paper ${md} ${lg}`}
           >
-            <span className="text-center font-editorial text-[clamp(2.5rem,9vw,3.5rem)] leading-[0.92] tracking-tight text-ink transition-transform duration-[450ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:group-hover:translate-y-0 md:text-[clamp(3.25rem,5vw,5.75rem)]">
-              View all
-              <br />
-              Projects
-            </span>
-
-            <span className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-ink/25 text-ink transition-colors duration-[450ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-oxblood group-hover:bg-oxblood group-hover:text-paper group-focus-visible:border-oxblood group-focus-visible:bg-oxblood group-focus-visible:text-paper md:h-14 md:w-14 lg:h-16 lg:w-16">
-              <ArrowUpRight
-                aria-hidden="true"
-                className="h-5 w-5 transition-transform duration-[450ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0 md:h-6 md:w-6"
+            <div className={`relative w-full overflow-hidden bg-ink/5 ${aspect} ${ARTWORK_SHADOW}`}>
+              <Image
+                src={project.galleryImage ?? project.image}
+                alt={project.title}
+                fill
+                sizes={sizes}
+                priority={index === 0}
+                loading={index === 0 ? undefined : "lazy"}
+                className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] group-focus-visible:scale-[1.025]"
               />
-            </span>
+            </div>
+
+            {/* Restrained editorial caption — a small UI/label scale, not
+                a headline, one size for every project regardless of image
+                size. Title is `font-display` (Neue Montreal, the same
+                sans used for headings/UI throughout v2) — a brief Bradford
+                serif experiment here didn't fit the section and was
+                reverted; the size bump from that pass is kept (it stands
+                on its own merit, unrelated to the typeface). Text is
+                static on hover/focus by design — only the image itself
+                (its own `group-hover:scale` above) reacts. */}
+            <div className="mt-2.5 flex items-baseline justify-between gap-3 sm:mt-3">
+              <span className="font-display font-medium text-[0.85rem] leading-snug tracking-[-0.01em] text-ink lg:text-[0.9rem]">
+                {shortTitle(project.title)}
+              </span>
+              <span className="shrink-0 font-sans text-[0.62rem] uppercase tracking-[0.12em] text-ink/60">
+                {meta}
+              </span>
+            </div>
           </Link>
-        </div>
+        ))}
       </div>
 
       <SelectedWorkMotion />
