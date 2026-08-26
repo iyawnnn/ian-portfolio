@@ -345,6 +345,25 @@ html.has-custom-cursor:not([data-intro-active]) [data-custom-cursor-root] {
   transition: opacity 0.15s ease;
 }
 
+/* Writing section (field-notes-motion.tsx): while the pointer is inside the
+   desktop preview interaction, `data-cursor-suppressed` is set on <html> so
+   the floating article preview becomes the section's only visible
+   cursor-like affordance — no ring/dot, and no native pointer either. The
+   native cursor needs no extra rule here: `.has-custom-cursor` is only ever
+   added on `(hover: hover) and (pointer: fine)` devices, which the Writing
+   preview's own activation condition (`(min-width: 1120px) and (hover:
+   hover) and (pointer: fine)`) is a strict subset of, so the base
+   `cursor: none !important` rule above is already active for the whole
+   stage-area whenever this fires — nothing to override. This selector
+   repeats `.has-custom-cursor` to outrank the base ring/dot-visibility rule
+   above on specificity alone (0-4-1 vs 0-3-1), so it wins outright
+   regardless of source order — no `!important` arms race, and the ring/dot
+   still fades via the same `opacity 0.15s` transition already declared
+   above. */
+html.has-custom-cursor[data-cursor-suppressed] [data-custom-cursor-root] {
+  opacity: 0;
+}
+
 @keyframes route-loader-draw {
   0%, 100% {
     stroke-dashoffset: 320;

@@ -6,6 +6,7 @@ import { Practice } from "@/components/v2/practice";
 import { WorkTransition } from "@/components/v2/work-transition";
 import { SelectedWork } from "@/components/v2/selected-work";
 import { WorkingSet } from "@/components/v2/working-set";
+import { FieldNotes } from "@/components/v2/field-notes";
 import { NavIslandLoader } from "@/components/v2/nav-island-loader";
 import { SmoothScroll } from "@/components/v2/smooth-scroll";
 import { IntroLoader } from "@/components/v2/intro-loader";
@@ -26,6 +27,7 @@ export default function ExplorePage() {
       <WorkTransition />
       <SelectedWork />
       <WorkingSet />
+      <FieldNotes />
       <SmoothScroll />
       <HeroMotion />
     </>
