@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PracticeMotion } from "@/components/v2/practice-motion";
+import { PracticeMotion } from "@/components/home/practice-motion";
 
 const PRACTICE_ITEMS = [
   {

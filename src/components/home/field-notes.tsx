@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react/ssr";
 
 import { getAllPostsMeta } from "@/lib/mdx";
-import { FieldNotesMotion } from "@/components/v2/field-notes-motion";
+import { FieldNotesMotion } from "@/components/home/field-notes-motion";
 
 const NOTE_COUNT = 4;
 

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { TechIcon } from "@/components/v2/tech-icon";
-import type { TechItem } from "@/components/v2/working-set-data";
+import { TechIcon } from "@/components/home/tech-icon";
+import type { TechItem } from "@/components/home/working-set-data";
 
 // Adapted from React Bits' LogoLoop: rAF + translate3d marquee, duplicated
 // sequences for a seamless wrap, ResizeObserver-driven copy count, and a

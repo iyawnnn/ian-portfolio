@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { PROJECTS } from "@/lib/projects";
-import { SelectedWorkMotion } from "@/components/v2/selected-work-motion";
-import { ProjectHoverLayer } from "@/components/v2/project-hover-layer";
+import { SelectedWorkMotion } from "@/components/home/selected-work-motion";
+import { ProjectHoverLayer } from "@/components/home/project-hover-layer";
 
 // The curved ribbon above (work-transition.tsx) already reads
 // "SYSTEM TO SCREEN — SELECTED WORK", so this section deliberately carries

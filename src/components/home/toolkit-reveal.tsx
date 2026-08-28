@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
-import { LogoLoop } from "@/components/v2/logo-loop";
-import { RAIL_ONE, RAIL_TWO } from "@/components/v2/working-set-data";
+import { LogoLoop } from "@/components/home/logo-loop";
+import { RAIL_ONE, RAIL_TWO } from "@/components/home/working-set-data";
 
 gsap.registerPlugin(MorphSVGPlugin);
 
@@ -14,7 +14,7 @@ gsap.registerPlugin(MorphSVGPlugin);
 // nav-island-loader.tsx. Allowed directly here since this file is already
 // a Client Component.
 const ToolkitPanel = dynamic(
-  () => import("@/components/v2/toolkit-panel").then((m) => m.ToolkitPanel),
+  () => import("@/components/home/toolkit-panel").then((m) => m.ToolkitPanel),
   { ssr: false },
 );
 

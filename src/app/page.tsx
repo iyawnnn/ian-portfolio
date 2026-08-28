@@ -1,15 +1,15 @@
 import { ScrollRestoration } from "@/components/ui/scroll-restoration";
-import { Hero } from "@/components/v2/hero";
-import { HeroMotion } from "@/components/v2/hero-motion";
-import { AboutManifesto } from "@/components/v2/about-manifesto";
-import { Practice } from "@/components/v2/practice";
-import { PracticeProjectsHandoff } from "@/components/v2/practice-projects-handoff";
-import { SelectedWork } from "@/components/v2/selected-work";
-import { WorkingSet } from "@/components/v2/working-set";
-import { FieldNotes } from "@/components/v2/field-notes";
-import { NavIslandLoader } from "@/components/v2/nav-island-loader";
-import { SmoothScroll } from "@/components/v2/smooth-scroll";
-import { IntroLoader } from "@/components/v2/intro-loader";
+import { Hero } from "@/components/home/hero";
+import { HeroMotion } from "@/components/home/hero-motion";
+import { AboutManifesto } from "@/components/home/about-manifesto";
+import { Practice } from "@/components/home/practice";
+import { PracticeProjectsHandoff } from "@/components/home/practice-projects-handoff";
+import { SelectedWork } from "@/components/home/selected-work";
+import { WorkingSet } from "@/components/home/working-set";
+import { FieldNotes } from "@/components/home/field-notes";
+import { NavIslandLoader } from "@/components/home/nav-island-loader";
+import { SmoothScroll } from "@/components/home/smooth-scroll";
+import { IntroLoader } from "@/components/home/intro-loader";
 
 // Below-hero sections (Projects Overview, GitHub activity, Spotify/WakaTime,
 // blog preview, Stack/Resume cards) are temporarily not rendered on "/"

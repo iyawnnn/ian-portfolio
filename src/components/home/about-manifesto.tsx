@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AboutManifestoMotion } from "@/components/v2/about-manifesto-motion";
+import { AboutManifestoMotion } from "@/components/home/about-manifesto-motion";
 
 const MANIFESTO_PARAGRAPHS = [
   "I turn complicated ideas into things people can actually use. I care about the details, probably more than I should, and I like building products that feel as good as they work.",

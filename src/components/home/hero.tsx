@@ -1,5 +1,5 @@
-import { PortraitPill } from "@/components/v2/portrait-pill";
-import { HeroClock } from "@/components/v2/hero-clock";
+import { PortraitPill } from "@/components/home/portrait-pill";
+import { HeroClock } from "@/components/home/hero-clock";
 
 export function Hero() {
   return (

@@ -4,8 +4,8 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import gsap from "gsap";
 import { X as XIcon } from "@phosphor-icons/react/ssr";
-import { TechIcon } from "@/components/v2/tech-icon";
-import { WORKING_SET, type TechZone } from "@/components/v2/working-set-data";
+import { TechIcon } from "@/components/home/tech-icon";
+import { WORKING_SET, type TechZone } from "@/components/home/working-set-data";
 
 // Matches the portfolio's own max-w-[1600px] content container (see
 // working-set.tsx) — the sheet's black background stays full-bleed, but

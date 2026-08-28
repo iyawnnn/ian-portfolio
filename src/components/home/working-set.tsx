@@ -1,5 +1,5 @@
-import { ToolkitReveal } from "@/components/v2/toolkit-reveal";
-import { WorkingSetMotion } from "@/components/v2/working-set-motion";
+import { ToolkitReveal } from "@/components/home/toolkit-reveal";
+import { WorkingSetMotion } from "@/components/home/working-set-motion";
 import { maskStyle } from "@/lib/icon-mask";
 
 const IAN_MARK_SRC = "/brand/ian-mark.svg";
