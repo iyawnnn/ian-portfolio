@@ -31,21 +31,20 @@ Treat the page as chapter-based, not a sequence of unrelated sections.
 | 4 | Practice | Warm Black |
 | — | **Major transition: Warm Black → Paper** | |
 | 5 | Projects | Paper |
-| 6 | Text Loop | Oxblood |
-| 7 | Tech Stack | Paper |
-| 8 | GitHub Contributions | Paper |
-| 9 | Writing / Blog | Paper |
+| 6 | Tech Stack | Paper |
+| 7 | GitHub Contributions | Paper |
+| 8 | Writing / Blog | Paper |
 | — | **Major transition: Paper → Warm Black** | |
-| 10 | Contact | Warm Black |
-| 11 | Footer | Warm Black |
+| 9 | Contact | Warm Black |
+| 10 | Footer | Warm Black |
 
 **Chapters**
 - Opening / identity — Loader, Hero
 - Dark identity/practice — About, Practice (must stay visually connected as one continuous Warm Black chapter)
-- Work / systems / writing — Projects, Text Loop, Tech Stack, GitHub Contributions, Writing
+- Work / systems / writing — Projects, Tech Stack, GitHub Contributions, Writing
 - Closing — Contact, Footer
 
-Text Loop is **not** the Warm Black → Paper transition — it stays a standalone oxblood banner/interstitial, placed after Projects.
+Text Loop is currently excluded from the homepage flow. Keep the component available for possible later reuse, but do not treat it as an active section or chapter transition.
 
 ## Major section transitions
 
@@ -53,10 +52,11 @@ Reserve large transition effects for a small number of important chapter changes
 
 ### Practice → Projects (main dark → light transition)
 - Reference: the chapter transitions in the Devian reference site.
-- Paper should feel like the next section rises upward over the dark chapter (drawer/sheet-like), not a flat CSS background swap.
-- Background may also interpolate/fade Warm Black → Paper.
-- Should feel spatial and continuous; the real next section participates in the transition rather than a decorative overlay sitting on top of it.
-- **Not implemented yet** — build only after Projects' new layout is finalized (see implementation order).
+- Use a Devian-inspired layered handoff: the real Projects section rises from below while the end of Practice remains briefly visible behind it.
+- Projects stays fully opaque on Paper. Page-level movement and the short section overlap create the depth; do not fade in the entire Paper surface.
+- A restrained gradient attached to Projects' moving top edge softens the temporary boundary and disappears as Projects settles.
+- Do not add a standalone transition spacer, duplicate Projects, or substitute a decorative Paper panel for the real incoming section.
+- Keep the transition in normal document flow with one dedicated ScrollTrigger and no pinning unless a later direction explicitly justifies it.
 
 ### Writing → Contact (closing transition)
 - Second major Paper → Warm Black transition.
@@ -77,28 +77,30 @@ Project Title                         Short Metadata
 - Generous spacing between projects; editorial presentation, not cards.
 - No index counters (`01 / 04`), no repeated Ian marks, no tech-logo walls, no excessive metadata, no card chrome.
 
-**Later motion (not now):** restrained image reveal, subtle scroll movement, modest hover scale, small title/metadata entrance. No heavy pinned-scroll or WebGL unless strongly justified.
+**Motion direction:** retain restrained section entrances and the clean circular secondary-image hover reveal. Captions remain static. No heavy pinned-scroll or WebGL unless strongly justified.
 
 **Implemented** (`src/components/v2/selected-work.tsx`) — 8 of the 9 `PROJECTS` entries render directly in this grid, no "view all projects" CTA. **ClimaPH is excluded from this homepage showcase only** — its data, `/projects/climaph` page, and every other reference stay untouched; it's still reachable from `/projects` and elsewhere.
 
-Fixed desktop composition (a 12-column grid used purely as an **alignment system**, not a mandate to consume all 12 columns — row spans never sum to 12, negative space is permanent):
+Fixed desktop composition (a 12-column grid used purely as an **alignment system**, not a mandate to consume all 12 columns — negative space is permanent):
 
-- **Row 1** — AC-CORE alone, top-left, large landscape (16/9) but contained at 6/12, never centered or full-width.
-- **Row 2** — UA LabSign + SubVantage, two medium landscape rectangles (4/3 and 16/9), distributed across the row with a gap between.
-- **Row 3** — Grit + Mama R's, two small horizontal rectangles (3/2 and 16/10) grouped toward the **right** side — the row's left ~7 columns are deliberately empty, an art-directed void, not a bug.
-- **Row 4** — KodaSync (portrait, 3/4) + Thryve (square) + MovieLoom (square), evenly spaced left/center/right.
+- **Row 1** — AC-CORE alone, top-right, landscape (16/9), starting at column 5 and spanning 8 columns.
+- **Row 2** — UA LabSign and SubVantage, matching landscape rectangles (16/9), each spanning 5 columns from columns 1 and 7. Both retain the approved slight 16px width extension.
+- **Row 3** — Grit and Mama R's, matching small horizontal rectangles (3/2), each spanning 3 columns from columns 5 and 10 with the approved leftward 96px extension.
+- **Row 4** — KodaSync (portrait, 3/4), Thryve (square), and MovieLoom (square), each based on a 3-column span at columns 1, 5, and 9 with their approved 32px width extensions.
 
-Project sizing stays restrained throughout — AC-CORE, UA LabSign, and SubVantage must never be scaled back up to fill their row; Grit and Mama R's must read as genuinely small, not "medium squeezed narrower." Every item's position is explicit (`lg:col-start`/`lg:col-span`/`lg:row-start`), not grid auto-placement. Caption typography is one restrained small editorial label scale for every project regardless of image size (`font-medium`, ~0.78–0.82rem) — no separate oversized/compact split. Vertical rhythm is a single shared `gap-y` (`lg:gap-y-9`) — no per-item margin or offset exceptions. Tablet collapses to a 2-column auto-flow grid (Grit/Mama R's become a normal pair, not right-offset; KodaSync/Thryve/MovieLoom land as 2+1); mobile is a single column in the order AC-CORE → UA LabSign → SubVantage → Grit → Mama R's → KodaSync → Thryve → MovieLoom, varied aspect ratios preserved.
+Every desktop position remains explicit (`lg:col-start`/`lg:col-span`/`lg:row-start`), not grid auto-placement. Captions use one restrained uppercase editorial label treatment (`font-medium`, approximately 0.85–0.9rem for titles) and remain static on hover. Desktop vertical rhythm uses `lg:gap-y-24` (96px); Row 2's `lg:mt-4` is the only intentional row-spacing exception. Tablet collapses to a 2-column auto-flow grid; mobile is a single column in the order AC-CORE → UA LabSign → SubVantage → Grit → Mama R's → KodaSync → Thryve → MovieLoom, with the approved aspect ratios preserved.
+
+**Implemented hover direction:** projects with a secondary image use a clean circular reveal from the exact center with a restrained opacity/scale blend. The experimental pixel-edge treatment was abandoned. The outlined `VIEW PROJECT` pointer remains; hover styling may be revisited later without changing the grid.
 
 **Row-composition rule to keep**: after the hero, every row holds 2–3 items sized well under the row's full width, and negative space must be distributed across the canvas rather than clustered — avoid several consecutive rows whose content all terminates around the same column.
 
 ## Practice section
 
-Do not redesign yet — current imagery is a placeholder pending final video assets. Only preserve its role as the second Warm Black section after About. Revisit once video is available.
+Practice shares the exact Warm Black surface with About, forming one continuous dark chapter. Its current imagery and internal composition remain placeholders pending final video assets; this phase only adapts the surface and text colors. Revisit the content treatment once video is available.
 
 ## Text Loop
 
-Stays its own oxblood banner. Tentative placement: **Projects → Text Loop → Tech Stack**. Acts as a visual reset after Projects, not the page's dark→light transition.
+Currently excluded from the homepage sequence. Keep the implementation available for possible later reconsideration; do not replace it with another separator between Projects and Tech Stack.
 
 ## Paper-section visual language
 
@@ -128,9 +130,9 @@ Respect `prefers-reduced-motion`.
 1. Lock section architecture and chapter structure (this document).
 2. Redesign Projects (HAOQI-inspired layout).
 3. Validate Projects: spacing, typography, responsive behavior, basic hover.
-4. Build the Practice → Projects Warm Black → Paper transition, now that Projects' top/layout is known.
+4. Maintain the implemented Practice → Projects layered handoff now that Projects' top/layout is known.
 5. Inspect and tune global Lenis/GSAP scroll feel.
-6. Continue through Text Loop, Tech Stack, GitHub Contributions, Writing.
+6. Continue through Tech Stack, GitHub Contributions, Writing.
 7. Design the Paper → Warm Black transition into Contact.
 8. Finish Contact and Footer.
 9. Return to Practice once the final video asset is available.

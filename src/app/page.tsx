@@ -3,7 +3,7 @@ import { Hero } from "@/components/v2/hero";
 import { HeroMotion } from "@/components/v2/hero-motion";
 import { AboutManifesto } from "@/components/v2/about-manifesto";
 import { Practice } from "@/components/v2/practice";
-import { WorkTransition } from "@/components/v2/work-transition";
+import { PracticeProjectsHandoff } from "@/components/v2/practice-projects-handoff";
 import { SelectedWork } from "@/components/v2/selected-work";
 import { WorkingSet } from "@/components/v2/working-set";
 import { FieldNotes } from "@/components/v2/field-notes";
@@ -23,9 +23,7 @@ export default function ExplorePage() {
       <NavIslandLoader />
       <Hero />
       <AboutManifesto />
-      <Practice />
-      <WorkTransition />
-      <SelectedWork />
+      <PracticeProjectsHandoff practice={<Practice />} projects={<SelectedWork />} />
       <WorkingSet />
       <FieldNotes />
       <SmoothScroll />

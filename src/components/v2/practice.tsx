@@ -59,41 +59,44 @@ export function Practice() {
     <section
       id="practice"
       data-practice="root"
+      data-island-theme="dark"
+      data-cursor-theme="dark"
       aria-labelledby="practice-heading"
-      className="relative bg-paper px-5 py-24 min-[768px]:px-8 min-[768px]:py-28 min-[900px]:px-11 min-[1120px]:px-[clamp(24px,3vw,40px)] min-[1120px]:py-32 min-[1280px]:px-16 min-[1280px]:py-36 min-[1536px]:px-20"
+      className="relative overflow-hidden bg-[#11110F] pt-24 text-[#F2F0E9] min-[768px]:pt-28 min-[1120px]:pt-32 min-[1280px]:pt-36"
     >
-      <div className="mx-auto w-full max-w-[1600px] text-ink">
-        {/* Headline + decor */}
-        <div className="grid grid-cols-1 min-[1120px]:grid-cols-[minmax(0,1fr)_auto] min-[1120px]:items-center min-[1120px]:gap-8">
-          <h2
-            id="practice-heading"
-            className="min-w-0 font-display font-medium uppercase leading-[1.02] tracking-[-0.01em] text-[clamp(2.4rem,11vw,3.4rem)] min-[768px]:max-w-[900px] min-[768px]:text-[clamp(3.25rem,6.5vw,4.75rem)] min-[1120px]:max-w-none min-[1120px]:text-[clamp(3.6rem,4.6vw,5.4rem)] min-[1280px]:text-[clamp(4.5rem,5.5vw,6.5rem)]"
-          >
-            <span className="block overflow-hidden">
-              <span data-practice="headline-line" className="block">
-                I LIKE MAKING THINGS
-              </span>
-            </span>
-            <span className="block overflow-hidden">
-              <span data-practice="headline-line" className="block">
-                THAT LIVE{" "}
-                <span
-                  data-practice="headline-between"
-                  className="font-editorial lowercase italic text-oxblood"
-                >
-                  between
+      <div className="px-5 min-[768px]:px-8 min-[900px]:px-11 min-[1120px]:px-[clamp(24px,3vw,40px)] min-[1280px]:px-16 min-[1536px]:px-20">
+        <div className="mx-auto w-full max-w-[1600px] pb-24 text-[#F2F0E9] min-[768px]:pb-28 min-[1120px]:pb-32 min-[1280px]:pb-36">
+          {/* Headline + decor */}
+          <div className="grid grid-cols-1 min-[1120px]:grid-cols-[minmax(0,1fr)_auto] min-[1120px]:items-center min-[1120px]:gap-8">
+            <h2
+              id="practice-heading"
+              className="min-w-0 font-display font-medium uppercase leading-[1.02] tracking-[-0.01em] text-[clamp(2.4rem,11vw,3.4rem)] min-[768px]:max-w-[900px] min-[768px]:text-[clamp(3.25rem,6.5vw,4.75rem)] min-[1120px]:max-w-none min-[1120px]:text-[clamp(3.6rem,4.6vw,5.4rem)] min-[1280px]:text-[clamp(4.5rem,5.5vw,6.5rem)]"
+            >
+              <span className="block overflow-hidden">
+                <span data-practice="headline-line" className="block">
+                  I LIKE MAKING THINGS
                 </span>
               </span>
-            </span>
-            <span className="block overflow-hidden">
-              <span data-practice="headline-line" className="block">
-                DESIGN AND CODE.
+              <span className="block overflow-hidden">
+                <span data-practice="headline-line" className="block">
+                  THAT LIVE{" "}
+                  <span
+                    data-practice="headline-between"
+                    className="font-editorial lowercase italic text-oxblood"
+                  >
+                    between
+                  </span>
+                </span>
               </span>
-            </span>
-          </h2>
+              <span className="block overflow-hidden">
+                <span data-practice="headline-line" className="block">
+                  DESIGN AND CODE.
+                </span>
+              </span>
+            </h2>
 
-          <PracticeDecor />
-        </div>
+            <PracticeDecor />
+          </div>
 
         {/* Three practice areas.
             Mobile (<768): each module is text above a square image, plain
@@ -120,46 +123,47 @@ export function Practice() {
             siblings, so the images' top edges line up exactly no matter
             how each module's copy wraps — entirely unchanged from before
             this pass. */}
-        <div className="mt-12 grid grid-cols-1 gap-0 min-[1120px]:mt-[clamp(2.75rem,3vw,3.75rem)] min-[1120px]:grid-cols-3 min-[1120px]:grid-rows-[auto_auto] min-[1120px]:gap-x-[clamp(2rem,2.4vw,3rem)] min-[1120px]:gap-y-0">
-          {PRACTICE_ITEMS.map((item, index) => {
-            const isReversed = index % 2 === 1;
-            return (
-              <article
-                key={item.id}
-                data-practice-item={item.id}
-                className={`min-w-0 w-full pt-[clamp(64px,9vw,80px)] first:pt-0 min-[768px]:grid min-[768px]:items-center min-[768px]:gap-x-[clamp(24px,4vw,48px)] min-[768px]:pt-[clamp(72px,6vw,112px)] min-[1120px]:grid-cols-none min-[1120px]:items-stretch min-[1120px]:max-w-none min-[1120px]:grid-rows-subgrid min-[1120px]:row-span-2 min-[1120px]:pt-0 ${isReversed ? "min-[768px]:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)]" : "min-[768px]:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]"}`}
-              >
-                <div
-                  data-practice="item-text"
-                  className={`min-w-0 min-[768px]:row-start-1 min-[1120px]:col-start-auto min-[1120px]:row-start-auto ${isReversed ? "min-[768px]:col-start-2" : "min-[768px]:col-start-1"}`}
+          <div className="mt-12 grid grid-cols-1 gap-0 min-[1120px]:mt-[clamp(2.75rem,3vw,3.75rem)] min-[1120px]:grid-cols-3 min-[1120px]:grid-rows-[auto_auto] min-[1120px]:gap-x-[clamp(2rem,2.4vw,3rem)] min-[1120px]:gap-y-0">
+            {PRACTICE_ITEMS.map((item, index) => {
+              const isReversed = index % 2 === 1;
+              return (
+                <article
+                  key={item.id}
+                  data-practice-item={item.id}
+                  className={`min-w-0 w-full pt-[clamp(64px,9vw,80px)] first:pt-0 min-[768px]:grid min-[768px]:items-center min-[768px]:gap-x-[clamp(24px,4vw,48px)] min-[768px]:pt-[clamp(72px,6vw,112px)] min-[1120px]:grid-cols-none min-[1120px]:items-stretch min-[1120px]:max-w-none min-[1120px]:grid-rows-subgrid min-[1120px]:row-span-2 min-[1120px]:pt-0 ${isReversed ? "min-[768px]:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)]" : "min-[768px]:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)]"}`}
                 >
-                  <p data-practice="text-part" className="font-display text-[0.85rem] text-ink/40 min-[1120px]:text-[0.95rem]">
-                    {item.number}
-                  </p>
-                  <h3
-                    data-practice="text-part"
-                    className="mt-3 font-display text-[1.5rem] font-medium uppercase tracking-tight min-[1120px]:text-[1.7rem]"
+                  <div
+                    data-practice="item-text"
+                    className={`min-w-0 min-[768px]:row-start-1 min-[1120px]:col-start-auto min-[1120px]:row-start-auto ${isReversed ? "min-[768px]:col-start-2" : "min-[768px]:col-start-1"}`}
                   >
-                    {item.title}
-                  </h3>
-                  <p
-                    data-practice="text-part"
-                    className="mt-3 font-editorial text-[1rem] italic text-oxblood"
-                  >
-                    {item.italic}
-                  </p>
-                  <p
-                    data-practice="text-part"
-                    className="mt-5 max-w-[40ch] font-sans text-[0.95rem] leading-[1.6] text-ink/65"
-                  >
-                    {item.copy}
-                  </p>
-                </div>
+                    <p data-practice="text-part" className="font-display text-[0.85rem] text-[#F2F0E9]/40 min-[1120px]:text-[0.95rem]">
+                      {item.number}
+                    </p>
+                    <h3
+                      data-practice="text-part"
+                      className="mt-3 font-display text-[1.5rem] font-medium uppercase tracking-tight min-[1120px]:text-[1.7rem]"
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      data-practice="text-part"
+                      className="mt-3 font-editorial text-[1rem] italic text-oxblood"
+                    >
+                      {item.italic}
+                    </p>
+                    <p
+                      data-practice="text-part"
+                      className="mt-5 max-w-[40ch] font-sans text-[0.95rem] leading-[1.6] text-[#F2F0E9]/65"
+                    >
+                      {item.copy}
+                    </p>
+                  </div>
 
-                <PracticeImage src={item.image} alt={item.alt} reversed={isReversed} />
-              </article>
-            );
-          })}
+                  <PracticeImage src={item.image} alt={item.alt} reversed={isReversed} />
+                </article>
+              );
+            })}
+          </div>
         </div>
       </div>
 

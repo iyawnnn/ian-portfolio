@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { PROJECTS } from "@/lib/projects";
 import { SelectedWorkMotion } from "@/components/v2/selected-work-motion";
+import { ProjectHoverLayer } from "@/components/v2/project-hover-layer";
 
 // The curved ribbon above (work-transition.tsx) already reads
 // "SYSTEM TO SCREEN — SELECTED WORK", so this section deliberately carries
@@ -166,7 +167,7 @@ function shortTitle(title: string) {
 // Reused verbatim in field-notes.tsx so its own row thumbnails read as the
 // same artwork surface as this reel.
 const ARTWORK_SHADOW =
-  "shadow-[0_8px_30px_rgba(17,17,15,0.06),0_2px_8px_rgba(17,17,15,0.04)]";
+  "shadow-[0_1px_2px_rgba(17,17,15,0.04),0_8px_24px_rgba(17,17,15,0.06)]";
 
 export function SelectedWork() {
   return (
@@ -189,44 +190,94 @@ export function SelectedWork() {
           to make Row 1→2 the most generous gap (~112px) while Row 2→3
           and Row 3→4 both land at a consistent ~96px. */}
       <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-x-6 gap-y-14 md:grid-cols-2 md:gap-y-16 lg:grid-cols-12 lg:gap-y-24">
-        {featured.map(({ project, meta, aspect, md, lg, sizes }, index) => (
-          <Link
-            key={project.link}
-            href={project.link}
-            data-selected-work="item"
-            className={`group block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-4 focus-visible:ring-offset-paper ${md} ${lg}`}
-          >
-            <div className={`relative w-full overflow-hidden bg-ink/5 ${aspect} ${ARTWORK_SHADOW}`}>
-              <Image
-                src={project.galleryImage ?? project.image}
-                alt={project.title}
-                fill
-                sizes={sizes}
-                priority={index === 0}
-                loading={index === 0 ? undefined : "lazy"}
-                className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] group-focus-visible:scale-[1.025]"
-              />
-            </div>
+        {featured.map(({ project, meta, aspect, md, lg, sizes }, index) => {
+          // A project's `galleryImage` (purpose-made artwork for this
+          // reel) is already the primary image whenever it exists — which
+          // leaves the raw cover `image` sitting unused for exactly those
+          // projects, and genuinely absent for the rest. Reusing it as the
+          // hover-swap image costs nothing (no new asset, no data-shape
+          // change) and only ever applies where a real second image
+          // exists; projects without a `galleryImage` (Mama R's, Thryve,
+          // MovieLoom) simply get no image swap, just the pointer layer.
+          const primaryImage = project.galleryImage ?? project.image;
+          const hoverImage = project.galleryImage ? project.image : undefined;
 
-            {/* Restrained editorial caption — a small UI/label scale, not
-                a headline, one size for every project regardless of image
-                size. Title is `font-display` (Neue Montreal, the same
-                sans used for headings/UI throughout v2) — a brief Bradford
-                serif experiment here didn't fit the section and was
-                reverted; the size bump from that pass is kept (it stands
-                on its own merit, unrelated to the typeface). Text is
-                static on hover/focus by design — only the image itself
-                (its own `group-hover:scale` above) reacts. */}
-            <div className="mt-2.5 flex items-baseline justify-between gap-3 sm:mt-3">
-              <span className="font-display font-medium text-[0.85rem] leading-snug tracking-[-0.01em] text-ink lg:text-[0.9rem]">
-                {shortTitle(project.title)}
-              </span>
-              <span className="shrink-0 font-sans text-[0.62rem] uppercase tracking-[0.12em] text-ink/60">
-                {meta}
-              </span>
-            </div>
-          </Link>
-        ))}
+          return (
+            <Link
+              key={project.link}
+              href={project.link}
+              data-selected-work="item"
+              className={`group block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-oxblood focus-visible:ring-offset-4 focus-visible:ring-offset-paper ${md} ${lg}`}
+            >
+              <div
+                className={`relative w-full overflow-hidden rounded-[5px] bg-ink/5 ${aspect} ${ARTWORK_SHADOW}`}
+              >
+                {/* Always-visible base image — static for projects with a
+                    secondary reveal (a competing scale here would fight
+                    the reveal's own subtle settle-scale below). Projects
+                    with no secondary image keep the previous scale as
+                    their only hover polish. `rounded-[5px]` above (plus
+                    `overflow-hidden`) is the section's one shared radius —
+                    just enough to soften the artwork's corners against the
+                    Paper page; it clips every child here, primary image,
+                    secondary reveal image, and the reveal's own animated
+                    clip-path alike, so nothing needs its own radius. */}
+                <Image
+                  src={primaryImage}
+                  alt={project.title}
+                  fill
+                  sizes={sizes}
+                  priority={index === 0}
+                  loading={index === 0 ? undefined : "lazy"}
+                  className={`object-cover ${
+                    hoverImage
+                      ? ""
+                      : "transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.025] group-focus-visible:scale-[1.025]"
+                  }`}
+                />
+
+                {hoverImage ? (
+                  // This resting state also keeps the secondary image
+                  // hidden before hydration and on coarse pointers.
+                  <Image
+                    src={hoverImage}
+                    alt=""
+                    fill
+                    sizes={sizes}
+                    loading="lazy"
+                    data-hover-reveal="image"
+                    className="object-cover"
+                    style={{
+                      clipPath: "circle(0% at 50% 50%)",
+                      opacity: 0.85,
+                      transform: "scale(1.025)",
+                    }}
+                  />
+                ) : null}
+
+                <ProjectHoverLayer hasReveal={Boolean(hoverImage)} />
+              </div>
+
+              {/* Restrained editorial caption — a small UI/label scale, not
+                  a headline, one size for every project regardless of image
+                  size, now uppercase on both title and metadata (font
+                  family/size/weight/spacing otherwise unchanged). Title is
+                  `font-display` (Neue Montreal, the same sans used for
+                  headings/UI throughout v2). Text is static on hover/focus
+                  by design — the artwork's own center-reveal and the
+                  circular cursor are the entire interaction; the caption
+                  never reacts. */}
+              <div className="mt-2.5 flex items-baseline justify-between gap-3 sm:mt-3">
+                <span className="font-display font-medium text-[0.85rem] uppercase leading-snug tracking-[-0.01em] text-ink lg:text-[0.9rem]">
+                  {shortTitle(project.title)}
+                </span>
+                <span className="shrink-0 font-sans text-[0.62rem] uppercase tracking-[0.12em] text-ink/60">
+                  {meta}
+                </span>
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
       <SelectedWorkMotion />
