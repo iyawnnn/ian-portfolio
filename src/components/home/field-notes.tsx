@@ -4,6 +4,7 @@ import { ArrowUpRight } from "@phosphor-icons/react/ssr";
 
 import { getAllPostsMeta } from "@/lib/mdx";
 import { FieldNotesMotion } from "@/components/home/field-notes-motion";
+import { PaperGridLines } from "@/components/ui/paper-grid-lines";
 
 const NOTE_COUNT = 4;
 
@@ -51,6 +52,13 @@ export function FieldNotes() {
       // so nothing decorative sits at the seam.
       className="relative bg-paper px-5 pt-[clamp(88px,12vw,140px)] pb-[clamp(80px,10vw,128px)] min-[768px]:px-8 min-[900px]:px-11 min-[1120px]:px-[clamp(24px,3vw,40px)] min-[1280px]:px-16 min-[1536px]:px-20"
     >
+      {/* Shared, page-level Paper background rhythm (see
+          paper-grid-lines.tsx) — same column positions as every other
+          Paper section, kept low enough to sit underneath this section's
+          own horizontal hairline row-rules (ROW_RULE above) without
+          competing with them. */}
+      <PaperGridLines opacity={0.03} />
+
       <div className="mx-auto w-full max-w-[1600px] text-ink">
         {/* Header. No separate eyebrow — the statement itself is both the
             section's heading and its visual introduction. Below `1120px`

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { PracticeMotion } from "@/components/home/practice-motion";
+import { PaperGridLines } from "@/components/ui/paper-grid-lines";
 
 const PRACTICE_ITEMS = [
   {
@@ -62,6 +63,37 @@ export function Practice() {
       aria-labelledby="practice-heading"
       className="relative overflow-hidden bg-paper pt-24 text-ink min-[768px]:pt-28 min-[1120px]:pt-32 min-[1280px]:pt-36"
     >
+      {/* Shared, page-level Paper background rhythm (see
+          paper-grid-lines.tsx) — mounted directly on this section's own
+          full-width root, at the same default column counts every other
+          Paper section uses, so it continues the exact same page grid
+          rather than this section's own 1/2/3-column item layout (the
+          earlier version mounted it inside the padded max-w container
+          below and tied its column count to that grid, which is why it
+          read as card-column dividers instead of page architecture). */}
+      <PaperGridLines opacity={0.035} />
+
+      {/* Large, mostly-cropped echo of the same Ian asterisk mark used
+          below in PracticeDecor (and by Hero) — reusing the existing
+          asset rather than a new shape. Static, very low opacity, bottom-
+          left as a quiet diagonal counterweight to the small spinning
+          mark's top-right position. Purely decorative background filler
+          for the otherwise-empty margin outside the max-w-[1600px]
+          content column on wide viewports. */}
+      <div
+        aria-hidden="true"
+        data-practice="decor-echo"
+        className="pointer-events-none absolute -bottom-[18%] -left-[12%] hidden aspect-square w-[420px] opacity-[0.05] min-[1280px]:block min-[1536px]:w-[520px]"
+      >
+        <Image
+          src="/images/hero/decor/asterisk-oxblood.svg"
+          alt=""
+          fill
+          sizes="520px"
+          className="object-contain"
+        />
+      </div>
+
       <div className="px-5 min-[768px]:px-8 min-[900px]:px-11 min-[1120px]:px-[clamp(24px,3vw,40px)] min-[1280px]:px-16 min-[1536px]:px-20">
         <div className="mx-auto w-full max-w-[1600px] pb-24 text-ink min-[768px]:pb-28 min-[1120px]:pb-32 min-[1280px]:pb-36">
           {/* Headline + decor */}

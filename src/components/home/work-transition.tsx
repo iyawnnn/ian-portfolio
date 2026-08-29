@@ -1,5 +1,6 @@
 import { WorkTransitionWave } from "@/components/home/curved-loop";
 import { WorkTransitionMotion } from "@/components/home/work-transition-motion";
+import { PaperGridLines } from "@/components/ui/paper-grid-lines";
 
 // The two phrases only — WorkTransitionWave (client) joins them with a
 // real Ian mark in between, using the same gap width it reserves for
@@ -26,6 +27,12 @@ export function WorkTransition() {
       // value instead of picking up the new mobile tier for 600-639.
       className="relative overflow-hidden bg-paper py-[clamp(24px,6vw,32px)] min-[600px]:py-[clamp(32px,8vw,48px)] sm:py-[clamp(40px,7vw,56px)] md:py-[clamp(48px,6vw,64px)] lg:py-6"
     >
+      {/* Shared, page-level Paper background rhythm (see
+          paper-grid-lines.tsx) — same column positions as every other
+          Paper section, at this section's own lowest opacity so the
+          moving ribbon stays the dominant visual idea here. */}
+      <PaperGridLines opacity={0.025} />
+
       <span className="sr-only">System to screen — Selected Work</span>
 
       {/* True full-bleed: the section itself is never inside a padded/

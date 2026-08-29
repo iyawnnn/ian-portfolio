@@ -1,6 +1,7 @@
 import { ToolkitReveal } from "@/components/home/toolkit-reveal";
 import { WorkingSetMotion } from "@/components/home/working-set-motion";
 import { maskStyle } from "@/lib/icon-mask";
+import { PaperGridLines } from "@/components/ui/paper-grid-lines";
 
 const IAN_MARK_SRC = "/brand/ian-mark.svg";
 
@@ -55,6 +56,14 @@ export function WorkingSet() {
       data-working-set="root"
       className="relative bg-paper px-4 pt-14 pb-12 sm:px-6 sm:pt-16 sm:pb-16 lg:px-12 lg:pt-20 lg:pb-20"
     >
+      {/* Shared, page-level Paper background rhythm (see
+          paper-grid-lines.tsx) — same column positions as every other
+          Paper section. Kept extremely subtle here: the headline
+          animation, divider mark, and tech-logo marquee already make this
+          a busy section, so the lines stay in the background rather than
+          adding to it. */}
+      <PaperGridLines opacity={0.028} />
+
       <div className="mx-auto w-full max-w-[1600px]">
         {/* Headline */}
         <div className="mx-auto max-w-[1400px] text-center text-ink">

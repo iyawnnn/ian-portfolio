@@ -21,6 +21,7 @@ import {
 
 import { PROJECTS } from "@/lib/projects";
 import { SelectedWorkMotion } from "@/components/home/selected-work-motion";
+import { PaperGridLines } from "@/components/ui/paper-grid-lines";
 
 // The curved ribbon above (work-transition.tsx) already reads
 // "SYSTEM TO SCREEN — SELECTED WORK", so this section deliberately carries
@@ -111,6 +112,18 @@ export function SelectedWork() {
       // rhythm, unchanged from before this pass.
       className="relative bg-paper pt-[clamp(48px,10vw,64px)] pb-[clamp(56px,10vw,72px)] md:pt-[clamp(64px,9vw,88px)] md:pb-[clamp(72px,9vw,96px)] lg:pt-0 lg:pb-0"
     >
+      {/* Shared, page-level Paper background rhythm (see
+          paper-grid-lines.tsx). Mounted on this section's own root, not
+          inside `viewport`/`track` — deliberately never moves with the
+          horizontal-scroll track. It doesn't need to live inside the
+          GSAP-pinned `viewport` either: the pattern is purely vertical
+          (Y-invariant), so it looks identical whether it scrolls normally
+          with `root` or stays fixed on screen with the pin — there's
+          nothing in it that scrolling could visibly desync. Mounting it
+          here keeps this section consistent with every other Paper
+          section instead of a one-off gutter-matched treatment. */}
+      <PaperGridLines opacity={0.032} />
+
       <div
         data-selected-work="viewport"
         // `scroll-ps-*` matches the track's own leading `px-*` below. Without
