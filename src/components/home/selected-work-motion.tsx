@@ -6,84 +6,52 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-// Pins the Selected Work reel and converts vertical scroll into horizontal
-// track movement. Renders nothing — targets are found via the
-// `data-selected-work` attributes on the static markup in selected-work.tsx,
-// which stands on its own without this: below 1024px (and under
-// prefers-reduced-motion) the same markup is a native horizontal
-// overflow/snap gallery, so nothing here runs. The 1024px threshold
-// matches selected-work.tsx's own `lg:` activation classes — below it,
-// cards are sized against viewport width (native scroll, natural
-// height); at/above it, this pin takes over and cards size against
-// viewport height (h-screen pinned section).
-//
-// Scroll position comes from the shared Lenis instance in smooth-scroll.tsx
-// (it already drives ScrollTrigger.update) — no second smooth-scroll or
-// nested scroll container is created here.
+// Entrance-only: the statement lines clip-reveal up and the grid cards
+// fade/rise in on scroll. No pin, no scrub — the horizontal-scroll/pin
+// mechanism that used to live here moved to field-notes-motion.tsx, which
+// now owns the Blog section's horizontal browse. Renders nothing — targets
+// are found via the `data-selected-work` attributes on the static markup
+// in selected-work.tsx, which stands on its own without this.
 export function SelectedWorkMotion() {
   useGSAP(() => {
     const root = document.querySelector<HTMLElement>('[data-selected-work="root"]');
-    const viewport = root?.querySelector<HTMLElement>('[data-selected-work="viewport"]');
-    const track = root?.querySelector<HTMLElement>('[data-selected-work="track"]');
-    if (!root || !viewport || !track) return;
+    if (!root) return;
 
-    const mm = gsap.matchMedia();
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
 
-    mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
-      // Travel is measured from the real rendered track, so responsive card
-      // widths, the gaps and the leading/trailing padding are all accounted
-      // for; invalidateOnRefresh re-runs these functions on resize.
-      const travel = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+    const lines = Array.from(root.querySelectorAll<HTMLElement>('[data-selected-work="statement-line"]'));
+    const headerCta = root.querySelector<HTMLElement>('[data-selected-work="header-cta"]');
+    const cards = Array.from(root.querySelectorAll<HTMLElement>('[data-selected-work="card"]'));
 
-      const tween = gsap.to(track, {
-        x: () => -travel(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: viewport,
-          start: "top top",
-          end: () => `+=${travel()}`,
-          pin: true,
-          // Every route is wrapped by `src/app/template.tsx`'s
-          // `.page-enter` div, whose page-enter CSS animation
-          // (globals.css) leaves a non-"none" `transform` on that
-          // ancestor permanently via fill-mode "both". Any transformed
-          // ancestor changes the containing block for `position:fixed`
-          // descendants, so ScrollTrigger's default "fixed" pinType
-          // pins relative to `.page-enter` instead of the real viewport
-          // — its per-frame `top` compensation then pushes the pinned
-          // section off-screen as the page scrolls (observed: the
-          // section renders blank and the horizontal reel appears to
-          // skip straight past project 1). Forcing "transform" pins via
-          // a plain translate instead of `position:fixed`, which is
-          // immune to ancestor transforms.
-          pinType: "transform",
-          pinSpacing: true,
-          anticipatePin: 1,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
+    if (root.getBoundingClientRect().top < window.innerHeight * 0.75) return;
 
-      const cards = gsap.utils.toArray<HTMLElement>(
-        '[data-selected-work="card"], [data-selected-work="cta-card"]',
-      );
-      const entrance = gsap.from(cards, {
-        y: 28,
-        opacity: 0,
-        duration: 0.7,
-        ease: "power3.out",
-        stagger: 0.08,
-        scrollTrigger: { trigger: root, start: "top 70%", once: true },
-      });
+    gsap.set(lines, { yPercent: 105 });
+    gsap.set(headerCta, { opacity: 0, y: 10 });
+    gsap.set(cards, { y: 28, opacity: 0 });
 
-      return () => {
-        entrance.scrollTrigger?.kill();
-        tween.scrollTrigger?.kill();
-        gsap.set(track, { clearProps: "transform" });
-      };
+    ScrollTrigger.create({
+      trigger: root,
+      start: "top 75%",
+      once: true,
+      onEnter: () => {
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+        tl.to(lines, { yPercent: 0, duration: 0.9, stagger: 0.12 }, 0).to(
+          headerCta,
+          { opacity: 1, y: 0, duration: 0.5 },
+          0.45,
+        );
+      },
     });
 
-    return () => mm.revert();
+    ScrollTrigger.create({
+      trigger: root,
+      start: "top 70%",
+      once: true,
+      onEnter: () => {
+        gsap.to(cards, { y: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.08 });
+      },
+    });
   }, []);
 
   return null;
