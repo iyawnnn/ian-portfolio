@@ -9,9 +9,14 @@ export async function ViewCounter({ slug }: { slug: string }) {
     async () => {
       try {
         return (await redis.get<number>(`pageviews:blog:${slug}`)) ?? 0;
-      } catch (error: any) {
+      } catch (error) {
         // 2. CRITICAL FIX: Never swallow Next.js internal build errors
-        if (error.digest === 'DYNAMIC_SERVER_USAGE') {
+        if (
+          error &&
+          typeof error === "object" &&
+          "digest" in error &&
+          error.digest === "DYNAMIC_SERVER_USAGE"
+        ) {
           throw error;
         }
         console.error("Redis Error:", error);

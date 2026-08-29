@@ -59,13 +59,11 @@ export function Practice() {
     <section
       id="practice"
       data-practice="root"
-      data-island-theme="dark"
-      data-cursor-theme="dark"
       aria-labelledby="practice-heading"
-      className="relative overflow-hidden bg-[#11110F] pt-24 text-[#F2F0E9] min-[768px]:pt-28 min-[1120px]:pt-32 min-[1280px]:pt-36"
+      className="relative overflow-hidden bg-paper pt-24 text-ink min-[768px]:pt-28 min-[1120px]:pt-32 min-[1280px]:pt-36"
     >
       <div className="px-5 min-[768px]:px-8 min-[900px]:px-11 min-[1120px]:px-[clamp(24px,3vw,40px)] min-[1280px]:px-16 min-[1536px]:px-20">
-        <div className="mx-auto w-full max-w-[1600px] pb-24 text-[#F2F0E9] min-[768px]:pb-28 min-[1120px]:pb-32 min-[1280px]:pb-36">
+        <div className="mx-auto w-full max-w-[1600px] pb-24 text-ink min-[768px]:pb-28 min-[1120px]:pb-32 min-[1280px]:pb-36">
           {/* Headline + decor */}
           <div className="grid grid-cols-1 min-[1120px]:grid-cols-[minmax(0,1fr)_auto] min-[1120px]:items-center min-[1120px]:gap-8">
             <h2
@@ -136,7 +134,7 @@ export function Practice() {
                     data-practice="item-text"
                     className={`min-w-0 min-[768px]:row-start-1 min-[1120px]:col-start-auto min-[1120px]:row-start-auto ${isReversed ? "min-[768px]:col-start-2" : "min-[768px]:col-start-1"}`}
                   >
-                    <p data-practice="text-part" className="font-display text-[0.85rem] text-[#F2F0E9]/40 min-[1120px]:text-[0.95rem]">
+                    <p data-practice="text-part" className="font-display text-[0.85rem] text-ink/40 min-[1120px]:text-[0.95rem]">
                       {item.number}
                     </p>
                     <h3
@@ -153,7 +151,7 @@ export function Practice() {
                     </p>
                     <p
                       data-practice="text-part"
-                      className="mt-5 max-w-[40ch] font-sans text-[0.95rem] leading-[1.6] text-[#F2F0E9]/65"
+                      className="mt-5 max-w-[40ch] font-sans text-[0.95rem] leading-[1.6] text-ink/65"
                     >
                       {item.copy}
                     </p>

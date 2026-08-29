@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { AnchorHTMLAttributes } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -54,8 +55,16 @@ const previewMap: Record<string, string> = {
   "https://www.instagram.com/blythe/": "/preview-links/andrea-preview-image.webp",
 };
 
-export const CustomLink = ({ href, children, ...props }: any) => {
-  const isInternal = href && href.startsWith("/");
+export const CustomLink = ({
+  href,
+  children,
+  ...props
+}: AnchorHTMLAttributes<HTMLAnchorElement>) => {
+  if (!href) {
+    return <a {...props}>{children}</a>;
+  }
+
+  const isInternal = href.startsWith("/");
   const previewImage = previewMap[href];
 
   if (previewImage) {
